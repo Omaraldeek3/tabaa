@@ -101,10 +101,20 @@ import menus_sweetsShop from "./menus/sweets-shop.ts";
 import menus_enBrunch from "./menus/en-brunch.ts";
 import menus_enCafe from "./menus/en-cafe.ts";
 import labels_oliveOil from "./labels/olive-oil.ts";
+import labels_candle from "./labels/candle.ts";
+import labels_carobMolasses from "./labels/carob-molasses.ts";
 import labels_datesBox from "./labels/dates-box.ts";
+import labels_figJam from "./labels/fig-jam.ts";
+import labels_freekeh from "./labels/freekeh.ts";
 import labels_honey from "./labels/honey.ts";
+import labels_labnehJar from "./labels/labneh-jar.ts";
+import labels_maftoul from "./labels/maftoul.ts";
 import labels_nabulsiSoap from "./labels/nabulsi-soap.ts";
+import labels_oudPerfume from "./labels/oud-perfume.ts";
+import labels_pickles from "./labels/pickles.ts";
+import labels_sageTea from "./labels/sage-tea.ts";
 import labels_zaatar from "./labels/zaatar.ts";
+import labels_enCoffeeBag from "./labels/en-coffee-bag.ts";
 import labels_enHandmade from "./labels/en-handmade.ts";
 import greetings_eidCrescent from "./greetings/eid-crescent.ts";
 import greetings_mabrouk from "./greetings/mabrouk.ts";
@@ -220,10 +230,20 @@ export const templates: Template[] = [
   menus_enBrunch,
   menus_enCafe,
   labels_oliveOil,
+  labels_candle,
+  labels_carobMolasses,
   labels_datesBox,
+  labels_figJam,
+  labels_freekeh,
   labels_honey,
+  labels_labnehJar,
+  labels_maftoul,
   labels_nabulsiSoap,
+  labels_oudPerfume,
+  labels_pickles,
+  labels_sageTea,
   labels_zaatar,
+  labels_enCoffeeBag,
   labels_enHandmade,
   greetings_eidCrescent,
   greetings_mabrouk,
