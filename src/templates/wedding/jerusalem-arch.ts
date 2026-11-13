@@ -36,22 +36,22 @@ const jerusalemArch: Template = {
     const max = aw - 26 * s, skyH = Math.min(aw * 0.3, ah * 0.2), baseY = top + ah;
     const stars: SceneNode[] = [[-0.22, 0.2], [0.2, 0.16], [-0.3, 0.33], [0.3, 0.3], [0, 0.11]].map(([x, y]) => g({ x: cx + x * aw, y: top + y * ah }, path(starPath(4, 1.5 * s, 0.45 * s), { fill: p.accent, opacity: 0.8 })));
     // Text starts below the arch's shoulders, where it is at full width.
-    const y0 = top + Math.min(ah * 0.3, aw * 0.5), step = (baseY - skyH - 8 * s - y0) / 100;
+    const y0 = top + Math.min(ah * 0.25, aw * 0.42), step = (baseY - skyH - 8 * s - y0) / 100;
     return scene(W, H, p.paper,
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       g({ x: m, y: top }, path(archPath(aw, ah, 0.74), { fill: null, stroke: p.accent, strokeWidth: 0.55 * s })),
       g({ x: m + inner, y: top + inner * 1.5 }, path(archPath(aw - 2 * inner, ah - inner * 1.5, 0.74), { fill: null, stroke: p.accent, strokeWidth: 0.18 * s })),
       stars,
-      g({ x: cx, y: top + ah * 0.2, rotate: -90 }, path(crescentPath(4.2 * s, 0.5), { fill: p.accent })),
+      g({ x: cx, y: top + ah * 0.14, rotate: -90 }, path(crescentPath(4.2 * s, 0.5), { fill: p.accent })),
       g({ x: m + inner + 0.2 * s, y: baseY - skyH }, jerusalem(aw - 2 * inner - 0.4 * s, skyH, p.accent2, p.accent, p.paper)),
       line(val(ctx, "opening"), cx, y0, 4.8 * s, { font: "amiri", fill: p.accent, maxWidth: max * 0.7 }),
-      line(val(ctx, "invite"), cx, y0 + 13 * step, 5.2 * s, { font: "amiri", fill: p.ink, maxWidth: max * 0.85 }),
-      line(val(ctx, "groom"), cx, y0 + 37 * step, 22 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
-      line("و", cx, y0 + 48 * step, 7 * s, { font: "amiri", fill: p.ink, safe: false }),
-      line(val(ctx, "bride"), cx, y0 + 66 * step, 22 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
-      rect(cx - 16 * s, y0 + 74 * step, 32 * s, 0.25 * s, { fill: p.accent }),
-      line(val(ctx, "date"), cx, y0 + 85 * step, 6.4 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
-      line([val(ctx, "time"), val(ctx, "venue")].filter(Boolean).join("  ·  "), cx, y0 + 95 * step, 5 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
+      line(val(ctx, "invite"), cx, y0 + 11 * step, 5.2 * s, { font: "amiri", fill: p.ink, maxWidth: max * 0.85 }),
+      line(val(ctx, "groom"), cx, y0 + 38 * step, 20 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
+      line("و", cx, y0 + 50 * step, 7 * s, { font: "amiri", fill: p.ink, safe: false }),
+      line(val(ctx, "bride"), cx, y0 + 70 * step, 20 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
+      rect(cx - 16 * s, y0 + 78 * step, 32 * s, 0.25 * s, { fill: p.accent }),
+      line(val(ctx, "date"), cx, y0 + 88 * step, 6.4 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
+      line([val(ctx, "time"), val(ctx, "venue")].filter(Boolean).join("  ·  "), cx, y0 + 97 * step, 5 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, H - m - 2 * s, 5 * s, { font: "amiri", weight: 700, fill: p.accent, maxWidth: aw }),
     );
   },

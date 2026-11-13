@@ -77,3 +77,35 @@ export const line = (value: string, x: number, y: number, size: number, o: TextO
 export function stack(lines: string[], x: number, y: number, size: number, leading: number, o: TextOpts & { font: string }): SceneNode[] {
   return lines.map((l, i) => line(l, x, y + i * leading, size, o)).filter((n): n is SceneNode => !!n);
 }
+
+Object.assign(sizes, {
+  cardV: { id: "55x85", label: { ar: "كرت طولي ٥٥×٨٥ ملم", en: "Tall card 55×85 mm" }, widthMm: 55, heightMm: 85 },
+  a5l: { id: "a5-landscape", label: { ar: "A5 عرضي (٢١٠×١٤٨ ملم)", en: "A5 landscape (210×148 mm)" }, widthMm: 210, heightMm: 148 },
+  sq60: { id: "60x60", label: { ar: "مربع ٦٠×٦٠ ملم", en: "Square 60×60 mm" }, widthMm: 60, heightMm: 60 },
+  label10070: { id: "100x70", label: { ar: "ملصق ١٠٠×٧٠ ملم", en: "Label 100×70 mm" }, widthMm: 100, heightMm: 70 },
+});
+/** Sizes added after the first set; same shape as `sizes`. */
+export const more = sizes as typeof sizes & Record<"cardV" | "a5l" | "sq60" | "label10070", Size>;
+
+/** The numbers every layout starts from: page, palette, bleed overdraw, and
+ *  a scale against the size the design was drawn at. */
+export function dims(ctx: RenderContext, baseW: number, baseH: number) {
+  const { widthMm: W, heightMm: H } = ctx.size, u = W / baseW, v = H / baseH;
+  return { W, H, p: ctx.palette, b: ctx.bleedMm + 1, u, v, s: Math.min(u, v), cx: W / 2 };
+}
+
+/** Several fields on one line, skipping the empty ones. */
+export const joined = (ctx: RenderContext, ids: string[], sep = "  ·  ") => ids.map(id => val(ctx, id)).filter(Boolean).join(sep);
+
+/** A price list: name at nameX, price at priceX, a dotted rule under each row. */
+export function priceList(ctx: RenderContext, id: string, o: { nameX: number; priceX: number; top: number; pitch: number; size: number; max: number; ink: Ink; priceInk: Ink; rule: Ink; font?: string; priceFont?: string }): SceneNode[] {
+  const out: (SceneNode | null)[] = [], lo = Math.min(o.nameX, o.priceX), w = Math.abs(o.nameX - o.priceX), dot = o.size * 0.09;
+  rows(ctx, id, o.max).forEach(([name = "", price = ""], i) => {
+    const y = o.top + i * o.pitch;
+    out.push(line(name, o.nameX, y, o.size, { font: o.font ?? "tajawal", weight: 700, fill: o.ink, align: "start", maxWidth: w * 0.74 }));
+    out.push(line(price, o.priceX, y, o.size * 1.08, { font: o.priceFont ?? o.font ?? "tajawal", weight: 800, fill: o.priceInk, align: "end", maxWidth: w * 0.22 }));
+    const d = Array.from({ length: Math.floor(w / (dot * 3)) }, (_, k) => `M${lo + k * dot * 3} ${y + o.size * 0.42} h${dot} v${dot * 0.6} h${-dot} Z`).join(" ");
+    if (d) out.push({ type: "path", d, fill: o.rule });
+  });
+  return out.filter((n): n is SceneNode => !!n);
+}
