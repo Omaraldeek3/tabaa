@@ -140,6 +140,18 @@ import certificates_sportsTrophy from "./certificates/sports-trophy.ts";
 import certificates_volunteerHands from "./certificates/volunteer-hands.ts";
 import certificates_enAchievement from "./certificates/en-achievement.ts";
 import certificates_enWorkshopAttendance from "./certificates/en-workshop-attendance.ts";
+import cities_akka from "./cities/akka.ts";
+import cities_bethlehem from "./cities/bethlehem.ts";
+import cities_gaza from "./cities/gaza.ts";
+import cities_haifa from "./cities/haifa.ts";
+import cities_hebron from "./cities/hebron.ts";
+import cities_jaffa from "./cities/jaffa.ts";
+import cities_jerusalemGate from "./cities/jerusalem-gate.ts";
+import cities_nablus from "./cities/nablus.ts";
+import cities_nazareth from "./cities/nazareth.ts";
+import cities_ramallah from "./cities/ramallah.ts";
+import cities_safad from "./cities/safad.ts";
+import cities_tiberias from "./cities/tiberias.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -283,6 +295,18 @@ export const templates: Template[] = [
   certificates_volunteerHands,
   certificates_enAchievement,
   certificates_enWorkshopAttendance,
+  cities_akka,
+  cities_bethlehem,
+  cities_gaza,
+  cities_haifa,
+  cities_hebron,
+  cities_jaffa,
+  cities_jerusalemGate,
+  cities_nablus,
+  cities_nazareth,
+  cities_ramallah,
+  cities_safad,
+  cities_tiberias,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
