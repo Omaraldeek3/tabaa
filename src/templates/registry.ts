@@ -160,6 +160,14 @@ import tickets_hallEntry from "./tickets/hall-entry.ts";
 import tickets_raffle from "./tickets/raffle.ts";
 import tickets_schoolTrip from "./tickets/school-trip.ts";
 import tickets_enConcertTicket from "./tickets/en-concert-ticket.ts";
+import stickers_favourNames from "./stickers/favour-names.ts";
+import stickers_fragile from "./stickers/fragile.ts";
+import stickers_kidsReward from "./stickers/kids-reward.ts";
+import stickers_madeInPalestine from "./stickers/made-in-palestine.ts";
+import stickers_saleBurst from "./stickers/sale-burst.ts";
+import stickers_shopSeal from "./stickers/shop-seal.ts";
+import stickers_thanksOrder from "./stickers/thanks-order.ts";
+import stickers_enPlasticFree from "./stickers/en-plastic-free.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -323,6 +331,14 @@ export const templates: Template[] = [
   tickets_raffle,
   tickets_schoolTrip,
   tickets_enConcertTicket,
+  stickers_favourNames,
+  stickers_fragile,
+  stickers_kidsReward,
+  stickers_madeInPalestine,
+  stickers_saleBurst,
+  stickers_shopSeal,
+  stickers_thanksOrder,
+  stickers_enPlasticFree,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
