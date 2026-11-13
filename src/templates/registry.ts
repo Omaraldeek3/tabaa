@@ -174,6 +174,12 @@ import tags_giftTag from "./tags/gift-tag.ts";
 import tags_priceTag from "./tags/price-tag.ts";
 import tags_weddingFavourTag from "./tags/wedding-favour-tag.ts";
 import tags_enGiftTag from "./tags/en-gift-tag.ts";
+import bookmarks_ayah from "./bookmarks/ayah.ts";
+import bookmarks_library from "./bookmarks/library.ts";
+import bookmarks_poem from "./bookmarks/poem.ts";
+import bookmarks_readingTracker from "./bookmarks/reading-tracker.ts";
+import bookmarks_tatreezStrip from "./bookmarks/tatreez-strip.ts";
+import bookmarks_enQuote from "./bookmarks/en-quote.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -351,6 +357,12 @@ export const templates: Template[] = [
   tags_priceTag,
   tags_weddingFavourTag,
   tags_enGiftTag,
+  bookmarks_ayah,
+  bookmarks_library,
+  bookmarks_poem,
+  bookmarks_readingTracker,
+  bookmarks_tatreezStrip,
+  bookmarks_enQuote,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
