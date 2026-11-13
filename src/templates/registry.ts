@@ -3,13 +3,25 @@
 import wedding_tatreezFrame from "./wedding/tatreez-frame.ts";
 import wedding_jerusalemArch from "./wedding/jerusalem-arch.ts";
 import wedding_cypressColumns from "./wedding/cypress-columns.ts";
+import wedding_doves from "./wedding/doves.ts";
+import wedding_hishamTree from "./wedding/hisham-tree.ts";
+import wedding_jaffaTiles from "./wedding/jaffa-tiles.ts";
+import wedding_jasmine from "./wedding/jasmine.ts";
 import wedding_keffiyehBand from "./wedding/keffiyeh-band.ts";
 import wedding_modernKufi from "./wedding/modern-kufi.ts";
+import wedding_namesRoundel from "./wedding/names-roundel.ts";
+import wedding_octagonDome from "./wedding/octagon-dome.ts";
+import wedding_oldDoor from "./wedding/old-door.ts";
 import wedding_oliveWreath from "./wedding/olive-wreath.ts";
 import wedding_orangeGrove from "./wedding/orange-grove.ts";
+import wedding_pomegranate from "./wedding/pomegranate.ts";
 import wedding_poppyField from "./wedding/poppy-field.ts";
+import wedding_qabbehPanel from "./wedding/qabbeh-panel.ts";
 import wedding_saveTheDate from "./wedding/save-the-date.ts";
 import wedding_starLattice from "./wedding/star-lattice.ts";
+import wedding_waxSeal from "./wedding/wax-seal.ts";
+import wedding_zaffehCandles from "./wedding/zaffeh-candles.ts";
+import wedding_enAmpersand from "./wedding/en-ampersand.ts";
 import wedding_enArch from "./wedding/en-arch.ts";
 import wedding_enOliveBranch from "./wedding/en-olive-branch.ts";
 import occasions_hennaNight from "./occasions/henna-night.ts";
@@ -66,13 +78,25 @@ export const templates: Template[] = [
   wedding_tatreezFrame,
   wedding_jerusalemArch,
   wedding_cypressColumns,
+  wedding_doves,
+  wedding_hishamTree,
+  wedding_jaffaTiles,
+  wedding_jasmine,
   wedding_keffiyehBand,
   wedding_modernKufi,
+  wedding_namesRoundel,
+  wedding_octagonDome,
+  wedding_oldDoor,
   wedding_oliveWreath,
   wedding_orangeGrove,
+  wedding_pomegranate,
   wedding_poppyField,
+  wedding_qabbehPanel,
   wedding_saveTheDate,
   wedding_starLattice,
+  wedding_waxSeal,
+  wedding_zaffehCandles,
+  wedding_enAmpersand,
   wedding_enArch,
   wedding_enOliveBranch,
   occasions_hennaNight,

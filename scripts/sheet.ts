@@ -30,7 +30,7 @@ if (mode === "motifs") {
   svgs = [renderSvg(await resolveScene(s))];
 } else {
   const { templates, sampleValues } = await import("../src/templates/registry.ts");
-  for (const t of templates.filter(t => !filter || t.id.includes(filter))) {
+  for (const t of templates.filter(t => !filter || new RegExp(filter).test(t.id))) {
     const combos = variant === "all" ? t.palettes.flatMap(p => t.sizes.map(size => ({ p, size }))) : [{ p: t.palettes[Number(variant) || 0] ?? t.palettes[0], size: t.sizes[0] }];
     for (const { p, size } of combos) {
       const sc = t.render({ values: sampleValues(t), palette: p, font: t.fonts[0], size, safeMm: 5, bleedMm: 3 });
