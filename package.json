@@ -11,7 +11,8 @@
     "test:e2e": "playwright test",
     "thumbs": "node --experimental-strip-types scripts/thumbs.ts",
     "predev": "npm run thumbs",
-    "prebuild": "npm run thumbs"
+    "prebuild": "npm run thumbs",
+    "start": "node scripts/serve.mjs"
   },
   "dependencies": {
     "bidi-js": "1.1.0",
