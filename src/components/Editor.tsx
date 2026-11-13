@@ -7,6 +7,7 @@ import { asset } from "../lib/paths";
 import { renderSvg } from "../lib/render-svg";
 import type { Scene } from "../lib/scene";
 import { getTemplate, sampleValues, templates } from "../templates/registry";
+import similarData from "../templates/similar.json";
 import { type Field, type Template, type Values, categories } from "../templates/types";
 import { useLang } from "./Lang";
 import { TemplateCard } from "./Sheet";
@@ -129,7 +130,8 @@ export function Editor({ id }: { id: string }) {
 
   const patch = (p: Partial<Saved>) => setState(s => (s ? { ...s, ...p } : s));
   const category = categories.find(c => c.id === template.category)!;
-  const more = templates.filter(x => x.category === template.category && x.id !== template.id).slice(0, 4);
+  const similar = ((similarData.near as Record<string, string[]>)[template.id] ?? []).slice(0, 6).map((id: string) => getTemplate(id)).filter((x): x is Template => !!x);
+  const more = templates.filter(x => x.category === template.category && x.id !== template.id && !similar.includes(x)).slice(0, 4);
   const round = template.shape === "round";
 
   return (
@@ -157,6 +159,19 @@ export function Editor({ id }: { id: string }) {
           <section className="panel">
             <h1 className="panel-title">{pick(template.title)}</h1>
             <p className="panel-note">{pick(template.note)}</p>
+
+            {similar.length ? (
+              <div className="similar">
+                <h2>{t("edSimilar")}</h2>
+                <div className="similar-row">
+                  {similar.map(s => (
+                    <Link key={s.id} href={`/t/${s.id}/`} className="similar-item" title={pick(s.title)}>
+                      <img src={asset(`thumbs/${s.id}.svg`)} alt={pick(s.title)} loading="lazy" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             {state ? <>
               <div className="group">

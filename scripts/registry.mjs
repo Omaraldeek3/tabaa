@@ -5,7 +5,8 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = path.join(import.meta.dirname, "..", "src", "templates");
-const order = ["wedding", "occasions", "posters", "cards", "menus", "labels", "greetings", "certificates"];
+const order = ["wedding", "occasions", "posters", "cards", "menus", "labels", "greetings", "certificates",
+  "cities", "tickets", "stickers", "tags", "bookmarks", "calendars", "programmes", "stationery"];
 /** Shown first in their section. */
 const lead = ["tatreez-frame", "jerusalem-arch", "henna-night", "olive-harvest", "kufi-monogram", "falafel-shop", "olive-oil", "eid-crescent", "tatreez-honor"];
 

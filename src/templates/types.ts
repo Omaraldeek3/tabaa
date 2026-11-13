@@ -3,7 +3,8 @@ import type { L10n } from "../lib/fonts.ts";
 import type { Scene } from "../lib/scene.ts";
 
 export type { L10n };
-export type Category = "wedding" | "occasions" | "posters" | "cards" | "menus" | "labels" | "greetings" | "certificates";
+export type Category = "wedding" | "occasions" | "posters" | "cards" | "menus" | "labels" | "greetings" | "certificates"
+  | "cities" | "tickets" | "stickers" | "tags" | "bookmarks" | "calendars" | "programmes" | "stationery";
 
 /** A named set of colours a template can be printed in. */
 export type Palette = { id: string; name: L10n; paper: Ink; ink: Ink; accent: Ink; accent2: Ink; soft: Ink };
@@ -46,4 +47,12 @@ export const categories: { id: Category; name: L10n }[] = [
   { id: "labels", name: { ar: "ملصقات منتجات", en: "Product labels" } },
   { id: "greetings", name: { ar: "تهاني", en: "Greetings" } },
   { id: "certificates", name: { ar: "شهادات", en: "Certificates" } },
+  { id: "cities", name: { ar: "مدن فلسطين", en: "Palestinian cities" } },
+  { id: "tickets", name: { ar: "تذاكر وقسائم", en: "Tickets and vouchers" } },
+  { id: "stickers", name: { ar: "ستيكرات", en: "Stickers" } },
+  { id: "tags", name: { ar: "بطاقات هدايا", en: "Gift tags" } },
+  { id: "bookmarks", name: { ar: "فواصل كتب", en: "Bookmarks" } },
+  { id: "calendars", name: { ar: "تقاويم وجداول", en: "Calendars and planners" } },
+  { id: "programmes", name: { ar: "برامج وبطاقات طاولات", en: "Programmes and table cards" } },
+  { id: "stationery", name: { ar: "أوراق رسمية", en: "Stationery" } },
 ];

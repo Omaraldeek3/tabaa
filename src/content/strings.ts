@@ -79,6 +79,7 @@ const s = {
   edSaved: { ar: "تعديلاتك محفوظة على هذا الجهاز.", en: "Your edits are saved on this device." },
   edBack: { ar: "كل القوالب", en: "All templates" },
   edMore: { ar: "قوالب من القسم نفسه", en: "More from this section" },
+  edSimilar: { ar: "قوالب مشابهة، قبل أن تبدأ", en: "Similar templates, before you start" },
   notFound: { ar: "هذا القالب غير موجود.", en: "This template does not exist." },
 
   guideTitle: { ar: "دليل الطباعة", en: "Print guide" },

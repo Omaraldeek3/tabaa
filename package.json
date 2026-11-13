@@ -13,7 +13,8 @@
     "predev": "npm run thumbs",
     "prebuild": "npm run thumbs",
     "start": "node scripts/serve.mjs",
-    "registry": "node scripts/registry.mjs"
+    "registry": "node scripts/registry.mjs",
+    "similar": "node --experimental-strip-types scripts/similar.ts"
   },
   "dependencies": {
     "bidi-js": "1.1.0",
@@ -24,7 +25,9 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@huggingface/transformers": "^4.3.1",
     "@playwright/test": "1.63.0",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
