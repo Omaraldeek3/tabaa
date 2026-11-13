@@ -25,13 +25,23 @@ import wedding_enAmpersand from "./wedding/en-ampersand.ts";
 import wedding_enArch from "./wedding/en-arch.ts";
 import wedding_enOliveBranch from "./wedding/en-olive-branch.ts";
 import occasions_hennaNight from "./occasions/henna-night.ts";
+import occasions_anniversary from "./occasions/anniversary.ts";
+import occasions_aqiqa from "./occasions/aqiqa.ts";
 import occasions_birthdayParty from "./occasions/birthday-party.ts";
 import occasions_condolenceThanks from "./occasions/condolence-thanks.ts";
 import occasions_engagementRings from "./occasions/engagement-rings.ts";
+import occasions_farewell from "./occasions/farewell.ts";
 import occasions_graduation from "./occasions/graduation.ts";
 import occasions_hajjMabrour from "./occasions/hajj-mabrour.ts";
+import occasions_khatma from "./occasions/khatma.ts";
+import occasions_naaweh from "./occasions/naaweh.ts";
 import occasions_newHome from "./occasions/new-home.ts";
 import occasions_newborn from "./occasions/newborn.ts";
+import occasions_retirement from "./occasions/retirement.ts";
+import occasions_snouneh from "./occasions/snouneh.ts";
+import occasions_tuhur from "./occasions/tuhur.ts";
+import occasions_welcomeHome from "./occasions/welcome-home.ts";
+import occasions_enBabyShower from "./occasions/en-baby-shower.ts";
 import posters_oliveHarvest from "./posters/olive-harvest.ts";
 import posters_bookFair from "./posters/book-fair.ts";
 import posters_footballCup from "./posters/football-cup.ts";
@@ -100,13 +110,23 @@ export const templates: Template[] = [
   wedding_enArch,
   wedding_enOliveBranch,
   occasions_hennaNight,
+  occasions_anniversary,
+  occasions_aqiqa,
   occasions_birthdayParty,
   occasions_condolenceThanks,
   occasions_engagementRings,
+  occasions_farewell,
   occasions_graduation,
   occasions_hajjMabrour,
+  occasions_khatma,
+  occasions_naaweh,
   occasions_newHome,
   occasions_newborn,
+  occasions_retirement,
+  occasions_snouneh,
+  occasions_tuhur,
+  occasions_welcomeHome,
+  occasions_enBabyShower,
   posters_oliveHarvest,
   posters_bookFair,
   posters_footballCup,
