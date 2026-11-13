@@ -7,3 +7,4 @@ export * from "./life.ts";
 export * from "./arts.ts";
 export * from "./food.ts";
 export * from "./pantry.ts";
+export * from "./seasons.ts";

@@ -117,11 +117,19 @@ import labels_zaatar from "./labels/zaatar.ts";
 import labels_enCoffeeBag from "./labels/en-coffee-bag.ts";
 import labels_enHandmade from "./labels/en-handmade.ts";
 import greetings_eidCrescent from "./greetings/eid-crescent.ts";
+import greetings_adhaKaaba from "./greetings/adha-kaaba.ts";
+import greetings_christmasBethlehem from "./greetings/christmas-bethlehem.ts";
+import greetings_easterFire from "./greetings/easter-fire.ts";
+import greetings_getWell from "./greetings/get-well.ts";
 import greetings_mabrouk from "./greetings/mabrouk.ts";
+import greetings_mothersDay from "./greetings/mothers-day.ts";
+import greetings_newYear from "./greetings/new-year.ts";
 import greetings_ramadanLantern from "./greetings/ramadan-lantern.ts";
 import greetings_seasonsWreath from "./greetings/seasons-wreath.ts";
+import greetings_teachersDay from "./greetings/teachers-day.ts";
 import greetings_thankYou from "./greetings/thank-you.ts";
 import greetings_enEid from "./greetings/en-eid.ts";
+import greetings_enThinkingOfYou from "./greetings/en-thinking-of-you.ts";
 import certificates_tatreezHonor from "./certificates/tatreez-honor.ts";
 import certificates_courseArch from "./certificates/course-arch.ts";
 import certificates_oliveModern from "./certificates/olive-modern.ts";
@@ -246,11 +254,19 @@ export const templates: Template[] = [
   labels_enCoffeeBag,
   labels_enHandmade,
   greetings_eidCrescent,
+  greetings_adhaKaaba,
+  greetings_christmasBethlehem,
+  greetings_easterFire,
+  greetings_getWell,
   greetings_mabrouk,
+  greetings_mothersDay,
+  greetings_newYear,
   greetings_ramadanLantern,
   greetings_seasonsWreath,
+  greetings_teachersDay,
   greetings_thankYou,
   greetings_enEid,
+  greetings_enThinkingOfYou,
   certificates_tatreezHonor,
   certificates_courseArch,
   certificates_oliveModern,
