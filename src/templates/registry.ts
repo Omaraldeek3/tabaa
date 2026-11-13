@@ -152,6 +152,14 @@ import cities_nazareth from "./cities/nazareth.ts";
 import cities_ramallah from "./cities/ramallah.ts";
 import cities_safad from "./cities/safad.ts";
 import cities_tiberias from "./cities/tiberias.ts";
+import tickets_cinema from "./tickets/cinema.ts";
+import tickets_discountCoupon from "./tickets/discount-coupon.ts";
+import tickets_eventStub from "./tickets/event-stub.ts";
+import tickets_giftVoucher from "./tickets/gift-voucher.ts";
+import tickets_hallEntry from "./tickets/hall-entry.ts";
+import tickets_raffle from "./tickets/raffle.ts";
+import tickets_schoolTrip from "./tickets/school-trip.ts";
+import tickets_enConcertTicket from "./tickets/en-concert-ticket.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -307,6 +315,14 @@ export const templates: Template[] = [
   cities_ramallah,
   cities_safad,
   cities_tiberias,
+  tickets_cinema,
+  tickets_discountCoupon,
+  tickets_eventStub,
+  tickets_giftVoucher,
+  tickets_hallEntry,
+  tickets_raffle,
+  tickets_schoolTrip,
+  tickets_enConcertTicket,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);

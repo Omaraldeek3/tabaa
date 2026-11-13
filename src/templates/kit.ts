@@ -83,9 +83,17 @@ Object.assign(sizes, {
   a5l: { id: "a5-landscape", label: { ar: "A5 عرضي (٢١٠×١٤٨ ملم)", en: "A5 landscape (210×148 mm)" }, widthMm: 210, heightMm: 148 },
   sq60: { id: "60x60", label: { ar: "مربع ٦٠×٦٠ ملم", en: "Square 60×60 mm" }, widthMm: 60, heightMm: 60 },
   label10070: { id: "100x70", label: { ar: "ملصق ١٠٠×٧٠ ملم", en: "Label 100×70 mm" }, widthMm: 100, heightMm: 70 },
+  ticket: { id: "160x60", label: { ar: "تذكرة ١٦٠×٦٠ ملم", en: "Ticket 160×60 mm" }, widthMm: 160, heightMm: 60 },
+  ticketS: { id: "140x50", label: { ar: "تذكرة ١٤٠×٥٠ ملم", en: "Ticket 140×50 mm" }, widthMm: 140, heightMm: 50 },
+  dlL: { id: "dl-landscape", label: { ar: "DL عرضي (٢١٠×٩٩ ملم)", en: "DL landscape (210×99 mm)" }, widthMm: 210, heightMm: 99 },
+  bookmark: { id: "50x150", label: { ar: "فاصل ٥٠×١٥٠ ملم", en: "Bookmark 50×150 mm" }, widthMm: 50, heightMm: 150 },
+  bookmarkW: { id: "60x180", label: { ar: "فاصل ٦٠×١٨٠ ملم", en: "Bookmark 60×180 mm" }, widthMm: 60, heightMm: 180 },
+  tag: { id: "55x90", label: { ar: "بطاقة ٥٥×٩٠ ملم", en: "Tag 55×90 mm" }, widthMm: 55, heightMm: 90 },
+  tagS: { id: "45x75", label: { ar: "بطاقة ٤٥×٧٥ ملم", en: "Tag 45×75 mm" }, widthMm: 45, heightMm: 75 },
+  round40: { id: "round-40", label: { ar: "دائري ٤٠ ملم", en: "Round 40 mm" }, widthMm: 40, heightMm: 40 },
 });
 /** Sizes added after the first set; same shape as `sizes`. */
-export const more = sizes as typeof sizes & Record<"cardV" | "a5l" | "sq60" | "label10070", Size>;
+export const more = sizes as typeof sizes & Record<"cardV" | "a5l" | "sq60" | "label10070" | "ticket" | "ticketS" | "dlL" | "bookmark" | "bookmarkW" | "tag" | "tagS" | "round40", Size>;
 
 /** The numbers every layout starts from: page, palette, bleed overdraw, and
  *  a scale against the size the design was drawn at. */
