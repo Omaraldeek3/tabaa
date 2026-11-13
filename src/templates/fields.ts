@@ -33,3 +33,7 @@ export function cardAr(s: { name: string; role: string; phone: string; email?: s
     ...extra,
   ];
 }
+
+/** A priced list: item and price columns. */
+export const priced = (id: string, ar: string, en: string, sample: string[][], maxRows: number): ListField =>
+  lf(id, ar, en, [["الصنف", "Item"], ["السعر", "Price"]], sample, maxRows);

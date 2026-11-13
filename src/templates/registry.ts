@@ -88,9 +88,17 @@ import cards_enDevTerminal from "./cards/en-dev-terminal.ts";
 import cards_enKeffiyeh from "./cards/en-keffiyeh.ts";
 import menus_falafelShop from "./menus/falafel-shop.ts";
 import menus_coffeeHouse from "./menus/coffee-house.ts";
+import menus_dishOfTheDay from "./menus/dish-of-the-day.ts";
+import menus_fulHummus from "./menus/ful-hummus.ts";
+import menus_gazaFish from "./menus/gaza-fish.ts";
 import menus_grillHouse from "./menus/grill-house.ts";
 import menus_homeKitchen from "./menus/home-kitchen.ts";
+import menus_iceCreamParlour from "./menus/ice-cream-parlour.ts";
+import menus_juiceBar from "./menus/juice-bar.ts";
+import menus_manaqeeshBakery from "./menus/manaqeesh-bakery.ts";
+import menus_shawarmaStand from "./menus/shawarma-stand.ts";
 import menus_sweetsShop from "./menus/sweets-shop.ts";
+import menus_enBrunch from "./menus/en-brunch.ts";
 import menus_enCafe from "./menus/en-cafe.ts";
 import labels_oliveOil from "./labels/olive-oil.ts";
 import labels_datesBox from "./labels/dates-box.ts";
@@ -199,9 +207,17 @@ export const templates: Template[] = [
   cards_enKeffiyeh,
   menus_falafelShop,
   menus_coffeeHouse,
+  menus_dishOfTheDay,
+  menus_fulHummus,
+  menus_gazaFish,
   menus_grillHouse,
   menus_homeKitchen,
+  menus_iceCreamParlour,
+  menus_juiceBar,
+  menus_manaqeeshBakery,
+  menus_shawarmaStand,
   menus_sweetsShop,
+  menus_enBrunch,
   menus_enCafe,
   labels_oliveOil,
   labels_datesBox,

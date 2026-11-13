@@ -5,3 +5,4 @@ export * from "./skyline.ts";
 export * from "./objects.ts";
 export * from "./life.ts";
 export * from "./arts.ts";
+export * from "./food.ts";
