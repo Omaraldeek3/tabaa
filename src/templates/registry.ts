@@ -43,15 +43,29 @@ import occasions_tuhur from "./occasions/tuhur.ts";
 import occasions_welcomeHome from "./occasions/welcome-home.ts";
 import occasions_enBabyShower from "./occasions/en-baby-shower.ts";
 import posters_oliveHarvest from "./posters/olive-harvest.ts";
+import posters_bloodDonation from "./posters/blood-donation.ts";
 import posters_bookFair from "./posters/book-fair.ts";
+import posters_cleanupCampaign from "./posters/cleanup-campaign.ts";
+import posters_dabkeFestival from "./posters/dabke-festival.ts";
 import posters_footballCup from "./posters/football-cup.ts";
+import posters_forRent from "./posters/for-rent.ts";
 import posters_grandOpening from "./posters/grand-opening.ts";
 import posters_heritageNight from "./posters/heritage-night.ts";
+import posters_iftarCharity from "./posters/iftar-charity.ts";
 import posters_landDay from "./posters/land-day.ts";
+import posters_marathon from "./posters/marathon.ts";
+import posters_nowHiring from "./posters/now-hiring.ts";
 import posters_orangeSeason from "./posters/orange-season.ts";
+import posters_oudEvening from "./posters/oud-evening.ts";
+import posters_photoExhibition from "./posters/photo-exhibition.ts";
+import posters_poetryNight from "./posters/poetry-night.ts";
+import posters_privateLessons from "./posters/private-lessons.ts";
 import posters_shopSale from "./posters/shop-sale.ts";
+import posters_symposium from "./posters/symposium.ts";
 import posters_tatreezWorkshop from "./posters/tatreez-workshop.ts";
 import posters_enFilmNight from "./posters/en-film-night.ts";
+import posters_enSwissConcert from "./posters/en-swiss-concert.ts";
+import posters_enTechMeetup from "./posters/en-tech-meetup.ts";
 import cards_kufiMonogram from "./cards/kufi-monogram.ts";
 import cards_archTall from "./cards/arch-tall.ts";
 import cards_craftStamp from "./cards/craft-stamp.ts";
@@ -128,15 +142,29 @@ export const templates: Template[] = [
   occasions_welcomeHome,
   occasions_enBabyShower,
   posters_oliveHarvest,
+  posters_bloodDonation,
   posters_bookFair,
+  posters_cleanupCampaign,
+  posters_dabkeFestival,
   posters_footballCup,
+  posters_forRent,
   posters_grandOpening,
   posters_heritageNight,
+  posters_iftarCharity,
   posters_landDay,
+  posters_marathon,
+  posters_nowHiring,
   posters_orangeSeason,
+  posters_oudEvening,
+  posters_photoExhibition,
+  posters_poetryNight,
+  posters_privateLessons,
   posters_shopSale,
+  posters_symposium,
   posters_tatreezWorkshop,
   posters_enFilmNight,
+  posters_enSwissConcert,
+  posters_enTechMeetup,
   cards_kufiMonogram,
   cards_archTall,
   cards_craftStamp,
