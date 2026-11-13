@@ -37,3 +37,17 @@ export function cardAr(s: { name: string; role: string; phone: string; email?: s
 /** A priced list: item and price columns. */
 export const priced = (id: string, ar: string, en: string, sample: string[][], maxRows: number): ListField =>
   lf(id, ar, en, [["الصنف", "Item"], ["السعر", "Price"]], sample, maxRows);
+
+/** The fields an Arabic certificate needs. */
+export function certAr(s: { org: string; title: string; lead: string; name: string; reason: string; date: string; sign1: string; sign2: string }): Field[] {
+  return [
+    tf("org", "الجهة", "Organisation", s.org),
+    tf("title", "العنوان", "Title", s.title, 26),
+    tf("lead", "تمهيد", "Lead-in", s.lead),
+    tf("name", "الاسم", "Recipient", s.name, 36),
+    ml("reason", "النص", "Text", s.reason, 3),
+    tf("date", "التاريخ", "Date", s.date),
+    tf("sign1", "التوقيع الأول", "First signature", s.sign1),
+    tf("sign2", "التوقيع الثاني", "Second signature", s.sign2),
+  ];
+}

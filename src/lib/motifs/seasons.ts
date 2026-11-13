@@ -88,3 +88,35 @@ export function firework(r: number, ink: Ink, rays = 14): GroupNode {
   }
   return g({}, dots, circle(0, 0, r * 0.08, { fill: ink }));
 }
+
+/** A trophy cup with handles on a stepped base, origin at the foot, `h` tall. */
+export function trophy(h: number, metal: Ink, base: Ink): GroupNode {
+  return g({ scale: h },
+    rect(-0.26, -0.1, 0.52, 0.1, { fill: base }), rect(-0.18, -0.18, 0.36, 0.08, { fill: base }),
+    rect(-0.04, -0.4, 0.08, 0.22, { fill: metal }),
+    path("M-0.32 -1 L0.32 -1 C0.32 -0.6 0.16 -0.42 0 -0.42 C-0.16 -0.42 -0.32 -0.6 -0.32 -1 Z", { fill: metal }),
+    path("M-0.31 -0.92 C-0.48 -0.92 -0.5 -0.7 -0.24 -0.6 M0.31 -0.92 C0.48 -0.92 0.5 -0.7 0.24 -0.6", { fill: null, stroke: metal, strokeWidth: 0.04 }),
+    path("M0 -0.88 L0.03 -0.8 L0.11 -0.8 L0.05 -0.75 L0.07 -0.67 L0 -0.72 L-0.07 -0.67 L-0.05 -0.75 L-0.11 -0.8 L-0.03 -0.8 Z", { fill: base }));
+}
+
+/** A shield of honour (dir'), centred at its top middle, `w` wide. */
+export const shieldPath = (w: number) => `M${f(-w / 2)} 0 H${f(w / 2)} V${f(w * 0.55)} C${f(w / 2)} ${f(w * 0.95)} ${f(w * 0.15)} ${f(w * 1.1)} 0 ${f(w * 1.2)} C${f(-w * 0.15)} ${f(w * 1.1)} ${f(-w / 2)} ${f(w * 0.95)} ${f(-w / 2)} ${f(w * 0.55)} Z`;
+
+/** A rosette medal with two ribbon tails, centred on the disc, `r` its radius. */
+export function rosette(r: number, disc: Ink, ribbon: Ink, ring: Ink): GroupNode {
+  const petals = Array.from({ length: 16 }, (_, i) => { const a = (i / 16) * Math.PI * 2; return circle(Math.cos(a) * r * 0.9, Math.sin(a) * r * 0.9, r * 0.28, { fill: ribbon }); });
+  return g({},
+    path(`M${f(-r * 0.5)} ${f(r * 0.5)} L${f(-r * 0.75)} ${f(r * 2)} L${f(-r * 0.45)} ${f(r * 1.8)} L${f(-r * 0.2)} ${f(r * 2.05)} L0 ${f(r * 0.6)} Z M${f(r * 0.5)} ${f(r * 0.5)} L${f(r * 0.75)} ${f(r * 2)} L${f(r * 0.45)} ${f(r * 1.8)} L${f(r * 0.2)} ${f(r * 2.05)} L0 ${f(r * 0.6)} Z`, { fill: ribbon }),
+    petals, circle(0, 0, r * 0.85, { fill: disc }), circle(0, 0, r * 0.68, { fill: null, stroke: ring, strokeWidth: r * 0.05 }));
+}
+
+/** Raised open hands side by side, standing on y = 0, `w` wide. */
+export function raisedHands(w: number, n: number, inks: Ink[]): GroupNode {
+  const step = w / n;
+  return g({}, Array.from({ length: n }, (_, i) => {
+    const x = step * (i + 0.5), hh = step * (1.3 + ((i * 3) % 4) * 0.12), pw = step * 0.5, c = inks[i % inks.length];
+    const fingers = [-0.36, -0.12, 0.12, 0.36].map((k, j) => rect(x + k * pw - pw * 0.09, -hh - [0.2, 0.32, 0.3, 0.18][j] * pw, pw * 0.18, pw * 0.6, { fill: c, r: pw * 0.09 }));
+    return g({}, rect(x - pw * 0.22, -hh * 0.55, pw * 0.44, hh * 0.55, { fill: c }), rect(x - pw / 2, -hh, pw, hh * 0.5, { fill: c, r: pw * 0.18 }), fingers,
+      g({ x: x - pw * 0.48, y: -hh * 0.7, rotate: -40 }, rect(-pw * 0.09, -pw * 0.4, pw * 0.18, pw * 0.45, { fill: c, r: pw * 0.09 })));
+  }));
+}

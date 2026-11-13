@@ -131,9 +131,15 @@ import greetings_thankYou from "./greetings/thank-you.ts";
 import greetings_enEid from "./greetings/en-eid.ts";
 import greetings_enThinkingOfYou from "./greetings/en-thinking-of-you.ts";
 import certificates_tatreezHonor from "./certificates/tatreez-honor.ts";
+import certificates_appreciationShield from "./certificates/appreciation-shield.ts";
 import certificates_courseArch from "./certificates/course-arch.ts";
+import certificates_employeeMonth from "./certificates/employee-month.ts";
+import certificates_kindergarten from "./certificates/kindergarten.ts";
 import certificates_oliveModern from "./certificates/olive-modern.ts";
+import certificates_sportsTrophy from "./certificates/sports-trophy.ts";
+import certificates_volunteerHands from "./certificates/volunteer-hands.ts";
 import certificates_enAchievement from "./certificates/en-achievement.ts";
+import certificates_enWorkshopAttendance from "./certificates/en-workshop-attendance.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -268,9 +274,15 @@ export const templates: Template[] = [
   greetings_enEid,
   greetings_enThinkingOfYou,
   certificates_tatreezHonor,
+  certificates_appreciationShield,
   certificates_courseArch,
+  certificates_employeeMonth,
+  certificates_kindergarten,
   certificates_oliveModern,
+  certificates_sportsTrophy,
+  certificates_volunteerHands,
   certificates_enAchievement,
+  certificates_enWorkshopAttendance,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
