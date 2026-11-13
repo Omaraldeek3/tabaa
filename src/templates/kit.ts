@@ -98,12 +98,12 @@ export function dims(ctx: RenderContext, baseW: number, baseH: number) {
 export const joined = (ctx: RenderContext, ids: string[], sep = "  ·  ") => ids.map(id => val(ctx, id)).filter(Boolean).join(sep);
 
 /** A price list: name at nameX, price at priceX, a dotted rule under each row. */
-export function priceList(ctx: RenderContext, id: string, o: { nameX: number; priceX: number; top: number; pitch: number; size: number; max: number; ink: Ink; priceInk: Ink; rule: Ink; font?: string; priceFont?: string }): SceneNode[] {
+export function priceList(ctx: RenderContext, id: string, o: { nameX: number; priceX: number; top: number; pitch: number; size: number; max: number; ink: Ink; priceInk: Ink; rule: Ink; font?: string; priceFont?: string; dir?: "rtl" | "ltr" }): SceneNode[] {
   const out: (SceneNode | null)[] = [], lo = Math.min(o.nameX, o.priceX), w = Math.abs(o.nameX - o.priceX), dot = o.size * 0.09;
   rows(ctx, id, o.max).forEach(([name = "", price = ""], i) => {
     const y = o.top + i * o.pitch;
-    out.push(line(name, o.nameX, y, o.size, { font: o.font ?? "tajawal", weight: 700, fill: o.ink, align: "start", maxWidth: w * 0.74 }));
-    out.push(line(price, o.priceX, y, o.size * 1.08, { font: o.priceFont ?? o.font ?? "tajawal", weight: 800, fill: o.priceInk, align: "end", maxWidth: w * 0.22 }));
+    out.push(line(name, o.nameX, y, o.size, { font: o.font ?? "tajawal", weight: 700, fill: o.ink, align: "start", dir: o.dir, maxWidth: w * 0.74 }));
+    out.push(line(price, o.priceX, y, o.size * 1.08, { font: o.priceFont ?? o.font ?? "tajawal", weight: 800, fill: o.priceInk, align: "end", dir: o.dir, maxWidth: w * 0.22 }));
     const d = Array.from({ length: Math.floor(w / (dot * 3)) }, (_, k) => `M${lo + k * dot * 3} ${y + o.size * 0.42} h${dot} v${dot * 0.6} h${-dot} Z`).join(" ");
     if (d) out.push({ type: "path", d, fill: o.rule });
   });

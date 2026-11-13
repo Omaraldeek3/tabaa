@@ -39,7 +39,17 @@ import cards_tatreezEdge from "./cards/tatreez-edge.ts";
 import cards_enBlock from "./cards/en-block.ts";
 import cards_enKeffiyeh from "./cards/en-keffiyeh.ts";
 import menus_falafelShop from "./menus/falafel-shop.ts";
+import menus_coffeeHouse from "./menus/coffee-house.ts";
+import menus_grillHouse from "./menus/grill-house.ts";
+import menus_homeKitchen from "./menus/home-kitchen.ts";
+import menus_sweetsShop from "./menus/sweets-shop.ts";
+import menus_enCafe from "./menus/en-cafe.ts";
 import labels_oliveOil from "./labels/olive-oil.ts";
+import labels_datesBox from "./labels/dates-box.ts";
+import labels_honey from "./labels/honey.ts";
+import labels_nabulsiSoap from "./labels/nabulsi-soap.ts";
+import labels_zaatar from "./labels/zaatar.ts";
+import labels_enHandmade from "./labels/en-handmade.ts";
 import greetings_eidCrescent from "./greetings/eid-crescent.ts";
 import greetings_ramadanLantern from "./greetings/ramadan-lantern.ts";
 import certificates_tatreezHonor from "./certificates/tatreez-honor.ts";
@@ -85,7 +95,17 @@ export const templates: Template[] = [
   cards_enBlock,
   cards_enKeffiyeh,
   menus_falafelShop,
+  menus_coffeeHouse,
+  menus_grillHouse,
+  menus_homeKitchen,
+  menus_sweetsShop,
+  menus_enCafe,
   labels_oliveOil,
+  labels_datesBox,
+  labels_honey,
+  labels_nabulsiSoap,
+  labels_zaatar,
+  labels_enHandmade,
   greetings_eidCrescent,
   greetings_ramadanLantern,
   certificates_tatreezHonor,
