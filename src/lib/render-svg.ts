@@ -2,7 +2,7 @@
 import type { Ink } from "./color.ts";
 import { getFont } from "./fonts.ts";
 import type { Paint, Scene, SceneNode } from "./scene.ts";
-import { hasArabic } from "./shaping.ts";
+import { hasArabic } from "./text.ts";
 
 export type PrintOptions = { bleedMm: number; cropMarks: boolean };
 export type SvgOptions = Partial<PrintOptions> & { showSafe?: boolean; safeMm?: number; showTrim?: boolean; idPrefix?: string };

@@ -5,12 +5,13 @@ import bidiFactory from "bidi-js";
 import { getFont, loadFontFile, pickFile } from "./fonts.ts";
 import { type Bounds, type Segment, parsePath, segmentsBounds, serialize, transformSegments } from "./pathdata.ts";
 import type { TextNode } from "./scene.ts";
+import { hasArabic } from "./text.ts";
 
 type Dir = "rtl" | "ltr";
 type Run = { text: string; direction: Dir };
 const bidi = bidiFactory();
 
-export const hasArabic = (s: string) => /[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]/.test(s);
+export { hasArabic };
 
 /** Reorder runs, never codepoints inside a run, before shaping. */
 export function visualRuns(text: string, direction: Dir = "rtl"): Run[] {

@@ -8,7 +8,10 @@
     "build": "next build",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "thumbs": "node --experimental-strip-types scripts/thumbs.ts",
+    "predev": "npm run thumbs",
+    "prebuild": "npm run thumbs"
   },
   "dependencies": {
     "bidi-js": "1.1.0",

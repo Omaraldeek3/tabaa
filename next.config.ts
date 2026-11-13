@@ -5,6 +5,8 @@ const config: NextConfig = {
   trailingSlash: true,
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   images: { unoptimized: true },
+  // HarfBuzz's loader imports Node's `module` behind a Node-only check.
+  turbopack: { resolveAlias: { module: { browser: "./src/lib/node-stub.ts" } } },
 };
 
 export default config;
