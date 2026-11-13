@@ -46,7 +46,7 @@ const heritageNight: Template = {
       g({ x: -b, y: skyY + skyH - 0.5 }, tatreezBand("chain", W + 2 * b, 7 * s, [p.accent2, p.accent])),
       line([val(ctx, "date"), val(ctx, "time")].filter(Boolean).join("  ·  "), cx, H - 40 * v, 19 * s, { font: ctx.font, weight: 700, fill: inks.paper, maxWidth: max }),
       line(val(ctx, "place"), cx, H - 26 * v, 11 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: max }),
-      stack(linesOf(val(ctx, "details"), 3), cx, 262 * v, 9 * s, 12 * v, { font: "tajawal", fill: p.ink, maxWidth: max }),
+      stack(linesOf(val(ctx, "details"), 3), cx, 237 * v, 8.6 * s, 10.5 * v, { font: "tajawal", fill: p.ink, maxWidth: max }),
     );
   },
 };

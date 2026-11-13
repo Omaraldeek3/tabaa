@@ -21,9 +21,22 @@ import occasions_hajjMabrour from "./occasions/hajj-mabrour.ts";
 import occasions_newHome from "./occasions/new-home.ts";
 import occasions_newborn from "./occasions/newborn.ts";
 import posters_oliveHarvest from "./posters/olive-harvest.ts";
+import posters_bookFair from "./posters/book-fair.ts";
+import posters_footballCup from "./posters/football-cup.ts";
+import posters_grandOpening from "./posters/grand-opening.ts";
 import posters_heritageNight from "./posters/heritage-night.ts";
+import posters_landDay from "./posters/land-day.ts";
+import posters_orangeSeason from "./posters/orange-season.ts";
 import posters_shopSale from "./posters/shop-sale.ts";
+import posters_tatreezWorkshop from "./posters/tatreez-workshop.ts";
+import posters_enFilmNight from "./posters/en-film-night.ts";
 import cards_kufiMonogram from "./cards/kufi-monogram.ts";
+import cards_archTall from "./cards/arch-tall.ts";
+import cards_craftStamp from "./cards/craft-stamp.ts";
+import cards_darkGold from "./cards/dark-gold.ts";
+import cards_oliveMinimal from "./cards/olive-minimal.ts";
+import cards_tatreezEdge from "./cards/tatreez-edge.ts";
+import cards_enBlock from "./cards/en-block.ts";
 import cards_enKeffiyeh from "./cards/en-keffiyeh.ts";
 import menus_falafelShop from "./menus/falafel-shop.ts";
 import labels_oliveOil from "./labels/olive-oil.ts";
@@ -54,9 +67,22 @@ export const templates: Template[] = [
   occasions_newHome,
   occasions_newborn,
   posters_oliveHarvest,
+  posters_bookFair,
+  posters_footballCup,
+  posters_grandOpening,
   posters_heritageNight,
+  posters_landDay,
+  posters_orangeSeason,
   posters_shopSale,
+  posters_tatreezWorkshop,
+  posters_enFilmNight,
   cards_kufiMonogram,
+  cards_archTall,
+  cards_craftStamp,
+  cards_darkGold,
+  cards_oliveMinimal,
+  cards_tatreezEdge,
+  cards_enBlock,
   cards_enKeffiyeh,
   menus_falafelShop,
   labels_oliveOil,
