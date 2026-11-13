@@ -168,6 +168,12 @@ import stickers_saleBurst from "./stickers/sale-burst.ts";
 import stickers_shopSeal from "./stickers/shop-seal.ts";
 import stickers_thanksOrder from "./stickers/thanks-order.ts";
 import stickers_enPlasticFree from "./stickers/en-plastic-free.ts";
+import tags_bottleTag from "./tags/bottle-tag.ts";
+import tags_eidiyya from "./tags/eidiyya.ts";
+import tags_giftTag from "./tags/gift-tag.ts";
+import tags_priceTag from "./tags/price-tag.ts";
+import tags_weddingFavourTag from "./tags/wedding-favour-tag.ts";
+import tags_enGiftTag from "./tags/en-gift-tag.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -339,6 +345,12 @@ export const templates: Template[] = [
   stickers_shopSeal,
   stickers_thanksOrder,
   stickers_enPlasticFree,
+  tags_bottleTag,
+  tags_eidiyya,
+  tags_giftTag,
+  tags_priceTag,
+  tags_weddingFavourTag,
+  tags_enGiftTag,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
