@@ -51,8 +51,15 @@ import labels_nabulsiSoap from "./labels/nabulsi-soap.ts";
 import labels_zaatar from "./labels/zaatar.ts";
 import labels_enHandmade from "./labels/en-handmade.ts";
 import greetings_eidCrescent from "./greetings/eid-crescent.ts";
+import greetings_mabrouk from "./greetings/mabrouk.ts";
 import greetings_ramadanLantern from "./greetings/ramadan-lantern.ts";
+import greetings_seasonsWreath from "./greetings/seasons-wreath.ts";
+import greetings_thankYou from "./greetings/thank-you.ts";
+import greetings_enEid from "./greetings/en-eid.ts";
 import certificates_tatreezHonor from "./certificates/tatreez-honor.ts";
+import certificates_courseArch from "./certificates/course-arch.ts";
+import certificates_oliveModern from "./certificates/olive-modern.ts";
+import certificates_enAchievement from "./certificates/en-achievement.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -107,8 +114,15 @@ export const templates: Template[] = [
   labels_zaatar,
   labels_enHandmade,
   greetings_eidCrescent,
+  greetings_mabrouk,
   greetings_ramadanLantern,
+  greetings_seasonsWreath,
+  greetings_thankYou,
+  greetings_enEid,
   certificates_tatreezHonor,
+  certificates_courseArch,
+  certificates_oliveModern,
+  certificates_enAchievement,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);

@@ -33,7 +33,7 @@ npm run test:e2e   # browser test against ./out (uses installed Edge)
 1. Create `src/templates/<category>/<name>.ts` exporting a `Template`
    (see `src/templates/types.ts`; `wedding/tatreez-frame.ts` is a good model).
    The id is `<category>-<name>`.
-2. Add it to the list in `src/templates/registry.ts`.
+2. Run `npm run registry`. It rewrites the list in `src/templates/registry.ts` from the files on disk.
 3. Run `npm test`. The registry test renders it in every size, palette and
    font, checks that text stays in the safe area even with long input, and
    that empty fields leave nothing behind.

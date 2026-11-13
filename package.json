@@ -12,7 +12,8 @@
     "thumbs": "node --experimental-strip-types scripts/thumbs.ts",
     "predev": "npm run thumbs",
     "prebuild": "npm run thumbs",
-    "start": "node scripts/serve.mjs"
+    "start": "node scripts/serve.mjs",
+    "registry": "node scripts/registry.mjs"
   },
   "dependencies": {
     "bidi-js": "1.1.0",
