@@ -68,11 +68,23 @@ import posters_enSwissConcert from "./posters/en-swiss-concert.ts";
 import posters_enTechMeetup from "./posters/en-tech-meetup.ts";
 import cards_kufiMonogram from "./cards/kufi-monogram.ts";
 import cards_archTall from "./cards/arch-tall.ts";
+import cards_architectBlueprint from "./cards/architect-blueprint.ts";
+import cards_barberStripes from "./cards/barber-stripes.ts";
+import cards_calligrapherNib from "./cards/calligrapher-nib.ts";
+import cards_carpentryGrain from "./cards/carpentry-grain.ts";
+import cards_clinicCross from "./cards/clinic-cross.ts";
 import cards_craftStamp from "./cards/craft-stamp.ts";
 import cards_darkGold from "./cards/dark-gold.ts";
+import cards_floristStem from "./cards/florist-stem.ts";
+import cards_lawyerScales from "./cards/lawyer-scales.ts";
+import cards_mechanicGear from "./cards/mechanic-gear.ts";
 import cards_oliveMinimal from "./cards/olive-minimal.ts";
+import cards_photographerAperture from "./cards/photographer-aperture.ts";
+import cards_tailorTape from "./cards/tailor-tape.ts";
 import cards_tatreezEdge from "./cards/tatreez-edge.ts";
+import cards_taxiChecker from "./cards/taxi-checker.ts";
 import cards_enBlock from "./cards/en-block.ts";
+import cards_enDevTerminal from "./cards/en-dev-terminal.ts";
 import cards_enKeffiyeh from "./cards/en-keffiyeh.ts";
 import menus_falafelShop from "./menus/falafel-shop.ts";
 import menus_coffeeHouse from "./menus/coffee-house.ts";
@@ -167,11 +179,23 @@ export const templates: Template[] = [
   posters_enTechMeetup,
   cards_kufiMonogram,
   cards_archTall,
+  cards_architectBlueprint,
+  cards_barberStripes,
+  cards_calligrapherNib,
+  cards_carpentryGrain,
+  cards_clinicCross,
   cards_craftStamp,
   cards_darkGold,
+  cards_floristStem,
+  cards_lawyerScales,
+  cards_mechanicGear,
   cards_oliveMinimal,
+  cards_photographerAperture,
+  cards_tailorTape,
   cards_tatreezEdge,
+  cards_taxiChecker,
   cards_enBlock,
+  cards_enDevTerminal,
   cards_enKeffiyeh,
   menus_falafelShop,
   menus_coffeeHouse,

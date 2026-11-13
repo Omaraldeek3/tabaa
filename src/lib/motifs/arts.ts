@@ -72,3 +72,34 @@ export function flag(h: number, pole: Ink, cloth: Ink, check?: Ink | null): Grou
   if (check) for (let i = 0; i < cells; i++) for (let j = 0; j < rows; j++) if ((i + j) % 2) sq.push(`M${f(i * cw / cells)} ${f(-h + j * ch / rows)} h${f(cw / cells)} v${f(ch / rows)} h${f(-cw / cells)} Z`);
   return g({}, rect(-h * 0.015, -h, h * 0.03, h, { fill: pole }), rect(0, -h, cw, ch, { fill: cloth }), check ? path(sq.join(" "), { fill: check }) : null);
 }
+
+/** A gear centred on the origin with `teeth` square teeth and a hole. */
+export function gearPath(r: number, teeth: number, depth = 0.16): string {
+  const out: string[] = [], n = teeth * 4;
+  for (let i = 0; i < n; i++) {
+    const a = (i * 2 * Math.PI) / n - Math.PI / 2, rr = i % 4 < 2 ? r : r * (1 - depth);
+    out.push(`${i ? "L" : "M"}${f(rr * Math.cos(a))} ${f(rr * Math.sin(a))}`);
+  }
+  const h = r * 0.3;
+  return out.join(" ") + ` Z M${f(h)} 0 A${f(h)} ${f(h)} 0 1 0 ${f(-h)} 0 A${f(h)} ${f(h)} 0 1 0 ${f(h)} 0 Z`;
+}
+
+/** A camera aperture: `n` blades round a hexagonal opening, centred on the origin. */
+export function aperture(r: number, ink: Ink, n = 6, open = 0.42): GroupNode {
+  const blades = Array.from({ length: n }, (_, i) => {
+    const a = (i * 2 * Math.PI) / n, b = ((i + 1) * 2 * Math.PI) / n, ro = r * open;
+    const p1 = [ro * Math.cos(a), ro * Math.sin(a)], p2 = [ro * Math.cos(b), ro * Math.sin(b)], p3 = [r * Math.cos(b + 0.6), r * Math.sin(b + 0.6)], p4 = [r * Math.cos(a + 0.9), r * Math.sin(a + 0.9)];
+    return path(`M${f(p1[0])} ${f(p1[1])} L${f(p2[0])} ${f(p2[1])} L${f(p3[0])} ${f(p3[1])} A${f(r)} ${f(r)} 0 0 0 ${f(p4[0])} ${f(p4[1])} Z`, { fill: ink, opacity: 0.55 + (i % 3) * 0.15 });
+  });
+  return g({}, circle(0, 0, r, { fill: null, stroke: ink, strokeWidth: r * 0.06 }), blades);
+}
+
+/** Scales of justice, origin at the foot, `h` tall. */
+export function scales(h: number, ink: Ink): GroupNode {
+  const pan = (x: number) => `M${f(x - 0.2)} -0.52 Q${f(x)} -0.36 ${f(x + 0.2)} -0.52 Z`;
+  return g({ scale: h },
+    rect(-0.22, -0.04, 0.44, 0.04, { fill: ink }), rect(-0.02, -0.92, 0.04, 0.9, { fill: ink }),
+    rect(-0.4, -0.86, 0.8, 0.03, { fill: ink }), circle(0, -0.95, 0.05, { fill: ink }),
+    path(`M-0.38 -0.84 L-0.56 -0.52 M-0.38 -0.84 L-0.2 -0.52 M0.38 -0.84 L0.2 -0.52 M0.38 -0.84 L0.56 -0.52`, { fill: null, stroke: ink, strokeWidth: 0.012 }),
+    path(pan(-0.38), { fill: ink }), path(pan(0.38), { fill: ink }));
+}

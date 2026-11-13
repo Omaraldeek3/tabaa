@@ -21,3 +21,15 @@ export function weddingAr(s: Partial<Record<"opening" | "invite" | "groom" | "br
     tf("families", "العائلتان", "Families", s.families ?? "آل الخطيب وآل النابلسي"),
   ];
 }
+
+/** The fields an Arabic business card needs. */
+export function cardAr(s: { name: string; role: string; phone: string; email?: string; address: string }, extra: ReturnType<typeof tf>[] = []): Field[] {
+  return [
+    tf("name", "الاسم", "Name", s.name, 32),
+    tf("role", "المهنة", "Role", s.role),
+    tf("phone", "الهاتف", "Phone", s.phone),
+    ...(s.email ? [tf("email", "البريد", "Email", s.email)] : []),
+    tf("address", "العنوان", "Address", s.address),
+    ...extra,
+  ];
+}
