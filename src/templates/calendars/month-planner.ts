@@ -1,4 +1,5 @@
-import { type SceneNode, rect, scene, text } from "../../lib/scene.ts";
+import { doubleFrame, guillocheNode, starTile } from "../../lib/motifs/index.ts";
+import { rect, scene, type SceneNode, text } from "../../lib/scene.ts";
 import { daysAr, monthCells, monthsAr, parseYear, toArabicDigits, toLatinDigits } from "../calendar-kit.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -33,11 +34,14 @@ const t: Template = {
     for (const [c, r, d] of cells) nodes.push(text(toArabicDigits(d), { font: ctx.font, weight: 700, size: 5 * s, x: W - gx - c * cw - 2 * s, y: top + r * ch + 6 * s, align: "start", fill: c === 6 ? p.accent : p.ink }));
     const lines = Array.from({ length: 14 }, (_, i) => rect(gx, top + 4 * s + i * 11 * s, side - 4 * s, 0.25 * s, { fill: p.soft }));
     return scene(W, H, p.paper,
+      guillocheNode(0, 0, W * 0.55, 26 * s, p.accent, { waves: 3, amp: 1.2 * s, period: 18 * s, width: 0.15 * s, opacity: 0.2 }),
+      starTile(0, H - 14 * s, W, 14 * s, 9 * s, 1.2 * s, p.accent, 0.07),
       line(`${monthsAr[month]} ${toArabicDigits(year)}`, W - gx, 26 * s, 14 * s, { font: ctx.font, weight: 700, fill: p.accent, align: "start", maxWidth: gw, safe: false }),
       nodes,
       rect(gx, top - 8 * s, side - 4 * s, 7 * s, { fill: p.accent2 }),
       line(val(ctx, "notes"), gx + (side - 4 * s) / 2, top - 3 * s, 3.4 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: side - 8 * s }),
       lines,
+      doubleFrame(5 * s, 5 * s, W - 10 * s, H - 10 * s, p.accent, p.paper, { gap: 1.8 * s, heavy: 0.5 * s, thin: 0.2 * s, corner: "bracket", r: 3 * s }),
     );
   },
 };

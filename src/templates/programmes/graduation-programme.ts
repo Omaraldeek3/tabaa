@@ -1,3 +1,4 @@
+import { burstLines, doubleFrame, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
@@ -31,12 +32,15 @@ const t: Template = {
       path(`M${-10 * s} ${4 * s} V${11 * s} C${-6 * s} ${15 * s} ${6 * s} ${15 * s} ${10 * s} ${11 * s} V${4 * s} Z`, { fill: p.accent2 }),
       path(`M0 0 L${14 * s} ${4 * s} V${12 * s}`, { fill: null, stroke: p.accent, strokeWidth: 0.6 * s }), rect(13 * s, 12 * s, 2 * s, 4 * s, { fill: p.accent }));
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 9 * s, 1.2 * s, p.accent, 0.06),
+      g({ x: cx, y: 24 * s, opacity: 0.25 }, burstLines(36, 14 * s, 26 * s, p.accent, 0.3 * s)),
       rect(-b, -b, W + 2 * b, 3 * s + b, { fill: p.accent }), rect(-b, H - 3 * s, W + 2 * b, 3 * s + b, { fill: p.accent }),
       cap,
       line(val(ctx, "school"), cx, 48 * s, 3.8 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: W - 14 * s }),
       line(val(ctx, "class"), cx, 60 * s, 9 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: W - 14 * s }),
       names.flatMap(([n = ""], i) => [line(n, i < half ? W * 0.74 : W * 0.26, top + (i % half) * pitch + 4 * s, 4.6 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: W * 0.42 })]),
       line(val(ctx, "date"), cx, H - 10 * s, 3.6 * s, { font: "amiri", fill: p.ink, maxWidth: W - 14 * s }),
+      doubleFrame(4 * s, 6 * s, W - 8 * s, H - 12 * s, p.accent, p.paper, { gap: 1.6 * s, heavy: 0.4 * s, thin: 0.15 * s, corner: "star", r: 2.4 * s }),
     );
   },
 };

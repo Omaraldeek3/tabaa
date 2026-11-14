@@ -1,4 +1,5 @@
-import { type SceneNode, circle, rect, scene, text } from "../../lib/scene.ts";
+import { beadRule, dotField, doubleFrame, starTile } from "../../lib/motifs/index.ts";
+import { circle, rect, scene, type SceneNode, text } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -35,9 +36,13 @@ const t: Template = {
       for (let d = 0; d < 31; d++) nodes.push(circle(gx + (d + 0.5) * cw, y + rh / 2, Math.min(cw, rh) * 0.32, { fill: null, stroke: p.accent, strokeWidth: 0.3 * s }));
     });
     return scene(W, H, p.paper,
+      dotField(W * 0.55, 0, W * 0.45, 44 * s, 4 * s, 0.5 * s, p.accent, { fade: "left", opacity: 0.3 }),
+      starTile(0, H - 14 * s, W, 14 * s, 9 * s, 1.2 * s, p.accent, 0.06),
       line(val(ctx, "title"), L, 28 * s, 13 * s, { ...ltr, font: ctx.font, weight: 700, fill: p.ink, maxWidth: W * 0.5 }),
       line(val(ctx, "month"), W - 14 * s, 28 * s, 6 * s, { align: "end", dir: "ltr", font: "inter", weight: 600, fill: p.accent, maxWidth: W * 0.3 }),
       nodes,
+      beadRule(L, W - 12 * s, 38 * s, p.accent, s, { bead: "dot", pitch: 3 }),
+      doubleFrame(5 * s, 5 * s, W - 10 * s, H - 10 * s, p.accent, p.paper, { gap: 1.8 * s, heavy: 0.5 * s, thin: 0.2 * s, corner: "bracket", r: 3 * s }),
     );
   },
 };

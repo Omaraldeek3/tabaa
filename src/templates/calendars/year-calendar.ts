@@ -1,4 +1,5 @@
-import { type SceneNode, rect, scene, text } from "../../lib/scene.ts";
+import { doubleFrame, flourishRule, rosetteLines, starTile } from "../../lib/motifs/index.ts";
+import { g, rect, scene, type SceneNode, text } from "../../lib/scene.ts";
 import { daysAr, monthCells, monthsAr, parseYear, toArabicDigits } from "../calendar-kit.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -35,11 +36,15 @@ const t: Template = {
       for (const [c, r, d] of monthCells(year, m)) nodes.push(text(toArabicDigits(d), { font: "tajawal", weight: c === 6 ? 800 : 500, size: 3.6 * s, x: x0 + mw - (c + 0.5) * cw, y: y0 + 20 * s + r * 8.4 * s, align: "center", fill: c === 6 ? p.accent : p.ink }));
     }
     return scene(W, H, p.paper,
+      starTile(0, 0, W, 60 * s, 12 * s, 1.6 * s, p.accent, 0.06),
+      g({ x: cx, y: 36 * s, opacity: 0.15 }, rosetteLines(28 * s, p.accent, { rings: 5, lobes: 16, width: 0.3 * s })),
       line(toArabicDigits(year), cx, 44 * s, 34 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W * 0.5, safe: false }),
       nodes,
       rect(-b, H - 30 * s, W + 2 * b, 30 * s + b, { fill: p.ink }),
       line(val(ctx, "name"), cx, H - 14 - 10 * s, 8 * s, { font: ctx.font, weight: 700, fill: p.paper, maxWidth: W - 40 * s }),
       line(val(ctx, "contact"), cx, H - 12 - 3 * s, 4.4 * s, { font: "tajawal", weight: 500, fill: p.paper, maxWidth: W - 40 * s }),
+      flourishRule(cx, 56 * s, W * 0.5, p.accent, s),
+      doubleFrame(7 * s, 7 * s, W - 14 * s, H - 14 * s - 30 * s, p.accent, p.paper, { gap: 2.4 * s, heavy: 0.6 * s, thin: 0.2 * s, corner: "bracket", r: 4 * s }),
     );
   },
 };

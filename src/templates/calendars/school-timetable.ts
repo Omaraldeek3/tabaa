@@ -1,4 +1,5 @@
-import { type SceneNode, rect, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, starTile } from "../../lib/motifs/index.ts";
+import { rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -44,9 +45,12 @@ const t: Template = {
       if (cell) nodes.push(line(cell, x + cw / 2, y + rh * 0.6, (j ? 4.6 : 5) * s, { font: j ? "tajawal" : ctx.font, weight: 700, fill: j ? p.ink : p.paper, maxWidth: cw - 4 * s }));
     }));
     return scene(W, H, p.paper,
+      dotField(0, 0, W, 44 * s, 4 * s, 0.5 * s, p.accent, { fade: "down", opacity: 0.25 }),
+      starTile(0, H - 14 * s, W, 14 * s, 9 * s, 1.2 * s, p.accent, 0.08),
       line(val(ctx, "title"), W - mx, 26 * s, 13 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: W * 0.5 }),
       line(val(ctx, "pupil"), mx, 26 * s, 6 * s, { font: "tajawal", weight: 700, fill: p.accent, align: "end", maxWidth: W * 0.4 }),
       nodes,
+      doubleFrame(5 * s, 5 * s, W - 10 * s, H - 10 * s, p.accent, p.paper, { gap: 1.8 * s, heavy: 0.5 * s, thin: 0.2 * s, corner: "star", r: 3 * s }),
     );
   },
 };

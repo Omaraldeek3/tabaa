@@ -1,4 +1,5 @@
-import { type SceneNode, circle, rect, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, hatch } from "../../lib/motifs/index.ts";
+import { circle, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -36,11 +37,14 @@ const t: Template = {
     });
     const shopLines = Array.from({ length: 16 }, (_, i) => [circle(mx + 2 * s, top + 8 * s + i * 13 * v, 1 * s, { fill: null, stroke: p.ink, strokeWidth: 0.3 * s }), rect(mx + 5 * s, top + 9 * s + i * 13 * v, side - 8 * s, 0.25 * s, { fill: p.soft })]);
     return scene(W, H, p.paper,
+      hatch(0, 0, W, 44 * v, 3 * s, p.accent, 0.15 * s, 0.08),
+      dotField(0, H - 16 * v, W, 16 * v, 4 * s, 0.5 * s, p.accent2, { fade: "up", opacity: 0.3 }),
       line(val(ctx, "title"), R, 26 * v, 11 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: W - 2 * mx }),
       line(val(ctx, "week"), R, 38 * v, 4 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: W * 0.6 }),
       nodes,
       line(val(ctx, "shop"), mx + side / 2, top - 3 * v, 4.4 * s, { font: ctx.font, weight: 700, fill: p.accent2, maxWidth: side - 4 * s }),
       shopLines,
+      doubleFrame(5 * s, 5 * s, W - 10 * s, H - 10 * s, p.accent, p.paper, { gap: 1.8 * s, heavy: 0.5 * s, thin: 0.2 * s, corner: "bracket", r: 3 * s }),
     );
   },
 };

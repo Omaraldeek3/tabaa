@@ -1,4 +1,5 @@
-import { circle, rect, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, flourishRule, khatamPath } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -26,6 +27,8 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 148, 210), list = rows(ctx, "items", 10), top = 54 * s, pitch = Math.min(16 * s, (H - top - 14 * s) / Math.max(list.length, 1)), ax = W * 0.66;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, 50 * s, 4 * s, 0.45 * s, p.accent, { fade: "down", opacity: 0.25 }),
+      g({ x: ax, y: H - 10 * s, opacity: 0.08 }, path(khatamPath(30 * s), { fill: p.accent2 })),
       line(val(ctx, "title"), cx, 24 * s, 10 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W - 20 * s }),
       line(val(ctx, "sub"), cx, 34 * s, 4.4 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: W - 20 * s }),
       list.length ? rect(ax - 0.3 * s, top - 4 * s, 0.6 * s, (list.length - 1) * pitch + 4 * s, { fill: p.accent2 }) : null,
@@ -34,6 +37,8 @@ const t: Template = {
         line(time, ax + 6 * s, top + i * pitch + 1.6 * s, 4.6 * s, { font: "tajawal", weight: 800, fill: p.accent, align: "end", maxWidth: W - ax - 14 * s }),
         line(item, ax - 6 * s, top + i * pitch + 1.6 * s, 4.8 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: ax - 16 * s }),
       ]),
+      flourishRule(cx, 44 * s, W * 0.5, p.accent2, s),
+      doubleFrame(5 * s, 5 * s, W - 10 * s, H - 10 * s, p.accent2, p.paper, { gap: 1.8 * s, heavy: 0.5 * s, thin: 0.2 * s, corner: "khatam", r: 2.4 * s }),
     );
   },
 };

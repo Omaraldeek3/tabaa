@@ -1,4 +1,4 @@
-import { crescentPath, lantern } from "../../lib/motifs/index.ts";
+import { beadRule, crescentPath, dotField, doubleFrame, lantern, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
@@ -49,12 +49,16 @@ const t: Template = {
       ];
     });
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 14 * s, 2 * s, p.accent, 0.06),
+      dotField(0, H - 40 * v, W, 40 * v, 5 * s, 0.6 * s, p.accent, { fade: "up", opacity: 0.35 }),
       g({ x: W * 0.16, y: -b }, rect(-0.2 * s, 0, 0.4 * s, 14 * s + b, { fill: p.accent }), g({ y: 14 * s + b }, lantern(28 * s, p.accent, p.soft))),
       g({ x: W * 0.84, y: 26 * v, rotate: -30 }, path(crescentPath(12 * s, 0.4), { fill: p.accent })),
       line(val(ctx, "title"), cx, 38 * v, 13 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W * 0.5 }),
       line(val(ctx, "city"), cx, 50 * v, 4.6 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: W * 0.5 }),
       table,
       line(val(ctx, "by"), cx, H - 14 * v, 5 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: W - 30 * s }),
+      doubleFrame(7 * s, 7 * s, W - 14 * s, H - 14 * s, p.accent, p.paper, { gap: 2.4 * s, heavy: 0.6 * s, thin: 0.2 * s, corner: "khatam", r: 3 * s }),
+      beadRule(20 * s, W - 20 * s, top - 10 * v, p.accent, s, { bead: "diamond", pitch: 4, centre: true }),
     );
   },
 };
