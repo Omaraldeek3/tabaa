@@ -1,4 +1,4 @@
-import { khatamPath, tatreezBand } from "../../lib/motifs/index.ts";
+import { doubleFrame, khatamPath, ringsNode, starTile, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, priceList, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -35,13 +35,17 @@ const t: Template = {
       g({ x: m, y: top + 2.4 * s }, tatreezBand("dots", W - 2 * m, 0.8 * s, [p.accent2])),
       priceList(ctx, listId, { nameX: W - m, priceX: m, top: top + pitch * 1.25, pitch, size: 4.6 * s, max: 7, ink: p.ink, priceInk: p.accent, rule: p.soft }),
     ];
+    const z = Math.min(W, H) / 99;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 8 * z, 0.9 * z, p.accent, 0.06),
+      g({ x: W / 2, y: H * 0.07, opacity: 0.25 }, ringsNode(8 * z, 14 * z, 3, p.accent, 0.2 * z)),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       g({ x: cx, y: 15 * s }, path(khatamPath(6 * s), { fill: null, stroke: p.accent, strokeWidth: 0.4 * s }), path(khatamPath(2.6 * s), { fill: p.accent2 })),
       line(val(ctx, "name"), cx, 36 * s, 15 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W - 2 * m }),
       g({ x: -b, y: head - 3 * s }, tatreezBand("chain", W + 2 * b, 3.4 * s, [p.accent, p.accent2])),
       sec("head1", "list1", head + pitch * 1.3), sec("head2", "list2", head + pitch * 10.2),
       line(val(ctx, "footer"), cx, H - 10 * s, 3.5 * s, { font: "tajawal", weight: 500, fill: p.soft === inks.sand ? inks.grey : p.soft, maxWidth: W - 2 * m }),
+      doubleFrame(4 * z, 4 * z, W - 8 * z, H - 8 * z, p.accent, p.paper, { gap: 1.4 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "dot", r: 2 * z }),
     );
   },
 };

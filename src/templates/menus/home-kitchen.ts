@@ -1,4 +1,4 @@
-import { oliveBranch, tatreezFrame } from "../../lib/motifs/index.ts";
+import { dotField, oliveBranch, tatreezFrame } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, priceList, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,9 @@ const t: Template = {
   safeMm: 6,
   render(ctx) {
     const { W, H, p, v, s, cx } = dims(ctx, 148, 210), inset = 6 * s, band = 7 * s, m = inset + band + 9 * s, top = 78 * v, pitch = Math.min(14.5 * v, (H - top - 52 * v) / 7);
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      dotField(14 * z, 14 * z, W - 28 * z, H - 28 * z, 5 * z, 0.35 * z, p.accent, { opacity: 0.1 }),
       g({ x: inset, y: inset }, tatreezFrame(W - 2 * inset, H - 2 * inset, band, [p.accent, p.accent2], { style: "stars" })),
       line(val(ctx, "name"), cx, 42 * v, 17 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: W - 2 * m }),
       g({ x: cx - 16 * s, y: 51 * v }, oliveBranch(32 * s, p.accent2, null, { leaves: 9, bend: 0.06 })),

@@ -1,5 +1,5 @@
-import { keffiyeh, tatreezBand } from "../../lib/motifs/index.ts";
-import { g, path, rect, scene } from "../../lib/scene.ts";
+import { keffiyeh, khatamPath, starTile, tatreezBand } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, more, pal, priceList, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -39,7 +39,9 @@ const t: Template = {
       g({ x: right - colW, y: top + 4 * v }, tatreezBand("zigzag", colW, 3.6 * s, [p.ink, p.accent2])),
       priceList(ctx, `list${i + 1}`, { nameX: right, priceX: right - colW, top: top + 22 * v, pitch, size: 6.6 * s, max: 7, ink: p.ink, priceInk: p.accent2, rule: p.soft }),
     ]; };
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      starTile(W * 0.27, 0, W * 0.73, H, 12 * z, 1.2 * z, p.paper, 0.04),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       rect(-b, -b, side + b, H + 2 * b, { fill: p.accent }),
       g({ x: -b, y: -b, opacity: 0.14 }, keffiyeh(side + b, H + 2 * b, 10 * s, inks.paper, 0.12)),
@@ -50,6 +52,7 @@ const t: Template = {
       column(0), column(1), column(2),
       rect(side + m, H - 30 * v, area, 0.5 * s, { fill: p.ink }),
       line(val(ctx, "footer"), side + m + area / 2, H - 19 * v, 5.6 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: area }),
+      [[W - 10 * z, 10 * z], [W - 10 * z, H - 10 * z]].map(([x, y]) => g({ x, y }, path(khatamPath(3 * z), { fill: p.accent }), circle(0, 0, 1 * z, { fill: p.ink }))),
     );
   },
 };

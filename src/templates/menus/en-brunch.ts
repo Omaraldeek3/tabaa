@@ -1,4 +1,4 @@
-import { friedEgg } from "../../lib/motifs/index.ts";
+import { burstLines, dotField, doubleFrame, friedEgg } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { priced, tf } from "../fields.ts";
 import { dims, inks, line, pal, priceList, sizes, val } from "../kit.ts";
@@ -27,13 +27,17 @@ const t: Template = {
   safeMm: 8,
   render(ctx) {
     const { W, H, p, u, v, cx } = dims(ctx, 210, 297), s = u, top = 128 * v, L = 22 * s, R = W - 22 * s;
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.07, opacity: 0.25 }, burstLines(36, 18 * z, 30 * z, p.accent, 0.3 * z)),
+      dotField(0, H * 0.82, W, H * 0.18, 5 * z, 0.4 * z, p.accent, { fade: "up", opacity: 0.18 }),
       g({ x: cx, y: 46 * v }, friedEgg(30 * s, p.accent, p.accent2)),
       line(val(ctx, "name"), cx, 96 * v, 20 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W - 40 * s }),
       line(val(ctx, "tagline"), cx, 108 * v, 6 * s, { font: "inter", weight: 500, fill: p.ink, maxWidth: W - 40 * s, tracking: 0.5 * s }),
       priceList(ctx, "list", { nameX: L, priceX: R, top, pitch: Math.min(17 * v, (H - top - 30 * v) / 9), size: 7.4 * s, max: 9, ink: p.ink, priceInk: p.ink, rule: p.soft, font: "playfairdisplay", priceFont: "inter", dir: "ltr" }),
       rect(cx - 10 * s, H - 26 * v, 20 * s, 0.4 * s, { fill: p.ink }),
       line(val(ctx, "footer"), cx, H - 15 * v, 5 * s, { font: "inter", weight: 500, fill: p.ink, maxWidth: W - 40 * s }),
+      doubleFrame(6 * z, 6 * z, W - 12 * z, H - 12 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "dot", r: 2 * z }),
     );
   },
 };

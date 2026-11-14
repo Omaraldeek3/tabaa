@@ -1,7 +1,7 @@
-import { hummusBowl } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, hummusBowl, rosetteLines } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { priced, tf } from "../fields.ts";
-import { dims, inks, line, pal, priceList, val, more } from "../kit.ts";
+import { dims, inks, line, more, pal, priceList, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
 const t: Template = {
@@ -31,7 +31,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 210, 148), r = Math.min(H * 0.3, W * 0.17), cw = (W - 2 * r - 40 * s) / 2, top = 58 * s;
     const opts = (right: number, top: number) => ({ nameX: right, priceX: right - cw, top, pitch: 11 * s, size: 5.6 * s, max: 6, ink: p.ink, priceInk: p.accent2, rule: p.soft });
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.45, opacity: 0.2 }, rosetteLines(44 * z, p.accent, { rings: 3, lobes: 20, width: 0.25 * z })),
+      dotField(0, 0, W, H * 0.25, 5 * z, 0.4 * z, p.accent2, { fade: "down", opacity: 0.2 }),
       rect(-b, H - 18 * s, W + 2 * b, 18 * s + b, { fill: p.accent, opacity: 0.25 }),
       g({ x: cx, y: H * 0.52 }, hummusBowl(r, p.accent, inks.sand, inks.olive, inks.goldDeep)),
       line(val(ctx, "name"), cx, 22 * s, 13 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W - 30 * s }),
@@ -41,6 +44,7 @@ const t: Template = {
       line(val(ctx, "head2"), 12 * s + cw, top - 9 * s, 8 * s, { font: ctx.font, weight: 700, fill: p.accent2, align: "start", maxWidth: cw }),
       priceList(ctx, "list2", opts(12 * s + cw, top)),
       line(val(ctx, "footer"), cx, H - 8 * s, 4.2 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: W - 30 * s }),
+      doubleFrame(6 * z, 6 * z, W - 12 * z, H * 0.86, p.accent, p.paper, { gap: 1.8 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 2.4 * z }),
     );
   },
 };

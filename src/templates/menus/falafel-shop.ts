@@ -1,5 +1,5 @@
-import { keffiyeh, khatamPath, tatreezBand } from "../../lib/motifs/index.ts";
-import { type SceneNode, circle, g, path, rect, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, keffiyeh, khatamPath, tatreezBand } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { inks, line, pal, rows, sizes, val } from "../kit.ts";
 import type { RenderContext, Template } from "../types.ts";
 
@@ -47,7 +47,9 @@ const falafelShop: Template = {
       });
       return out.filter((n): n is SceneNode => !!n);
     };
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.3, W, H * 0.7, 5 * z, 0.4 * z, p.accent, { fade: "up", opacity: 0.12 }),
       rect(-b, -b, W + 2 * b, headH + b, { fill: p.accent }),
       g({ x: -b, y: -b, opacity: 0.14 }, keffiyeh(W + 2 * b, headH + b, 9 * s, inks.paper, 0.13)),
       g({ x: cx, y: 17 * v }, path(khatamPath(6.5 * s), { fill: inks.paper }), circle(0, 0, 2.2 * s, { fill: p.accent })),
@@ -60,6 +62,7 @@ const falafelShop: Template = {
       line(val(ctx, "currency"), cx, H - 25 * v, 5.4 * s, { font: body, fill: p.accent2, maxWidth: W - 2 * m }),
       rect(m, H - 21 * v, W - 2 * m, 0.5 * s, { fill: p.ink }),
       line(val(ctx, "footer"), cx, H - 13 * v, 5.8 * s, { font: body, weight: 700, fill: p.ink, maxWidth: W - 2 * m }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.8 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "khatam", r: 2 * z }),
     );
   },
 };

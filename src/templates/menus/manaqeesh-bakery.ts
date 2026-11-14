@@ -1,4 +1,4 @@
-import { manousheh } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, manousheh, starTile } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { priced, tf } from "../fields.ts";
 import { dims, inks, line, pal, priceList, sizes, val } from "../kit.ts";
@@ -28,7 +28,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, u, v, cx } = dims(ctx, 210, 297), s = u, aw = W * 0.56, ah = 66 * v, ty = ah + 28 * v + aw * 0.36, top = ty + 16 * v;
     const mouth = `M${cx - aw / 2} ${ah + 20 * v} V${50 * v} A${aw / 2} ${aw / 2 * 0.6} 0 0 1 ${cx + aw / 2} ${50 * v} V${ah + 20 * v} Z`;
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H * 0.3, 5 * z, 0.4 * z, p.paper, { fade: "down", opacity: 0.2 }),
+      starTile(0, H * 0.4, W, H * 0.6, 14 * z, 1.4 * z, p.accent, 0.05),
       path(`M${-b} ${-b} H${W + b} V${ah + 26 * v} H${-b} Z`, { fill: p.accent }),
       path(mouth, { fill: inks.black }),
       g({ x: cx, y: ah + 18 * v }, manousheh(aw * 0.36, inks.sand, p.accent2, inks.goldDeep)),
@@ -36,6 +39,7 @@ const t: Template = {
       line(val(ctx, "tagline"), cx, ty, 7 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: W - 30 * s }),
       priceList(ctx, "list", { nameX: W - 26 * s, priceX: 26 * s, top, pitch: Math.min(15 * v, (H - top - 30 * v) / 10), size: 8.4 * s, max: 10, ink: p.ink, priceInk: p.accent, rule: p.accent2 }),
       line(val(ctx, "footer"), cx, H - 16 * v, 5.6 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: W - 30 * s }),
+      doubleFrame(6 * z, 6 * z, W - 12 * z, H - 12 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "khatam", r: 2 * z }),
     );
   },
 };

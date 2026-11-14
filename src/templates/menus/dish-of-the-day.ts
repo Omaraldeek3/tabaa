@@ -1,4 +1,5 @@
-import { path, rect, scene } from "../../lib/scene.ts";
+import { guillocheNode, khatamPath } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,7 +28,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 297, 420), fr = 12 * s, list = rows(ctx, "days", 7), top = 116 * s, pitch = Math.min(34 * s, (H - top - 90 * s) / Math.max(list.length, 1));
     const smudge = Array.from({ length: 6 }, (_, i) => `M${40 * s + i * 40 * s} ${60 * s + (i % 3) * 120 * s} q${20 * s} ${-6 * s} ${40 * s} 0`).join(" ");
+    const z = Math.min(W, H) / 297;
     return scene(W, H, inks.goldDeep,
+      guillocheNode(0, 0, W, H, p.paper, { waves: 18, amp: 1.2 * z, period: 24 * z, width: 0.15 * z, opacity: 0.05 }),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: inks.goldDeep }),
       rect(fr, fr, W - 2 * fr, H - 2 * fr, { fill: p.paper }),
       rect(fr + 1.5 * s, fr + 1.5 * s, W - 2 * fr - 3 * s, H - 2 * fr - 3 * s, { fill: null, stroke: inks.black, strokeWidth: 0.6 * s, opacity: 0.3 }),
@@ -40,6 +43,7 @@ const t: Template = {
       ]),
       line(val(ctx, "price"), cx, H - 58 * s, 11 * s, { font: ctx.font, weight: 700, fill: p.accent2, maxWidth: W - 60 * s }),
       line(val(ctx, "footer"), cx, H - 34 * s, 8 * s, { font: ctx.font, fill: p.ink, maxWidth: W - 60 * s }),
+      [[0.1, 0.92], [0.9, 0.08]].map(([x, y]) => g({ x: W * x, y: H * y }, path(khatamPath(4 * z), { fill: p.accent }), circle(0, 0, 1.4 * z, { fill: p.paper }))),
     );
   },
 };

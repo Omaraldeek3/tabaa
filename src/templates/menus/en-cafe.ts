@@ -1,4 +1,4 @@
-import { oliveBranch, tatreezBand } from "../../lib/motifs/index.ts";
+import { doubleFrame, oliveBranch, starTile, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, priceList, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -36,7 +36,9 @@ const t: Template = {
       rect(left, top + 4 * v, colW, 0.5 * s, { fill: p.ink }),
       priceList(ctx, listId, { nameX: left, priceX: left + colW, top: top + 22 * v, pitch, size: 5.6 * s, max: 8, ink: p.ink, priceInk: p.accent2, rule: p.soft, font: "inter", priceFont: "inter", dir: "ltr" }),
     ];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      starTile(0, H * 0.25, W, H * 0.6, 14 * z, 1.3 * z, p.accent, 0.04),
       g({ x: cx - 27 * s, y: 36 * v }, oliveBranch(54 * s, p.accent, p.ink, { leaves: 11, bend: 0.08, olives: 3 })),
       line(val(ctx, "name"), cx, 72 * v, 28 * s, { font: ctx.font, weight: 600, fill: p.ink, maxWidth: W - 2 * m }),
       line(val(ctx, "tagline"), cx, 86 * v, 4.4 * s, { font: "inter", weight: 700, fill: p.accent2, tracking: 1.2 * s, maxWidth: W - 2 * m }),
@@ -44,6 +46,7 @@ const t: Template = {
       column("head1", "list1", m), column("head2", "list2", W - m - colW),
       rect(m, H - 36 * v, W - 2 * m, 0.5 * s, { fill: p.ink }),
       line(val(ctx, "footer"), cx, H - 25 * v, 4 * s, { font: "inter", weight: 500, fill: p.soft === inks.sage ? p.ink : inks.grey, maxWidth: W - 2 * m }),
+      doubleFrame(6 * z, 6 * z, W - 12 * z, H - 12 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 2 * z }),
     );
   },
 };
