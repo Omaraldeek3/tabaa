@@ -1,4 +1,5 @@
-import { type SceneNode, g, path, rect, scene, text } from "../../lib/scene.ts";
+import { guillocheNode, khatamPath } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode, text } from "../../lib/scene.ts";
 import { ml, tf } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -33,7 +34,9 @@ const t: Template = {
       if (i) tabs.push(path(Array.from({ length: 16 }, (_, k) => `M${x} ${H - tabH + k * tabH / 16} v${tabH / 32}`).join(" "), { fill: null, stroke: p.ink, strokeWidth: 0.3 * s }));
       tabs.push(g({ x: x + tw / 2 + 2.2 * s, y: H - tabH / 2, rotate: -90 }, text(phone, { font: "tajawal", weight: 800, size: 5.4 * s, x: 0, y: 0, align: "center", fill: p.ink, maxWidth: tabH - 10 * s })));
     }
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(0, 0, W, H * 0.16, p.paper, { waves: 3, amp: 1.2 * z, period: 20 * z, width: 0.2 * z, opacity: 0.2 }),
       rect(-b, -b, W + 2 * b, 64 * s + b, { fill: p.accent }),
       line(val(ctx, "title"), cx, 46 * s, 30 * s, { font: ctx.font, weight: 700, fill: p.paper === inks.mustard ? inks.mustard : p.paper, maxWidth: max }),
       line(val(ctx, "area"), cx, 86 * s, 11 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: max }),
@@ -42,6 +45,7 @@ const t: Template = {
       line(phone, cx, H - tabH - 14 * s, 11 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: max }),
       phone ? path(`M${-b} ${H - tabH} H${W + b}`, { fill: null, stroke: p.ink, strokeWidth: 0.4 * s }) : null,
       tabs,
+      [[8, H / z * 0.2], [W / z - 8, H / z * 0.2]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(2.4 * z), { fill: p.accent }))),
     );
   },
 };

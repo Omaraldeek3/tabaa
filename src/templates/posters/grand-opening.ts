@@ -1,4 +1,4 @@
-import { ribbon, starPath, tatreezBand } from "../../lib/motifs/index.ts";
+import { burstLines, doubleFrame, ribbon, starPath, starTile, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -30,7 +30,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, v, s, cx } = dims(ctx, 297, 420), m = 22 * s, max = W - 2 * m, panel = 232 * v, rw = Math.min(max * 0.8, 200 * s);
     const stars = [[0.14, 60, 7], [0.86, 52, 9], [0.22, 186, 5], [0.8, 196, 6], [0.07, 130, 4], [0.93, 136, 4]] as const;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.2, opacity: 0.15 }, burstLines(80, 40 * z, W, p.accent, 0.5 * z)),
+      starTile(0, H * 0.48, W, H * 0.52, 16 * z, 2.2 * z, p.accent, 0.07),
       stars.map(([x, y, r]) => g({ x: x * W, y: y * v, rotate: x * 40 }, path(starPath(5, r * s, r * 0.42 * s), { fill: p.accent2 }))),
       g({ x: cx, y: 62 * v }, ribbon(rw * 0.62, 20 * s, p.accent, p.soft)),
       line(val(ctx, "kicker"), cx, 62 * v + 4 * s, 11 * s, { font: "tajawal", weight: 800, fill: inks.ivory, maxWidth: rw * 0.54 }),
@@ -43,6 +46,7 @@ const t: Template = {
       line(val(ctx, "date"), cx, panel + 112 * v, 22 * s, { font: ctx.font, weight: 700, fill: inks.ivory, maxWidth: max }),
       stack(linesOf(val(ctx, "offers"), 2), cx, panel + 132 * v, 10.5 * s, 13 * v, { font: "tajawal", weight: 500, fill: inks.ivory, maxWidth: max }),
       line(joined(ctx, ["address"]), cx, H - Math.max(15 * v, ctx.safeMm + 3), 10 * s, { font: "tajawal", weight: 800, fill: inks.mustard, maxWidth: max }),
+      doubleFrame(14 * z, H * 0.5, W - 28 * z, H * 0.5 - 14 * z, p.accent, p.ink, { gap: 3 * z, heavy: 0.6 * z, thin: 0.25 * z, corner: "khatam", r: 4 * z }),
     );
   },
 };

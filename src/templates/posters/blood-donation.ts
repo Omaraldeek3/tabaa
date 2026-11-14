@@ -1,4 +1,4 @@
-import { dropPath, heartbeat } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, dropPath, heartbeat, ringsNode } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -29,7 +29,10 @@ const t: Template = {
   safeMm: 10,
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 297, 420), max = W - 40 * s, dh = Math.min(H * 0.46, W * 1.05), dy = H * 0.42;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.36, opacity: 0.18 }, ringsNode(70 * z, 140 * z, 8, p.accent, 0.5 * z)),
+      dotField(0, H * 0.7, W, H * 0.3, 7 * z, 0.8 * z, p.accent, { fade: "up", opacity: 0.2 }),
       g({ x: cx, y: dy }, path(dropPath(dh), { fill: p.accent })),
       g({ x: -b, y: dy + dh * 0.3 }, path(heartbeat(W + 2 * b, dh * 0.16), { fill: null, stroke: p.accent2, strokeWidth: 3 * s })),
       line(val(ctx, "sub"), cx, 40 * s, 11 * s, { font: "tajawal", weight: 800, fill: p.accent, maxWidth: max }),
@@ -38,6 +41,7 @@ const t: Template = {
       line(joined(ctx, ["time"]), cx, H - 56 * s, 8 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "venue"), cx, H - 42 * s, 8 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(val(ctx, "with"), cx, H - 20 * s, 6.4 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: max }),
+      doubleFrame(10 * z, 10 * z, W - 20 * z, H - 20 * z, p.accent, p.paper, { gap: 3 * z, heavy: 0.8 * z, thin: 0.3 * z, corner: "dot", r: 3 * z }),
     );
   },
 };

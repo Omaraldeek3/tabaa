@@ -1,4 +1,4 @@
-import { broom } from "../../lib/motifs/index.ts";
+import { broom, dotField, doubleFrame, starPath } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { ml, tf } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
@@ -30,7 +30,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 297, 420), max = W - 40 * s, by = H * 0.74;
     const dust = [0, 1, 2, 3].map(i => `M${W * 0.12 + i * 10 * s} ${by - 10 * s - i * 12 * s} q${-14 * s} ${6 * s} ${-26 * s} ${-2 * s}`).join(" ");
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.4, W * 0.6, H * 0.6, 7 * z, 0.8 * z, p.accent, { fade: "up", opacity: 0.15 }),
+      [0.62, 0.72, 0.8].map((y, i) => g({ x: W * (0.1 + i * 0.06), y: H * y, rotate: i * 30, opacity: 0.5 }, path(starPath(4, 4 * z, 1 * z), { fill: p.accent2 }))),
       line(val(ctx, "title"), cx, 86 * s, 56 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "sub"), cx, 122 * s, 13 * s, { font: "tajawal", weight: 800, fill: p.accent, maxWidth: max }),
       g({ x: W * 0.3, y: by }, broom(H * 0.42, p.accent2 === inks.ivory ? inks.terracotta : p.soft, p.accent2, p.ink, -24)),
@@ -41,6 +44,7 @@ const t: Template = {
       line(val(ctx, "date"), W * 0.62, by + 6 * s, 9 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: W * 0.5 }),
       line(val(ctx, "meet"), W * 0.62, by + 20 * s, 7.4 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: W * 0.5 }),
       line(val(ctx, "organiser"), cx, H - 20 * s, 7.4 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: max }),
+      doubleFrame(10 * z, 10 * z, W - 20 * z, H - 20 * z, p.accent, p.paper, { gap: 3 * z, heavy: 0.8 * z, thin: 0.3 * z, corner: "star", r: 4 * z }),
     );
   },
 };

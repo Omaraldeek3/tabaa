@@ -1,4 +1,5 @@
-import { rect, scene } from "../../lib/scene.ts";
+import { dotField, hatch } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +29,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 297, 420), max = W - 40 * s, jobs = rows(ctx, "jobs", 6), top = 150 * s, pitch = 26 * s;
     const stripes = Array.from({ length: Math.ceil((W + 2 * b) / (14 * s)) + 4 }, (_, i) => `M${-b + i * 14 * s - 20 * s} ${108 * s} l${7 * s} 0 l${-12 * s} ${12 * s} l${-7 * s} 0 Z`).join(" ");
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      hatch(0, H * 0.24, W, H * 0.6, 8 * z, p.ink, 0.3 * z, 0.06),
+      dotField(W * 0.55, H * 0.3, W * 0.45, H * 0.5, 8 * z, 0.9 * z, p.ink, { fade: "left", opacity: 0.08 }),
       line(val(ctx, "title"), cx, 92 * s, 84 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
       rect(-b, 108 * s, W + 2 * b, 12 * s, { fill: p.accent }),
       { type: "path", d: stripes, fill: p.paper === inks.mustard ? inks.mustard : p.accent2 },

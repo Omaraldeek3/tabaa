@@ -1,5 +1,5 @@
-import { crescentPath, jerusalem, starPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { crescentPath, dotField, doubleFrame, jerusalem, starPath, starTile } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { dims, inks, joined, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -28,7 +28,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, v, s } = dims(ctx, 297, 420), m = 24 * s, max = W - 2 * m, skyH = 80 * v, skyY = H - skyH - 96 * v;
     const stars: SceneNode[] = [[0.1, 0.1, 1], [0.3, 0.06, 0.7], [0.5, 0.14, 0.6], [0.66, 0.05, 0.9], [0.9, 0.1, 0.7], [0.06, 0.3, 0.6]].map(([x, y, r]) => g({ x: x * W, y: y * H }, path(starPath(4, r * 3 * s, r * 0.85 * s), { fill: p.accent, opacity: 0.8 })));
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H * 0.4, 16 * z, 1.6 * z, p.accent, 0.08),
+      dotField(0, H * 0.75, W, H * 0.25, 8 * z, 0.8 * z, p.accent, { fade: "up", opacity: 0.12 }),
       path(`M${W + b} ${-b} L${W * 0.02} ${skyY + skyH * 0.5} L${W * 0.74} ${skyY + skyH * 0.5} Z`, { fill: p.accent, opacity: 0.16 }),
       stars, g({ x: W * 0.84, y: 54 * v, rotate: 200 }, path(crescentPath(16 * s, 0.5), { fill: p.accent })),
       line(val(ctx, "kicker"), m, 96 * v, 8.6 * s, { font: "inter", weight: 700, fill: p.accent, align: "start", tracking: 1.6 * s, maxWidth: max }),
@@ -39,6 +42,7 @@ const t: Template = {
       line(val(ctx, "date"), m, H - 68 * v, 12 * s, { font: "inter", weight: 800, fill: p.accent, align: "start", tracking: 0.8 * s, maxWidth: max }),
       line(joined(ctx, ["place"]), m, H - 52 * v, 12.5 * s, { font: "playfairdisplay", weight: 600, fill: inks.ivory, align: "start", maxWidth: max }),
       stack(linesOf(val(ctx, "details"), 3), m, H - 38 * v, 7.6 * s, 10.5 * v, { font: "inter", weight: 400, fill: inks.ivory, align: "start", maxWidth: max }),
+      doubleFrame(10 * z, 10 * z, W - 20 * z, H - 20 * z, p.accent, p.paper, { gap: 3 * z, heavy: 0.6 * z, thin: 0.25 * z, corner: "bracket", r: 4 * z }),
     );
   },
 };

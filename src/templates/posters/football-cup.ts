@@ -1,4 +1,4 @@
-import { rays, starPath } from "../../lib/motifs/index.ts";
+import { hatch, rays, ringsNode, starPath } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,10 @@ const t: Template = {
   safeMm: 10,
   render(ctx) {
     const { W, H, p, b, v, s, cx } = dims(ctx, 297, 420), m = 22 * s, max = W - 2 * m, bx = W * 0.3, by = 128 * v, r = 54 * s, foot = H - 96 * v;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      hatch(0, 0, W, H * 0.8, 10 * z, p.paper, 0.4 * z, 0.06),
+      g({ x: W * 0.25, y: H * 0.22, opacity: 0.25 }, ringsNode(60 * z, 100 * z, 4, p.accent, 0.5 * z)),
       g({ x: bx, y: by, rotate: -28 }, [-0.7, -0.25, 0.2, 0.65].map((k, i) => rect(r * 0.6, k * r - 3 * s, W * 1.4, (i % 2 ? 5 : 9) * s, { fill: p.soft }))),
       g({ x: bx, y: by }, g({ opacity: 0.35 }, rays(14, r * 1.12, r * 1.5, p.accent, 0.4)), circle(0, 0, r, { fill: inks.ivory }), path(starPath(5, r * 0.36, r * 0.3), { fill: inks.black }),
         [0, 72, 144, 216, 288].map(a => g({ rotate: a }, path(`M0 ${-r * 0.36} L0 ${-r * 0.74}`, { fill: null, stroke: inks.black, strokeWidth: 1.4 * s }), g({ y: -r * 0.92 }, path(starPath(5, r * 0.2, r * 0.16), { fill: inks.black })))),

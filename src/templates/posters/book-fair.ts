@@ -1,4 +1,4 @@
-import { khatamPath } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, khatamPath, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -29,7 +29,10 @@ const t: Template = {
     const { W, H, p, b, v, s } = dims(ctx, 297, 420), m = 22 * s, right = W - m, max = W - 2 * m, shelf = 300 * v;
     const cols = [p.accent, p.accent2, p.soft, p.ink, p.accent, p.soft, p.accent2];
     const books = [[0, 20, 150], [22, 15, 120], [39, 26, 172], [67, 13, 104], [82, 22, 140], [106, 17, 160], [125, 24, 112]] as const;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      dotField(W * 0.55, H * 0.3, W * 0.45, H * 0.4, 7 * z, 0.9 * z, p.ink, { fade: "left", opacity: 0.12 }),
+      starTile(0, 0, W, H * 0.08, 14 * z, 2 * z, p.ink, 0.08),
       books.map(([x, w, h], i) => g({ x: m + x * s * 0.8, y: shelf - h * v, scaleX: 0.8 },
         rect(0, 0, w * s, h * v, { fill: cols[i] }), rect(0, h * v * 0.12, w * s, 1.4 * s, { fill: p.paper, opacity: 0.8 }), rect(0, h * v * 0.86, w * s, 1.4 * s, { fill: p.paper, opacity: 0.8 }),
         g({ x: (w * s) / 2, y: h * v * 0.5 }, path(khatamPath(w * s * 0.26), { fill: p.paper, opacity: 0.85 })))),
@@ -39,6 +42,7 @@ const t: Template = {
       line(val(ctx, "dates"), right, shelf - 22 * v, 25 * s, { font: ctx.font, weight: 700, fill: p.accent, align: "start", maxWidth: max * 0.42 }),
       line(val(ctx, "place"), right, shelf + 34 * v, 16 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: max }),
       stack(linesOf(val(ctx, "details"), 3), right, shelf + 54 * v, 10 * s, 13 * v, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: max }),
+      doubleFrame(10 * z, 10 * z, W - 20 * z, H - 20 * z, p.ink, p.paper, { gap: 3 * z, heavy: 0.8 * z, thin: 0.3 * z, corner: "bracket", r: 4 * z }),
     );
   },
 };

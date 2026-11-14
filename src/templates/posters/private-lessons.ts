@@ -1,4 +1,5 @@
-import { circle, path, rect, scene } from "../../lib/scene.ts";
+import { starPath } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +29,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, u, cx } = dims(ctx, 210, 297), s = u, pitch = 11 * s, list = rows(ctx, "subjects", 6), mx = W - 30 * s, top = 92 * s;
     const ruled = Array.from({ length: Math.floor((H - 30 * s) / pitch) }, (_, i) => `M0 ${26 * s + i * pitch} H${W}`).join(" ");
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      [[0.78, 0.6], [0.86, 0.66], [0.72, 0.7]].map(([x, y], i) => g({ x: W * x, y: H * y, rotate: i * 20, opacity: 0.35 }, path(starPath(5, 4 * z, 1.8 * z), { fill: p.accent2 }))),
       path(ruled, { fill: null, stroke: p.accent, strokeWidth: 0.3 * s }),
       rect(mx + 4 * s, -6, 0.6 * s, H + 12, { fill: p.accent2 }),
       Array.from({ length: 14 }, (_, i) => circle(16 * s + i * ((W - 32 * s) / 13), 10 * s, 2.4 * s, { fill: inks.grey })),

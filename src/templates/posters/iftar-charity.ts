@@ -1,4 +1,4 @@
-import { crescentPath, starPath } from "../../lib/motifs/index.ts";
+import { crescentPath, dotField, doubleFrame, starPath, starTile } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -36,7 +36,10 @@ const t: Template = {
         [-1, 0, 1].map(k => g({ x: k * step * 0.07, y: -step * 0.02, rotate: 70 + k * 20 }, path(`M0 ${-step * 0.05} Q${step * 0.03} 0 0 ${step * 0.05} Q${-step * 0.03} 0 0 ${-step * 0.05} Z`, { fill: p.accent2 }))),
         rect(step * 0.33, -step * 0.2, step * 0.12, step * 0.22, { fill: p.accent, opacity: 0.5, r: step * 0.02 }));
     });
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H * 0.35, 16 * z, 2 * z, p.accent, 0.08),
+      dotField(0, H * 0.55, W, H * 0.45, 8 * z, 0.8 * z, p.accent, { fade: "down", opacity: 0.15 }),
       g({ x: W * 0.78, y: 64 * s, rotate: -30 }, path(crescentPath(30 * s, 0.4), { fill: p.accent })),
       [[0.12, 0.06], [0.3, 0.12], [0.55, 0.05], [0.9, 0.24]].map(([x, y], i) => g({ x: W * x, y: H * y + 10 * s }, path(starPath(4, (2 + i % 2) * s, 0.7 * s), { fill: p.accent }))),
       line(val(ctx, "title"), cx, 160 * s, 54 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
@@ -47,6 +50,7 @@ const t: Template = {
       line(val(ctx, "price"), cx, ty + step * 0.85 + 26 * s, 20 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
       line(val(ctx, "how"), cx, H - 46 * s, 8 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "organiser"), cx, H - 24 * s, 7 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
+      doubleFrame(10 * z, 10 * z, W - 20 * z, H - 20 * z, p.accent, p.paper, { gap: 3 * z, heavy: 0.8 * z, thin: 0.3 * z, corner: "star", r: 4 * z }),
     );
   },
 };

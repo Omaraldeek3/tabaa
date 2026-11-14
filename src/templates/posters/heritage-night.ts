@@ -1,5 +1,5 @@
-import { crescentPath, jerusalem, starPath, tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { burstLines, crescentPath, doubleFrame, jerusalem, starPath, starTile, tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -33,7 +33,10 @@ const heritageNight: Template = {
     const skyH = 96 * v, skyY = H - skyH - 64 * v, unit = 20 * s, gap = 9 * s, count = 5, rowW = count * unit + (count - 1) * gap;
     const stars: SceneNode[] = [[0.1, 0.08, 1.2], [0.3, 0.05, 0.8], [0.86, 0.07, 1], [0.94, 0.2, 0.7], [0.06, 0.24, 0.8], [0.6, 0.04, 0.7], [0.74, 0.16, 0.6], [0.18, 0.16, 0.6]]
       .map(([x, y, r]) => g({ x: x * W, y: y * H }, path(starPath(4, r * 3.2 * s, r * 0.9 * s), { fill: p.accent, opacity: 0.8 })));
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H * 0.7, 16 * z, 2 * z, p.accent, 0.07),
+      g({ x: W / 2, y: H * 0.85, opacity: 0.12 }, burstLines(60, 40 * z, H * 0.8, p.accent, 0.6 * z)),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       stars,
       g({ x: W * 0.8, y: 60 * v, rotate: 205 }, path(crescentPath(21 * s, 0.5), { fill: p.accent })),
@@ -47,6 +50,7 @@ const heritageNight: Template = {
       line([val(ctx, "date"), val(ctx, "time")].filter(Boolean).join("  ·  "), cx, H - 40 * v, 19 * s, { font: ctx.font, weight: 700, fill: inks.paper, maxWidth: max }),
       line(val(ctx, "place"), cx, H - 26 * v, 11 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: max }),
       stack(linesOf(val(ctx, "details"), 3), cx, 237 * v, 8.6 * s, 10.5 * v, { font: "tajawal", fill: p.ink, maxWidth: max }),
+      doubleFrame(10 * z, 10 * z, W - 20 * z, H - 20 * z, p.accent, p.paper, { gap: 3 * z, heavy: 0.8 * z, thin: 0.3 * z, corner: "khatam", r: 4 * z }),
     );
   },
 };

@@ -1,4 +1,5 @@
-import { circle, rect, scene } from "../../lib/scene.ts";
+import { ringsNode } from "../../lib/motifs/index.ts";
+import { circle, g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -31,7 +32,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 297, 420), L = 18 * s, col = (W - 2 * L) / 6;
     const big = (v: string, y: number) => line(v, L, y, 54 * s, { font: ctx.font, weight: 800, fill: p.ink, align: "start", dir: "ltr", maxWidth: W - 2 * L, tracking: -1 * s });
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      g({ x: W * 0.72, y: H * 0.22, opacity: 0.25 }, ringsNode(52 * z, 110 * z, 9, p.ink, 0.35 * z)),
       circle(L + col * 4.4, 96 * s, col * 1.7, { fill: p.accent }),
       circle(L + col * 2.2, 140 * s, col * 0.9, { fill: p.accent2 }),
       rect(L + col * 5, -b, col * 0.5, 190 * s + b, { fill: p.soft }),

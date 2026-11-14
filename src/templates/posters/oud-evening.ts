@@ -1,4 +1,4 @@
-import { dotRing, oud } from "../../lib/motifs/index.ts";
+import { dotRing, doubleFrame, oud, ringsNode, starTile } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -30,7 +30,10 @@ const t: Template = {
   safeMm: 10,
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 297, 420), max = W - 40 * s, oh = H * 0.6, ox = W * 0.4, oy = H * 0.5;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      g({ x: W * 0.42, y: H * 0.47, opacity: 0.2 }, ringsNode(70 * z, 130 * z, 7, p.accent, 0.4 * z)),
+      starTile(0, 0, W, H * 0.25, 16 * z, 1.8 * z, p.accent2, 0.06),
       g({ x: ox, y: oy }, dotRing(oh * 0.2, 40, 1.1 * s, p.accent2), dotRing(oh * 0.27, 52, 0.8 * s, p.accent2), dotRing(oh * 0.34, 64, 0.6 * s, p.accent2)),
       g({ x: ox, y: oy }, oud(oh, p.accent, p.soft, p.paper)),
       line(val(ctx, "kicker"), W - 22 * s, 40 * s, 9 * s, { font: "amiri", fill: p.accent2, align: "start", maxWidth: W * 0.6 }),
@@ -40,6 +43,7 @@ const t: Template = {
       line(val(ctx, "date"), cx, H - 60 * s, 12 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, H - 42 * s, 8 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "tickets"), cx, H - 26 * s, 6.4 * s, { font: "tajawal", weight: 700, fill: p.accent2, maxWidth: max }),
+      doubleFrame(10 * z, 10 * z, W - 20 * z, H - 20 * z, p.accent2, p.paper, { gap: 3 * z, heavy: 0.6 * z, thin: 0.25 * z, corner: "khatam", r: 4 * z }),
     );
   },
 };

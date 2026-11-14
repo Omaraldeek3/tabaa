@@ -1,4 +1,4 @@
-import { rays, ribbon, scallopPath, starPath } from "../../lib/motifs/index.ts";
+import { dotField, rays, ribbon, ringsNode, scallopPath, starPath } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -31,7 +31,9 @@ const shopSale: Template = {
     const { widthMm: W, heightMm: H } = ctx.size, p = ctx.palette, b = ctx.bleedMm + 1;
     const u = W / 297, v = H / 420, s = Math.min(u, v), cx = W / 2, m = 22 * s, max = W - 2 * m;
     const cy = 236 * v, R = 82 * s, footH = 62 * v;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.8, W, H * 0.2, 8 * z, 0.9 * z, p.ink, { fade: "up", opacity: 0.12 }),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       g({ x: cx, y: cy, opacity: 0.22 }, rays(24, R * 0.9, Math.hypot(W, H), p.ink, 0.5)),
       rect(-b, -b, W + 2 * b, 46 * v + b, { fill: p.ink }),
@@ -46,6 +48,7 @@ const shopSale: Template = {
       rect(-b, H - footH, W + 2 * b, footH + b, { fill: p.ink }),
       line(val(ctx, "dates"), cx, H - footH + 25 * v, 21 * s, { font: ctx.font, weight: 700, fill: p.soft, maxWidth: max }),
       line(val(ctx, "address"), cx, H - Math.max(15 * v, ctx.safeMm + 3), 9.5 * s, { font: "tajawal", weight: 700, fill: p.paper, maxWidth: max }),
+      g({ x: W / 2, y: H * 0.5 }, ringsNode(64 * z, 68 * z, 2, p.paper, 0.5 * z, 0.7)),
     );
   },
 };

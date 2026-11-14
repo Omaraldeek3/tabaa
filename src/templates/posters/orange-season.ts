@@ -1,5 +1,5 @@
-import { leafPath, orange } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, leafPath, orange } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { dims, inks, joined, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -32,7 +32,9 @@ const t: Template = {
       if (r === 1 && c === 1) { fruit.push(g({ x: -b + (c + 0.5) * cell, y: top + (r + 0.5) * cell * 0.94, rotate: 30 }, path(leafPath(d * 0.5, d * 0.12), { fill: p.accent2 }), g({ rotate: 120 }, path(leafPath(d * 0.4, d * 0.1), { fill: p.accent2 })))); continue; }
       fruit.push(g({ x: -b + (c + 0.5) * cell, y: top + (r + 0.5) * cell * 0.94 + d * 0.06 }, orange(d, p.accent, p.accent2, inks.ivory)));
     }
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H * 0.18, 8 * z, 0.9 * z, p.accent, { fade: "down", opacity: 0.2 }),
       line(val(ctx, "title"), W - m, 72 * v, 58 * s, { font: ctx.font, weight: 800, fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "subtitle"), W - m, 104 * v, 20 * s, { font: "tajawal", weight: 700, fill: p.accent, align: "start", maxWidth: max }),
       fruit,
@@ -40,6 +42,7 @@ const t: Template = {
       line(val(ctx, "date"), W - m, foot + 34 * v, 21 * s, { font: ctx.font, weight: 700, fill: inks.ivory, align: "start", maxWidth: max }),
       line(joined(ctx, ["place"]), W - m, foot + 52 * v, 13 * s, { font: "tajawal", weight: 800, fill: inks.mustard, align: "start", maxWidth: max }),
       stack(linesOf(val(ctx, "details"), 2), W - m, foot + 70 * v, 9.5 * s, 12 * v, { font: "tajawal", weight: 500, fill: inks.ivory, align: "start", maxWidth: max }),
+      doubleFrame(8 * z, 8 * z, W - 16 * z, H - 16 * z, p.accent2, p.paper, { gap: 3 * z, heavy: 0.6 * z, thin: 0.25 * z, corner: "dot", r: 3 * z }),
     );
   },
 };

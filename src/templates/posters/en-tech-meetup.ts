@@ -1,3 +1,4 @@
+import { dotField, hatch } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
@@ -32,7 +33,10 @@ const t: Template = {
       + " " + [0, 1, 2, 3].map(i => `M${W * 0.62} ${mid - 30 * s + i * 14 * s} H${W * 0.8 + i * 6 * s} L${W + b} ${mid - 60 * s + i * 14 * s}`).join(" ");
     const pads = [0, 1, 2, 3, 4, 5].map(i => circle(-b + i * 26 * s, mid + 110 * s + i * 4 * s, 2.4 * s, { fill: p.accent2 }));
     const ltr = { align: "start" as const, dir: "ltr" as const };
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H, 8 * z, 0.5 * z, p.accent, { opacity: 0.18 }),
+      hatch(0, H * 0.82, W, H * 0.18, 6 * z, p.accent, 0.2 * z, 0.12),
       path(traces, { fill: null, stroke: p.accent, strokeWidth: 1.2 * s, opacity: 0.8 }), pads,
       g({ x: W * 0.5, y: mid }, rect(-46 * s, -42 * s, 92 * s, 84 * s, { fill: p.soft, r: 6 * s })),
       line("{ }", W * 0.5, mid + 22 * s, 56 * s, { font: "inter", weight: 800, fill: p.accent, safe: false }),

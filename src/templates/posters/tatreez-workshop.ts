@@ -1,4 +1,4 @@
-import { tatreezFrame, tatreezUnit } from "../../lib/motifs/index.ts";
+import { starTile, tatreezFrame, tatreezUnit } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,9 @@ const t: Template = {
   safeMm: 10,
   render(ctx) {
     const { W, H, p, v, s, cx } = dims(ctx, 297, 420), m = 12 * s, max = W - 2 * m - 34 * s, star = Math.min(150 * s, 150 * v);
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      starTile(18 * z, 18 * z, W - 36 * z, H - 36 * z, 16 * z, 2 * z, p.accent, 0.07),
       g({ x: m, y: m }, tatreezFrame(W - 2 * m, H - 2 * m, 11 * s, [p.accent, p.accent2], { style: "chain", gap: 0.12 })),
       line(val(ctx, "kicker"), cx, 54 * v, 11 * s, { font: "tajawal", weight: 700, fill: p.accent2, maxWidth: max }),
       line(val(ctx, "title"), cx, 96 * v, 40 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),

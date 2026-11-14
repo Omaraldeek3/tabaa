@@ -1,4 +1,4 @@
-import { poppy, tatreezBand } from "../../lib/motifs/index.ts";
+import { burstLines, dotField, poppy, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,7 +27,10 @@ const t: Template = {
   safeMm: 10,
   render(ctx) {
     const { W, H, p, b, v, s, cx } = dims(ctx, 297, 420), m = 22 * s, max = W - 2 * m, ground = H - 104 * v, fy = 196 * v;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      g({ x: W * 0.4, y: H * 0.45, opacity: 0.12 }, burstLines(64, 70 * z, W, p.accent, 0.6 * z)),
+      dotField(0, 0, W, H * 0.25, 8 * z, 0.9 * z, p.ink, { fade: "down", opacity: 0.08 }),
       g({ x: W * 0.34, y: fy }, poppy(150 * s, p.accent, inks.black, { stem: p.accent2, stemLength: ground - fy + 10 * v })),
       g({ x: W * 0.74, y: fy + 96 * v }, poppy(58 * s, p.accent, inks.black, { stem: p.accent2, stemLength: ground - fy - 86 * v })),
       rect(-b, ground, W + 2 * b, H - ground + b, { fill: p.soft }),

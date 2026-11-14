@@ -1,5 +1,5 @@
-import { oliveBranch, rays, tatreezBand } from "../../lib/motifs/index.ts";
-import { circle, g, rect, scene } from "../../lib/scene.ts";
+import { dotField, khatamPath, oliveBranch, rays, tatreezBand } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -32,7 +32,9 @@ const oliveHarvest: Template = {
     const u = W / 297, v = H / 420, s = Math.min(u, v), cx = W / 2, m = 22 * s, right = W - m, max = W - 2 * m;
     const panelY = 286 * v, bandH = 13 * s, body = "tajawal";
     const sun = { x: W * 0.27, y: 196 * v, r: 50 * s };
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H * 0.72, 7 * z, 0.9 * z, p.ink, { fade: "down", opacity: 0.08 }),
       g({ x: sun.x, y: sun.y }, rays(28, sun.r * 1.18, sun.r * 2.6, p.accent2, 0.42), circle(0, 0, sun.r, { fill: p.accent2 })),
       // The title sits on a band of paper so the rays never fight it.
       rect(-b, 0 - b, W + 2 * b, 128 * v + b, { fill: p.paper }),
@@ -47,6 +49,7 @@ const oliveHarvest: Template = {
       line(val(ctx, "place"), right, panelY + 59 * v, 14 * s, { font: body, weight: 700, fill: inks.mustard, align: "start", maxWidth: max }),
       stack(linesOf(val(ctx, "details"), 4), right, panelY + 78 * v, 9.5 * s, 12.5 * v, { font: body, fill: inks.paper, align: "start", maxWidth: max }),
       line(val(ctx, "organiser"), cx, H - Math.max(16 * v, ctx.safeMm + 3), 8 * s, { font: body, weight: 700, fill: inks.paper, maxWidth: max }),
+      [[14, 14], [W / z - 14, 14]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(4 * z), { fill: p.accent }))),
     );
   },
 };

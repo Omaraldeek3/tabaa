@@ -1,4 +1,4 @@
-import { microphone } from "../../lib/motifs/index.ts";
+import { dotField, guillocheNode, microphone } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
@@ -30,7 +30,10 @@ const t: Template = {
   safeMm: 10,
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 297, 420), R = W - 22 * s, band = H * 0.6, list = rows(ctx, "speakers", 4), pitch = (H - band - 70 * s) / 4;
+    const z = Math.min(W, H) / 297;
     return scene(W, H, p.paper,
+      dotField(W * 0.5, 0, W * 0.5, H * 0.55, 8 * z, 0.8 * z, p.accent, { fade: "left", opacity: 0.15 }),
+      guillocheNode(0, H * 0.6, W, H * 0.4, p.paper, { waves: 8, amp: 1.4 * z, period: 26 * z, width: 0.25 * z, opacity: 0.12 }),
       rect(-b, band, W + 2 * b, H - band + b, { fill: p.accent }),
       g({ x: W * 0.2, y: band }, microphone(H * 0.36, p.ink, p.paper)),
       line(val(ctx, "kicker"), R, 50 * s, 11 * s, { font: "tajawal", weight: 800, fill: p.accent, align: "start", maxWidth: W * 0.6 }),
