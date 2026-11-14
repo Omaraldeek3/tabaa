@@ -1,4 +1,4 @@
-import { oliveBranch, oliveWreath, rings, tatreezBand } from "../../lib/motifs/index.ts";
+import { guillocheNode, oliveBranch, oliveWreath, rings, ringsNode, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -33,7 +33,10 @@ const oliveWreathInvite: Template = {
     const s = Math.min(W / 148, H / 210), v = H / 210, cx = W / 2, max = W - 32 * s;
     const wy = 52 * v, r = Math.min(27 * s, wy - 14 * s);
     const names = [val(ctx, "groom"), val(ctx, "bride")].filter(Boolean).join("  و  ");
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      guillocheNode(14 * z, H * 0.38, W - 28 * z, H * 0.5, p.accent, { waves: 8, amp: 1 * z, period: 16 * z, width: 0.12 * z, opacity: 0.12 }),
+      g({ x: W / 2, y: H * 0.22, opacity: 0.4 }, ringsNode(22 * z, 26 * z, 2, p.accent2, 0.25 * z)),
       rect(8 * s, 8 * s, W - 16 * s, H - 16 * s, { fill: null, stroke: p.accent2, strokeWidth: 0.3 * s }),
       rect(10 * s, 10 * s, W - 20 * s, H - 20 * s, { fill: null, stroke: p.accent2, strokeWidth: 0.12 * s }),
       g({ x: cx, y: wy }, oliveWreath(r, p.accent, p.ink, { leaves: 13, open: 34 }), rings(r * 0.95, p.accent2)),

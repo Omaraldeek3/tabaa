@@ -1,3 +1,4 @@
+import { doubleFrame, guillocheNode } from "../../lib/motifs/index.ts";
 import { rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -30,7 +31,9 @@ const t: Template = {
   safeMm: 6,
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 148, 210), max = W - 24 * s, mid = H * 0.44;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      guillocheNode(0, H * 0.2, W, H * 0.5, p.accent, { waves: 8, amp: 1.2 * z, period: 18 * z, width: 0.15 * z, opacity: 0.15 }),
       line("&", cx, mid + H * 0.2, Math.min(H * 0.55, W * 0.95), { font: "playfairdisplay", fill: p.accent, safe: false }),
       line(val(ctx, "invite"), cx, 18 * s, 4.2 * s, { font: "playfairdisplay", fill: p.ink, maxWidth: max }),
       line(val(ctx, "bride"), cx, mid - 14 * s, 17 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max, tracking: 1.2 * s }),
@@ -40,6 +43,7 @@ const t: Template = {
       line(val(ctx, "date"), cx, H - 35 * s, 5.4 * s, { font: "playfairdisplay", weight: 700, fill: p.accent2, maxWidth: max }),
       line(joined(ctx, ["time", "venue"], "  |  "), cx, H - 26 * s, 3.8 * s, { font: "inter", weight: 500, fill: p.ink, maxWidth: max, tracking: 0.3 * s }),
       line(val(ctx, "rsvp"), cx, H - 14 * s, 3.2 * s, { font: "inter", fill: p.ink, maxWidth: max }),
+      doubleFrame(7 * z, 7 * z, W - 14 * z, H - 14 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "dot", r: 2 * z }),
     );
   },
 };

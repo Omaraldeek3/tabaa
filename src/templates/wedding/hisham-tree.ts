@@ -1,4 +1,4 @@
-import { mosaicTree } from "../../lib/motifs/index.ts";
+import { flourishRule, mosaicTree, ringsNode, starTile } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { weddingAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -27,7 +27,10 @@ const t: Template = {
     const nx = Math.floor((W - 2 * m) / (t * 1.25)), ny = Math.floor((H - 2 * m) / (t * 1.25));
     run(m, m, 1, 0, nx); run(m, H - m - t, 1, 0, nx); run(m, m + t * 1.25, 0, 1, ny - 1); run(W - m - t - ((W - 2 * m) - nx * t * 1.25) + 0.25 * t, m + t * 1.25, 0, 1, ny - 1);
     const top = m + 7 * s, foot = top + size, Y = (k: number) => foot + 9 * s + (H - foot - 24 * s) * k, max = W - 30 * s;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      starTile(10 * z, 10 * z, W - 20 * z, H - 20 * z, 10 * z, 1.2 * z, p.accent, 0.08),
+      g({ x: W / 2, y: H * 0.16, opacity: 0.2 }, ringsNode(24 * z, 34 * z, 3, p.accent2, 0.3 * z)),
       path(border[0].join(" "), { fill: p.accent }), path(border[1].join(" "), { fill: p.accent2 }),
       g({ x: cx, y: foot }, mosaicTree(size, p.accent, p.soft, p.ink, p.accent2)),
       line(val(ctx, "opening"), cx, Y(0), 4.2 * s, { font: "amiri", fill: p.accent2, maxWidth: max * 0.8 }),
@@ -36,6 +39,7 @@ const t: Template = {
       line(val(ctx, "date"), cx, Y(0.62), 5.6 * s, { font: "amiri", weight: 700, fill: p.accent2, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, Y(0.76), 4.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, Y(1), 4.6 * s, { font: "amiri", weight: 700, fill: p.accent, maxWidth: max }),
+      flourishRule(W / 2, H * 0.68, W * 0.4, p.accent, z),
     );
   },
 };

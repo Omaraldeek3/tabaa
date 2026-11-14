@@ -1,4 +1,4 @@
-import { crescentPath, polygonPath, starPath } from "../../lib/motifs/index.ts";
+import { burstLines, crescentPath, polygonPath, starPath, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { weddingAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -24,7 +24,10 @@ const t: Template = {
     const { W, H, p, s, cx } = dims(ctx, 148, 210), cy = H * 0.56, r = Math.min(W * 0.44, H * 0.34), apo = r * Math.cos(Math.PI / 8);
     const R = r * 0.3, top = cy - apo, max = r * 1.3;
     const Y = (k: number) => cy - apo * 0.7 + apo * 1.5 * k;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 12 * z, 1.2 * z, p.accent, 0.06),
+      g({ x: W / 2, y: H * 0.14, opacity: 0.18 }, burstLines(48, 18 * z, 60 * z, p.accent, 0.4 * z)),
       g({ x: cx, y: top }, rect(-R * 1.08, -R * 0.18, R * 2.16, R * 0.18, { fill: p.accent }), path(`M${-R} ${-R * 0.18} A${R} ${R} 0 0 1 ${R} ${-R * 0.18} Z`, { fill: p.accent }),
         rect(-0.3 * s, -R * 1.36, 0.6 * s, R * 0.2, { fill: p.accent }), g({ y: -R * 1.5, rotate: -90 }, path(crescentPath(2.4 * s, 0.5), { fill: p.accent }))),
       g({ x: cx, y: cy }, path(polygonPath(8, r), { fill: null, stroke: p.accent, strokeWidth: 0.7 * s }), path(polygonPath(8, r - 3 * s), { fill: null, stroke: p.accent, strokeWidth: 0.22 * s }),

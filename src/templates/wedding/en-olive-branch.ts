@@ -1,5 +1,5 @@
-import { oliveBranch, tatreezBand } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { khatamPath, oliveBranch, rosetteLines, starTile, tatreezBand } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -30,7 +30,10 @@ const enOliveBranch: Template = {
   render(ctx) {
     const { widthMm: W, heightMm: H } = ctx.size, p = ctx.palette;
     const s = Math.min(W / 148, H / 210), v = H / 210, cx = W / 2, max = W - 36 * s, caps = ctx.font === "inter" ? "inter" : "inter";
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.42, opacity: 0.1 }, rosetteLines(40 * z, p.accent, { rings: 5, lobes: 14, width: 0.3 * z })),
+      starTile(14 * z, H * 0.82, W - 28 * z, H * 0.1, 8 * z, 1 * z, p.accent, 0.12),
       rect(9 * s, 9 * s, W - 18 * s, H - 18 * s, { fill: null, stroke: p.accent, strokeWidth: 0.25 * s }),
       g({ x: cx, y: 40 * v, rotate: 180 }, g({ x: 3 * s, rotate: 10 }, oliveBranch(34 * s, p.accent, p.ink, { leaves: 8, olives: 2 }))),
       g({ x: cx, y: 40 * v }, g({ x: 3 * s, rotate: -10, scaleY: -1 }, oliveBranch(34 * s, p.accent, p.ink, { leaves: 8, olives: 2 }))),
@@ -44,6 +47,7 @@ const enOliveBranch: Template = {
       line(val(ctx, "time"), cx, 175 * v, 4.4 * s, { font: "playfairdisplay", fill: p.ink, maxWidth: max }),
       line(val(ctx, "venue"), cx, 183.5 * v, 4.6 * s, { font: "playfairdisplay", weight: 600, fill: p.ink, maxWidth: max }),
       line(val(ctx, "rsvp"), cx, 195 * v, 3 * s, { font: caps, weight: 500, fill: p.soft === inks.grey ? inks.grey : p.accent, tracking: 0.3 * s, maxWidth: max }),
+      [[13, 13], [W / z - 13, 13], [13, H / z - 13], [W / z - 13, H / z - 13]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(2.6 * z), { fill: p.accent }), circle(0, 0, 0.8 * z, { fill: p.paper }))),
     );
   },
 };

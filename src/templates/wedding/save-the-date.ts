@@ -1,4 +1,4 @@
-import { arcade, starPath } from "../../lib/motifs/index.ts";
+import { arcade, dotField, guillocheNode, starPath } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, more, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -26,7 +26,10 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 148, 105), m = 12 * s, max = W - 2 * m, arcH = H * 0.3;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      guillocheNode(0, 0, W, H * 0.65, p.paper, { waves: 6, amp: 1.2 * z, period: 16 * z, width: 0.15 * z, opacity: 0.12 }),
+      dotField(0, 0, W * 0.4, H * 0.4, 4 * z, 0.45 * z, p.accent, { fade: "right", opacity: 0.35 }),
       g({ x: -b, y: H - arcH, opacity: 0.9 }, rect(0, arcH * 0.5, W + 2 * b, arcH * 0.5 + b, { fill: p.soft }), arcade(9, W + 2 * b, arcH + b, p.accent2, 0.5 * s)),
       g({ x: m + 4 * s, y: m + 4 * s }, path(starPath(8, 4 * s, 1.9 * s), { fill: p.accent2 })),
       line(val(ctx, "kicker"), W - m, m + 7 * s, 7.4 * s, { font: "tajawal", weight: 800, fill: p.accent2, align: "start", maxWidth: max - 14 * s }),

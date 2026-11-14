@@ -1,4 +1,4 @@
-import { candle } from "../../lib/motifs/index.ts";
+import { candle, doubleFrame, flourishRule, ringsNode, starTile } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { weddingAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -23,7 +23,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 148, 210), n = 9, floor = H - 9 * s, tall = Math.min(H * 0.26, W * 0.24);
     const textBottom = floor - tall * 1.3 - 5 * s, Y = (k: number) => 8 + 4.5 * s + (textBottom - 8 - 4.5 * s) * k, max = W - 22 * s;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H * 0.7, 12 * z, 1.2 * z, p.accent, 0.08),
+      g({ x: W / 2, y: H * 0.9, opacity: 0.18 }, ringsNode(20 * z, 60 * z, 6, p.accent, 0.4 * z)),
       Array.from({ length: n }, (_, i) => { const k = i / (n - 1), h = tall * (0.45 + 0.55 * Math.sin(Math.PI * k)); return g({ x: W * (0.1 + 0.8 * k), y: floor }, candle(h, p.soft, p.accent2, p.accent)); }),
       rect(-b, floor, W + 2 * b, 0.6 * s, { fill: p.accent }),
       line(val(ctx, "opening"), cx, Y(0), 4.2 * s, { font: "amiri", fill: p.accent, maxWidth: max * 0.7 }),
@@ -34,6 +37,8 @@ const t: Template = {
       line(val(ctx, "date"), cx, Y(0.79), 5.4 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, Y(0.9), 4.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, Y(1), 4.4 * s, { font: "amiri", weight: 700, fill: p.accent, maxWidth: max }),
+      doubleFrame(6 * z, 6 * z, W - 12 * z, H - 12 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "star", r: 2.4 * z }),
+      flourishRule(W / 2, H * 0.48, W * 0.36, p.accent, z * 0.8),
     );
   },
 };

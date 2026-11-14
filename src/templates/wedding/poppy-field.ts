@@ -1,5 +1,5 @@
-import { poppy } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { burstLines, dotField, poppy } from "../../lib/motifs/index.ts";
+import { circle, g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -30,7 +30,10 @@ const t: Template = {
     const { W, H, p, b, v, s, cx } = dims(ctx, 148, 210), max = W - 34 * s;
     const field = [[0.08, 30, 15], [0.2, 52, 19], [0.33, 26, 13], [0.46, 44, 17], [0.6, 28, 14], [0.72, 54, 20], [0.86, 34, 15], [0.95, 22, 12]] as const;
     const heart = p.ink === inks.ivory ? inks.night : inks.black;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      g({ x: W * 0.82, y: H * 0.1 }, circle(0, 0, 9 * z, { fill: p.accent2, opacity: 0.25 }), burstLines(24, 11 * z, 17 * z, p.accent2, 0.4 * z, 0.5)),
+      dotField(0, H * 0.4, W, H * 0.3, 5 * z, 0.4 * z, p.accent2, { fade: "down", opacity: 0.3 }),
       rect(-b, H - 9 * v, W + 2 * b, 9 * v + b, { fill: p.accent2 }),
       field.map(([x, h, d]) => g({ x: x * W, y: H - h * v - 6 * v }, poppy(d * s, p.accent, heart, { stem: p.accent2, stemLength: h * v + 8 * v }))),
       line(val(ctx, "invite"), cx, 34 * v, 5.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),

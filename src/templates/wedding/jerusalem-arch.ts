@@ -1,5 +1,5 @@
-import { archPath, crescentPath, jerusalem, starPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { archPath, burstLines, crescentPath, jerusalem, starPath, starTile } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -37,7 +37,10 @@ const jerusalemArch: Template = {
     const stars: SceneNode[] = [[-0.22, 0.2], [0.2, 0.16], [-0.3, 0.33], [0.3, 0.3], [0, 0.11]].map(([x, y]) => g({ x: cx + x * aw, y: top + y * ah }, path(starPath(4, 1.5 * s, 0.45 * s), { fill: p.accent, opacity: 0.8 })));
     // Text starts below the arch's shoulders, where it is at full width.
     const y0 = top + Math.min(ah * 0.25, aw * 0.42), step = (baseY - skyH - 8 * s - y0) / 100;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 12 * z, 1.4 * z, p.accent, 0.07),
+      g({ x: W / 2, y: H * 0.86, opacity: 0.12 }, burstLines(60, 20 * z, H * 0.8, p.accent, 0.4 * z)),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       g({ x: m, y: top }, path(archPath(aw, ah, 0.74), { fill: null, stroke: p.accent, strokeWidth: 0.55 * s })),
       g({ x: m + inner, y: top + inner * 1.5 }, path(archPath(aw - 2 * inner, ah - inner * 1.5, 0.74), { fill: null, stroke: p.accent, strokeWidth: 0.18 * s })),
@@ -53,6 +56,7 @@ const jerusalemArch: Template = {
       line(val(ctx, "date"), cx, y0 + 88 * step, 6.4 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line([val(ctx, "time"), val(ctx, "venue")].filter(Boolean).join("  ·  "), cx, y0 + 97 * step, 5 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, H - m - 2 * s, 5 * s, { font: "amiri", weight: 700, fill: p.accent, maxWidth: aw }),
+      [[0.14, 0.2], [0.86, 0.22], [0.1, 0.5], [0.9, 0.48], [0.15, 0.72], [0.85, 0.7]].map(([x, y], i) => g({ x: W * x, y: H * y }, path(starPath(4, (1.4 + (i % 2) * 0.6) * z, 0.4 * z), { fill: p.accent }))),
     );
   },
 };

@@ -1,4 +1,4 @@
-import { waxSeal } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, guillocheNode, ringsNode, waxSeal } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { weddingAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -24,7 +24,10 @@ const t: Template = {
     const { W, H, p, b, s, cx } = dims(ctx, 148, 210), tip = Math.min(H * 0.34, W * 0.5), r = 13 * s;
     const initials = [val(ctx, "groom"), val(ctx, "bride")].map(x => [...x][0] ?? "").filter(Boolean).join(" ");
     const Y = (k: number) => tip + r + 12 * s + (H - 7 - 6 * s - tip - r - 12 * s) * k, max = W - 22 * s;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      guillocheNode(0, 0, W, H * 0.24, p.paper, { waves: 4, amp: 1 * z, period: 14 * z, width: 0.15 * z, opacity: 0.35 }),
+      dotField(0, H * 0.45, W, H * 0.55, 5 * z, 0.4 * z, p.accent2, { fade: "up", opacity: 0.25 }),
       path(`M${-b} ${-b} H${W + b} V${4 * s} L${cx} ${tip} L${-b} ${4 * s} Z`, { fill: p.accent }),
       path(`M${-b} ${4 * s} L${cx} ${tip} L${W + b} ${4 * s}`, { fill: null, stroke: p.ink, strokeWidth: 0.25 * s, opacity: 0.4 }),
       g({ x: cx, y: tip }, waxSeal(r, p.accent2, p.soft)),
@@ -37,6 +40,8 @@ const t: Template = {
       line(val(ctx, "date"), cx, Y(0.77), 5.4 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, Y(0.88), 4.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, Y(1), 4.4 * s, { font: "amiri", weight: 700, fill: p.accent2, maxWidth: max }),
+      g({ x: W / 2, y: H * 0.235 }, ringsNode(13 * z, 16 * z, 3, p.accent, 0.25 * z, 0.5)),
+      doubleFrame(6 * z, H * 0.35, W - 12 * z, H * 0.65 - 6 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 3 * z }),
     );
   },
 };

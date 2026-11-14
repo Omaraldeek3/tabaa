@@ -1,4 +1,4 @@
-import { pomegranate } from "../../lib/motifs/index.ts";
+import { burstLines, doubleFrame, flourishRule, pomegranate, ringsNode } from "../../lib/motifs/index.ts";
 import { circle, g, scene } from "../../lib/scene.ts";
 import { weddingAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -24,7 +24,10 @@ const t: Template = {
     const { W, H, p, s, cx } = dims(ctx, 148, 210), size = Math.min(W * 0.36, H * 0.19), py = 16 * s + size * 0.62;
     const Y = (k: number) => py + size * 0.6 + 12 * s + (H - 7 - 6 * s - py - size * 0.6 - 12 * s) * k, max = W - 22 * s;
     const seeds = [[-0.9, 0.2], [0.95, 0.35], [-0.75, 0.75], [0.7, 0.85], [-1.2, -0.2], [1.15, -0.25]].map(([x, y], i) => circle(cx + x * size, py + y * size * 0.6, (0.9 + (i % 3) * 0.3) * s, { fill: p.accent }));
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.12, opacity: 0.2 }, burstLines(40, 16 * z, 34 * z, p.accent, 0.35 * z)),
+      g({ x: W / 2, y: H * 0.12, opacity: 0.25 }, ringsNode(14 * z, 18 * z, 3, p.accent2, 0.25 * z)),
       seeds,
       g({ x: cx, y: py }, pomegranate(size, p.accent, p.accent === inks.rose ? inks.burgundy : p.ink === inks.ivory ? inks.ivory : p.ink, p.soft, p.accent2)),
       line(val(ctx, "opening"), cx, Y(0), 4.2 * s, { font: "amiri", fill: p.accent2, maxWidth: max * 0.75 }),
@@ -35,6 +38,8 @@ const t: Template = {
       line(val(ctx, "date"), cx, Y(0.77), 5.4 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, Y(0.88), 4.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, Y(1), 4.4 * s, { font: "amiri", weight: 700, fill: p.accent2, maxWidth: max }),
+      doubleFrame(7 * z, 7 * z, W - 14 * z, H - 14 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "khatam", r: 2.2 * z }),
+      flourishRule(W / 2, H * 0.47, W * 0.32, p.accent, z * 0.8),
     );
   },
 };

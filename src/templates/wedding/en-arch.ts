@@ -1,4 +1,4 @@
-import { archPath, starPath } from "../../lib/motifs/index.ts";
+import { archPath, beadRule, burstLines, dotField, starPath } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,10 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, v, s, cx } = dims(ctx, 148, 210), aw = W * 0.62, ah = 118 * v, ax = cx - aw / 2, ay = 16 * v, max = aw - 18 * s, wide = W - 30 * s;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H, 6 * z, 0.4 * z, p.accent, { opacity: 0.14 }),
+      g({ x: W / 2, y: H * 0.3, opacity: 0.12 }, burstLines(64, 50 * z, W, p.accent, 0.4 * z)),
       g({ x: ax, y: ay }, path(archPath(aw, ah, 0.5), { fill: p.accent })),
       g({ x: ax - 3.5 * s, y: ay - 3.5 * s }, path(archPath(aw + 7 * s, ah + 3.5 * s, 0.5), { fill: null, stroke: p.accent, strokeWidth: 0.3 * s })),
       g({ x: cx, y: ay + 24 * v }, path(starPath(8, 3.4 * s, 1.6 * s), { fill: p.accent2 })),
@@ -41,6 +44,7 @@ const t: Template = {
       line(val(ctx, "day"), cx, ay + ah + 37 * v, 3.4 * s, { font: "inter", weight: 700, fill: p.ink, tracking: 0.8 * s, maxWidth: wide }),
       line(val(ctx, "venue"), cx, ay + ah + 46 * v, 4.6 * s, { font: "playfairdisplay", fill: p.ink, maxWidth: wide }),
       line(val(ctx, "rsvp"), cx, ay + ah + 57 * v, 3 * s, { font: "inter", weight: 500, fill: p.soft, maxWidth: wide }),
+      beadRule(W / 2 - 30 * z, W / 2 + 30 * z, H * 0.75, p.accent, z, { bead: "diamond", pitch: 4 }),
     );
   },
 };

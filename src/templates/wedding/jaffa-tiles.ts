@@ -1,5 +1,5 @@
-import { cementTiles } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { beadRule, cementTiles, flourishRule, khatamPath } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { weddingAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -23,7 +23,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 148, 210), cell = 17 * s, top = Math.round((H * 0.25) / cell) * cell, bot = cell * 1.5;
     const Y = (k: number) => top + 4 * s + (H - bot - top - 8 * s) * k, max = W - 22 * s;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.5, opacity: 0.07 }, path(khatamPath(44 * z), { fill: p.accent }), path(khatamPath(34 * z), { fill: p.paper })),
       rect(-b, -b, W + 2 * b, top + b, { fill: p.soft }),
       g({ x: -b, y: -b }, cementTiles(W + 2 * b, top + b, cell, p.accent, p.accent2, p.ink)),
       rect(-b, H - bot, W + 2 * b, bot + b, { fill: p.soft }),
@@ -37,6 +39,8 @@ const t: Template = {
       line(val(ctx, "date"), cx, Y(0.8), 5.8 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, Y(0.88), 4.6 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, Y(0.98), 4.6 * s, { font: "amiri", weight: 700, fill: p.accent2, maxWidth: max }),
+      flourishRule(W / 2, H * 0.68, W * 0.44, p.accent, z),
+      [H * 0.29].map(y => beadRule(W / 2 - 40 * z, W / 2 + 40 * z, y, p.accent, z, { bead: "dot", pitch: 3 })),
     );
   },
 };

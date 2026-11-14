@@ -1,5 +1,5 @@
-import { keffiyeh, tatreezUnit } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { keffiyeh, khatamPath, starTile, tatreezUnit } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -30,7 +30,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, v, s, cx } = dims(ctx, 148, 210), max = W - 30 * s, band = 26 * v;
     const strip = (y: number) => g({ x: -b, y }, rect(0, 0, W + 2 * b, band + b, { fill: p.accent }), keffiyeh(W + 2 * b, band + b, 6 * s, inks.paper, 0.13));
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      starTile(0, H * 0.14, W, H * 0.72, 10 * z, 1.2 * z, p.accent, 0.06),
       strip(-b), strip(H - band),
       rect(-b, band, W + 2 * b, 1.4 * s, { fill: p.accent2 }), rect(-b, H - band - 1.4 * s, W + 2 * b, 1.4 * s, { fill: p.accent2 }),
       line(val(ctx, "opening"), cx, band + 16 * v, 4.8 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
@@ -41,6 +43,7 @@ const t: Template = {
       line(val(ctx, "bride"), cx, band + 101 * v, 19 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "date"), cx, band + 121 * v, 6.4 * s, { font: "amiri", weight: 700, fill: p.accent2, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, band + 131 * v, 5.2 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
+      [16 * z, W - 16 * z].map(x => g({ x, y: H * 0.5 }, path(khatamPath(3 * z), { fill: p.accent }), circle(0, 0, 1 * z, { fill: p.paper }))),
     );
   },
 };

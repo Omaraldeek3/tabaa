@@ -1,6 +1,6 @@
-import { tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, scene } from "../../lib/scene.ts";
-import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
+import { flourishRule, guillocheNode, tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
+import { g, scene, type SceneNode } from "../../lib/scene.ts";
+import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
 const t: Template = {
@@ -32,7 +32,9 @@ const t: Template = {
     const n = Math.floor((H - 30 * s) / (unit * 1.12)), gap = (H - 30 * s - n * unit) / Math.max(1, n - 1);
     const column = (x: number): SceneNode[] => Array.from({ length: n }, (_, i) => g({ x, y: 15 * s + i * (unit + gap) }, tatreezUnit(i % 3 === 1 ? "rose" : "cypress", unit, [p.accent, p.accent2])));
     const y = (k: number) => 15 * s + (H - 30 * s) * k;
+    const z = Math.min(W, H) / 99;
     return scene(W, H, p.paper,
+      guillocheNode(W * 0.25, H * 0.12, W * 0.5, H * 0.76, p.accent, { waves: 14, amp: 0.8 * z, period: 10 * z, width: 0.12 * z, opacity: 0.18 }),
       g({ x: -b, y: 5 * s }, tatreezBand("chain", W + 2 * b, 5 * s, [p.accent, p.accent2])),
       g({ x: -b, y: H - 10 * s }, tatreezBand("chain", W + 2 * b, 5 * s, [p.accent, p.accent2])),
       column(m), column(W - m - unit),
@@ -46,6 +48,7 @@ const t: Template = {
       line(val(ctx, "time"), cx, y(0.8), 4.8 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "venue"), cx, y(0.86), 4.8 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, y(0.95), 4.2 * s, { font: "amiri", weight: 700, fill: p.accent2 === inks.olive ? p.accent : p.accent2, maxWidth: max }),
+      flourishRule(W / 2, H * 0.6, W * 0.4, p.accent2, z * 0.8),
     );
   },
 };

@@ -1,5 +1,5 @@
-import { jasmine, leafPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, flourishRule, jasmine, leafPath, rosetteLines } from "../../lib/motifs/index.ts";
+import { g, path, scene, type SceneNode } from "../../lib/scene.ts";
 import { weddingAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -32,7 +32,10 @@ const t: Template = {
       return out;
     };
     const Y = (k: number) => 44 * s + (H - 92 * s) * k;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H, 6 * z, 0.4 * z, p.accent, { opacity: 0.12 }),
+      g({ x: W / 2, y: H * 0.42, opacity: 0.12 }, rosetteLines(36 * z, p.accent, { rings: 4, lobes: 10, width: 0.3 * z })),
       spray(1), spray(-1),
       line(val(ctx, "opening"), cx, Y(0), 4.2 * s, { font: "amiri", fill: p.accent2, maxWidth: max * 0.7 }),
       line(val(ctx, "invite"), cx, Y(0.12), 5 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
@@ -42,6 +45,8 @@ const t: Template = {
       line(val(ctx, "date"), cx, Y(0.8), 5.6 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, Y(0.9), 4.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "families"), cx, Y(1), 4.4 * s, { font: "amiri", weight: 700, fill: p.accent2, maxWidth: max }),
+      doubleFrame(7 * z, 7 * z, W - 14 * z, H - 14 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.3 * z, thin: 0.15 * z, corner: "dot", r: 2 * z }),
+      flourishRule(W / 2, H * 0.66, W * 0.36, p.accent, z * 0.8),
     );
   },
 };

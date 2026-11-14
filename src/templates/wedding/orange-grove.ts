@@ -1,5 +1,5 @@
-import { leafPath, orange } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, flourishRule, leafPath, orange } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -32,7 +32,9 @@ const t: Template = {
       [[58, 20, 20], [30, 58, 70], [6, 66, 95], [60, 6, -10], [52, 40, 45]].map(([x, yy, a]) => g({ x: x * s, y: yy * s, rotate: a }, path(leafPath(15 * s, 3.4 * s), { fill: p.accent2 }))),
       [[20, 18, 24], [44, 12, 19], [14, 44, 20], [38, 36, 16]].map(([x, yy, d]) => g({ x: x * s, y: yy * s }, orange(d * s, p.accent, p.accent2, inks.ivory))));
     const names = p.soft === inks.navy ? inks.navy : p.accent;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.45, W, H * 0.55, 5 * z, 0.45 * z, p.accent, { fade: "up", opacity: 0.25 }),
       cluster(1), cluster(-1),
       line(val(ctx, "invite"), cx, y(0.14), 5.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "groom"), cx, y(0.32), 21 * s, { font: ctx.font, weight: 700, fill: names, maxWidth: max }),
@@ -42,6 +44,8 @@ const t: Template = {
       line(val(ctx, "date"), cx, y(0.7), 6.6 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, y(0.77), 5.2 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "closing"), cx, y(0.87), 4.6 * s, { font: "amiri", weight: 700, fill: p.accent2, maxWidth: max }),
+      doubleFrame(7 * z, H * 0.36, W - 14 * z, H * 0.64 - 7 * z, p.accent2, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 3 * z }),
+      flourishRule(W / 2, H * 0.72, W * 0.36, p.accent, z * 0.8),
     );
   },
 };

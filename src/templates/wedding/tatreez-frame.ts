@@ -1,4 +1,4 @@
-import { khatamPath, tatreezBand, tatreezFrame } from "../../lib/motifs/index.ts";
+import { beadRule, dotField, khatamPath, rosetteLines, tatreezBand, tatreezFrame } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -35,7 +35,10 @@ const tatreezFrameInvite: Template = {
     const inset = 7 * s, band = 8.4 * s, max = W - 2 * (inset + band + 6 * s);
     const body = "amiri";
     const bandLen = 58 * s;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.46, opacity: 0.1 }, rosetteLines(40 * z, p.accent, { rings: 6, lobes: 16, width: 0.3 * z })),
+      dotField(14 * z, 14 * z, W - 28 * z, H - 28 * z, 5 * z, 0.35 * z, p.accent, { opacity: 0.12 }),
       g({ x: inset, y: inset }, tatreezFrame(W - 2 * inset, H - 2 * inset, band, [p.accent, p.accent2])),
       g({ x: cx, y: 34 * v }, path(khatamPath(4.2 * s), { fill: p.accent }), path(khatamPath(1.8 * s), { fill: p.paper })),
       line(val(ctx, "opening"), cx, 50 * v, 5.4 * s, { font: body, fill: p.ink, maxWidth: max }),
@@ -50,6 +53,7 @@ const tatreezFrameInvite: Template = {
       line(val(ctx, "time"), cx, 171 * v, 5.2 * s, { font: body, fill: p.ink, maxWidth: max }),
       line(val(ctx, "venue"), cx, 180 * v, 5.6 * s, { font: body, fill: p.ink, maxWidth: max }),
       line(val(ctx, "closing"), cx, 189.5 * v, 4.4 * s, { font: body, fill: p.accent, maxWidth: max }),
+      [H * 0.105].map(y => beadRule(W / 2 - 34 * z, W / 2 + 34 * z, y, p.accent, z, { bead: "diamond", pitch: 4 })),
     );
   },
 };

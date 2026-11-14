@@ -1,4 +1,4 @@
-import { keffiyeh, khatamPath } from "../../lib/motifs/index.ts";
+import { dotField, guillocheNode, keffiyeh, khatamPath } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -31,7 +31,10 @@ const modernKufi: Template = {
     const { widthMm: W, heightMm: H } = ctx.size, p = ctx.palette, b = ctx.bleedMm + 0.5;
     const s = Math.min(W / 150, H / 150), m = 12 * s, right = W - m, max = W - 2 * m;
     const panelH = H * 0.6, stripe = 7 * s, foot = H - panelH - stripe;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      guillocheNode(0, 0, W, H * 0.6, p.paper, { waves: 8, amp: 1.4 * z, period: 18 * z, width: 0.15 * z, opacity: 0.12 }),
+      dotField(0, H * 0.72, W, H * 0.28, 5 * z, 0.5 * z, p.accent, { fade: "up", opacity: 0.25 }),
       rect(-b, -b, W + 2 * b, panelH + b, { fill: p.accent }),
       g({ x: -b, y: panelH }, rect(0, 0, W + 2 * b, stripe, { fill: p.ink }), g({ opacity: 0.5 }, keffiyeh(W + 2 * b, stripe, stripe / 2, p.paper, 0.12))),
       g({ x: m + 7 * s, y: m + 7 * s }, path(khatamPath(7 * s), { fill: null, stroke: inks.paper, strokeWidth: 0.4 * s }), path(khatamPath(2.6 * s), { fill: p.accent2 })),
