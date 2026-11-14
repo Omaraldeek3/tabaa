@@ -1,3 +1,4 @@
+import { burstLines } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -34,6 +35,9 @@ const t: Template = {
       rect(0, -5.2 * s, bw, 1 * s, { fill: p.accent2 }),
       [7 * s, bw - 7 * s].map(x => g({}, circle(x, -1.6 * s, 2.6 * s, { fill: p.ink }), circle(x, -1.6 * s, 1 * s, { fill: p.soft }))));
     return scene(W, H, p.paper,
+      g({ x: bx + bw + 10 * s, y: 14 * s }, circle(0, 0, 4 * s, { fill: p.accent2, opacity: 0.9 }), burstLines(16, 5.4 * s, 8 * s, p.accent2, 0.4 * s)),
+      path(`M${stub} ${by - 2 * s} L${stub + 14 * s} ${by - 16 * s} L${stub + 24 * s} ${by - 8 * s} L${stub + 36 * s} ${by - 22 * s} L${stub + 52 * s} ${by - 4 * s} V${by + 2 * s} H${stub} Z`, { fill: p.paper, opacity: 0.35 }),
+      [0, 1, 2].map(i => g({ x: stub + 8 * s + i * 11 * s, y: 12 * s + (i % 2) * 4 * s }, path(`M${-3 * s} 0 Q${-1.5 * s} ${-2 * s} 0 0 Q${1.5 * s} ${-2 * s} ${3 * s} 0`, { fill: null, stroke: p.ink, strokeWidth: 0.3 * s, opacity: 0.6 }))),
       path(Array.from({ length: 14 }, (_, i) => `M${stub + 4 * s + i * 4 * s} ${by + 2 * s} h${2 * s}`).join(" "), { fill: null, stroke: p.ink, strokeWidth: 0.5 * s }),
       bus,
       tearLine(stub, H, p.ink, p.soft, s),
@@ -42,6 +46,7 @@ const t: Template = {
       line(val(ctx, "date"), R, 36 * s, 3.4 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: tw }),
       line(val(ctx, "price"), R, 43 * s, 3 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: tw }),
       [18, 30, 42].map((y, i) => [rect(5 * s, y * s, stub - 10 * s, 0.25 * s, { fill: p.ink }), line(["اسم الطالب", "الصف", "توقيع وليّ الأمر"][i], stub - 5 * s, y * s - 1.2 * s, 2.3 * s, { font: "tajawal", fill: p.ink, align: "start", safe: false })]),
+      [0, 1, 2, 3].map(i => g({ x: bx + bw + 4 * s + i * 4 * s, y: by + 2 * s }, path(`M0 0 L${1.2 * s} ${-3.4 * s} L${2.4 * s} 0 Z`, { fill: p.accent, opacity: 0.7 }))),
     );
   },
 };

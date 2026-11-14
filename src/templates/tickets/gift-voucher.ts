@@ -1,3 +1,4 @@
+import { dotField, doubleFrame, rosetteLines, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -34,6 +35,9 @@ const t: Template = {
       rect(-3.4 * s, -3.4 * s, 6.8 * s, 6.8 * s, { fill: p.accent2, r: 1.4 * s }));
     const fill = (label: string, v: string, y: number) => [rect(R - tw, y, tw * 0.86, 0.3 * s, { fill: p.ink }), line(label, R, y - 0.4 * s, 3.4 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", safe: false }), line(v, R - 12 * s, y - 1.4 * s, 4.4 * s, { font: ctx.font, fill: p.ink, align: "start", maxWidth: tw * 0.7 })];
     return scene(W, H, p.paper,
+      dotField(rx + rw, 0, W - rx - rw, H, 4 * s, 0.6 * s, p.paper, { fade: "left", opacity: 0.6 }),
+      g({ x: rx, y: H * 0.62, opacity: 0.25 }, rosetteLines(22 * s, p.accent, { rings: 5, lobes: 14, width: 0.25 * s })),
+      starTile(0, 0, rx - rw / 2 - 2 * s, H, 10 * s, 1.6 * s, p.accent, 0.08),
       rect(rx - rw / 2, -b, rw, H + 2 * b, { fill: p.accent }),
       bow,
       line(val(ctx, "title"), R, 22 * s, 13 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: tw }),
@@ -41,6 +45,7 @@ const t: Template = {
       line(val(ctx, "shop"), R, 54 * s, 4 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: tw }),
       fill("إلى:", val(ctx, "to"), 68 * s), fill("من:", val(ctx, "from"), 79 * s),
       line(val(ctx, "valid"), R, 90 * s, 3 * s, { font: "tajawal", fill: p.soft, align: "start", maxWidth: tw }),
+      doubleFrame(4 * s, 4 * s, W - 8 * s, H - 8 * s, p.accent, p.paper, { gap: 2 * s, heavy: 0.5 * s, thin: 0.2 * s, corner: "diamond", r: 2 * s }),
     );
   },
 };

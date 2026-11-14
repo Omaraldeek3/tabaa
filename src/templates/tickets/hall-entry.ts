@@ -1,5 +1,5 @@
-import { khatamPath } from "../../lib/motifs/index.ts";
-import { g, path, rect, scene } from "../../lib/scene.ts";
+import { khatamPath, rosetteLines, starTile } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -30,6 +30,8 @@ const t: Template = {
     const { W, H, p, s, cx } = dims(ctx, 140, 50), m = 3.6 * s, max = W - 30 * s;
     const corners = [[m, m], [W - m, m], [m, H - m], [W - m, H - m]].map(([x, y]) => g({ x, y }, path(khatamPath(2.6 * s), { fill: p.accent })));
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 9 * s, 1.4 * s, p.accent, 0.07),
+      g({ x: cx, y: H / 2, opacity: 0.18 }, rosetteLines(H * 0.42, p.accent, { rings: 6, lobes: 18, width: 0.2 * s })),
       rect(m, m, W - 2 * m, H - 2 * m, { fill: null, stroke: p.accent, strokeWidth: 0.6 * s }),
       rect(m + 1.6 * s, m + 1.6 * s, W - 2 * m - 3.2 * s, H - 2 * m - 3.2 * s, { fill: null, stroke: p.accent, strokeWidth: 0.2 * s }),
       corners,
@@ -37,6 +39,7 @@ const t: Template = {
       line(val(ctx, "title"), cx, 26 * s, 10 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
       line([val(ctx, "guests"), val(ctx, "table")].filter(Boolean).join("  ·  "), cx, 34.4 * s, 4 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "note"), cx, 41.4 * s, 2.5 * s, { font: "tajawal", fill: p.soft, maxWidth: max }),
+      [cx - max / 2 + 4 * s, cx + max / 2 - 4 * s].map(x => g({ x, y: H / 2 }, path(khatamPath(2.4 * s), { fill: p.accent }), circle(0, 0, 0.8 * s, { fill: p.paper }))),
     );
   },
 };

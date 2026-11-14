@@ -1,5 +1,5 @@
-import { tatreezBand } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { beadRule, guillocheNode, khatamPath, tatreezBand } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, more, pal, val } from "../kit.ts";
 import { tearLine } from "../ticket-kit.ts";
@@ -31,6 +31,8 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 160, 60), stub = W * 0.24, R = W - 6 * s, tw = W - stub - 14 * s;
     return scene(W, H, p.paper,
+      guillocheNode(stub, 6 * s, W - stub, H - 6 * s, p.accent, { waves: 6, amp: 1.2 * s, period: 16 * s, width: 0.15 * s, opacity: 0.18 }),
+      g({ x: stub + (W - stub) * 0.2, y: H * 0.58, opacity: 0.08 }, path(khatamPath(18 * s), { fill: p.accent })),
       g({ x: stub, y: -b }, tatreezBand("zigzag", W - stub + b, 7 * s + b, [p.accent, p.accent2])),
       tearLine(stub, H, p.ink, p.soft, s),
       line(val(ctx, "title"), R, 23 * s, 10 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: tw }),
@@ -40,6 +42,8 @@ const t: Template = {
       rect(4 * s, 6 * s, stub - 8 * s, H - 12 * s, { fill: p.accent, r: 1.4 * s }),
       line(val(ctx, "number") ? "رقم" : "", stub / 2, 22 * s, 3.2 * s, { font: "tajawal", weight: 700, fill: p.paper === inks.navy ? inks.navy : inks.ivory, safe: false }),
       line(val(ctx, "number"), stub / 2, 36 * s, 8 * s, { font: ctx.font, weight: 700, fill: p.paper === inks.navy ? inks.navy : inks.ivory, maxWidth: stub - 12 * s }),
+      rect(stub + 4 * s, H - 5 * s, W - stub - 8 * s, 0.25 * s, { fill: p.accent }),
+      beadRule(stub + 4 * s, stub + (W - stub) * 0.45, H - 7 * s, p.accent, s, { bead: "diamond", pitch: 3 }),
     );
   },
 };

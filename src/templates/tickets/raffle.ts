@@ -1,4 +1,4 @@
-import { starPath } from "../../lib/motifs/index.ts";
+import { beadRule, burstLines, guillocheNode, starPath } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -30,6 +30,8 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s } = dims(ctx, 140, 50), stub = W * 0.3, R = W - 5 * s, tw = W - stub - 32 * s, ink2 = p.paper === inks.teal ? inks.ivory : p.ink;
     return scene(W, H, p.paper,
+      g({ x: stub + 22 * s, y: H / 2, opacity: 0.25 }, burstLines(36, 10 * s, 26 * s, p.paper, 0.6 * s)),
+      guillocheNode(stub, 0, W - stub, H, p.paper, { waves: 5, amp: 1 * s, period: 14 * s, width: 0.15 * s, opacity: 0.25 }),
       tearLine(stub, H, ink2, p.soft === p.ink ? inks.ivory : p.soft, s),
       g({ x: stub + 15 * s, y: H * 0.5 }, path(starPath(12, 13 * s, 10 * s), { fill: p.accent })),
       line(val(ctx, "number"), stub + 15 * s, H * 0.5 + 2.4 * s, 7 * s, { font: ctx.font, weight: 700, fill: p.accent2, maxWidth: 18 * s }),
@@ -39,6 +41,7 @@ const t: Template = {
       line(val(ctx, "draw"), R, 40 * s, 2.9 * s, { font: "tajawal", weight: 500, fill: ink2, align: "start", maxWidth: tw }),
       line(val(ctx, "number"), stub / 2, 13 * s, 7 * s, { font: ctx.font, weight: 700, fill: ink2, maxWidth: stub - 10 * s }),
       [24, 33, 42].map((y, i) => [rect(5 * s, y * s, stub - 10 * s, 0.25 * s, { fill: ink2 }), line(["الاسم", "الهاتف", "البلد"][i], stub - 5 * s, y * s - 1 * s, 2.2 * s, { font: "tajawal", fill: ink2, align: "start", safe: false })]),
+      beadRule(R - tw, R, H - 3.4 * s, p.accent, s, { bead: "dot", pitch: 2.6 }),
     );
   },
 };

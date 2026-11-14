@@ -1,4 +1,5 @@
-import { rect, scene } from "../../lib/scene.ts";
+import { dotField, ringsNode } from "../../lib/motifs/index.ts";
+import { g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
 import { barcode, tearLine } from "../ticket-kit.ts";
@@ -30,6 +31,8 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s } = dims(ctx, 160, 60), stub = W * 0.72, L = 14 * s, tw = stub - L - 6 * s, ltr = { align: "start" as const, dir: "ltr" as const };
     return scene(W, H, p.paper,
+      g({ x: stub, y: H / 2, opacity: 0.18 }, ringsNode(6 * s, 40 * s, 10, p.accent, 0.3 * s)),
+      dotField(L, 4 * s, stub - L - 4 * s, H - 8 * s, 3 * s, 0.35 * s, inks.white, { fade: "left", opacity: 0.18 }),
       [p.accent, p.accent2, p.soft].map((c, i) => rect(-4, i * H / 3 - 1, 8 * s + 4, H / 3 + 2, { fill: c })),
       tearLine(stub, H, p.ink, p.soft, s),
       line(val(ctx, "tour"), L, 15 * s, 3.4 * s, { ...ltr, font: "inter", weight: 600, fill: p.accent, maxWidth: tw }),
@@ -38,6 +41,7 @@ const t: Template = {
       line([val(ctx, "venue"), val(ctx, "seat")].filter(Boolean).join("  ·  "), L, 47.6 * s, 3 * s, { ...ltr, font: "inter", fill: p.ink, maxWidth: tw }),
       val(ctx, "number") ? barcode(stub + 6 * s, 12 * s, W - stub - 12 * s, 26 * s, val(ctx, "number"), p.ink) : [],
       line(val(ctx, "number"), stub + 6 * s, 46 * s, 3 * s, { ...ltr, font: "inter", weight: 600, fill: p.ink, maxWidth: W - stub - 12 * s }),
+      [0, 1, 2, 3, 4, 5, 6].map(i => rect(stub - 10 * s + i * 1.4 * s, 8 * s + (i % 3) * 1.5 * s, 0.7 * s, 6 * s - (i % 3) * 1.5 * s, { fill: p.accent2 })),
     );
   },
 };

@@ -1,3 +1,4 @@
+import { dotField, hatch, khatamPath, ringsNode } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -30,6 +31,9 @@ const t: Template = {
     const dash = (x0: number, y0: number, x1: number, y1: number) => { const len = Math.hypot(x1 - x0, y1 - y0), n = Math.floor(len / (3 * s)); return Array.from({ length: n }, (_, i) => `M${x0 + (x1 - x0) * i / n} ${y0 + (y1 - y0) * i / n} L${x0 + (x1 - x0) * (i + 0.5) / n} ${y0 + (y1 - y0) * (i + 0.5) / n}`).join(" "); };
     const scissors = g({ x: 14 * s, y: m, rotate: 0 }, path(`M0 0 l${4 * s} ${1.2 * s} M0 0 l${4 * s} ${-1.2 * s}`, { fill: null, stroke: p.ink, strokeWidth: 0.5 * s }), path(`M${-1.2 * s} ${-1.4 * s} a${1.1 * s} ${1.1 * s} 0 1 0 0.01 0 Z M${-1.2 * s} ${1.4 * s} a${1.1 * s} ${1.1 * s} 0 1 0 0.01 0 Z`, { fill: null, stroke: p.ink, strokeWidth: 0.5 * s }));
     return scene(W, H, p.paper,
+      hatch(m + 2 * s, m + 2 * s, L - m - 4 * s, H - 2 * m - 4 * s, 2.4 * s, p.accent, 0.2 * s, 0.12),
+      g({ x: L / 2 + 1 * s, y: H / 2 }, ringsNode(14 * s, 24 * s, 4, p.accent2, 0.35 * s, 0.35)),
+      dotField(L, m + 2 * s, W - L - m - 2 * s, H - 2 * m - 4 * s, 3 * s, 0.4 * s, p.soft, { fade: "right", opacity: 0.35 }),
       path(`${dash(m, m, W - m, m)} ${dash(W - m, m, W - m, H - m)} ${dash(W - m, H - m, m, H - m)} ${dash(m, H - m, m, m)}`, { fill: null, stroke: p.ink, strokeWidth: 0.45 * s }),
       rect(14 * s - 3 * s, m - 2.4 * s, 9 * s, 4.8 * s, { fill: p.paper }), scissors,
       line(val(ctx, "amount"), L / 2 + 3 * s, H * 0.66, 30 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: L - 14 * s }),
@@ -38,6 +42,8 @@ const t: Template = {
       val(ctx, "code") ? rect(R - 34 * s, 33 * s, 34 * s, 10 * s, { fill: p.accent2, r: 1 * s }) : null,
       line(val(ctx, "code"), R - 17 * s, 40.4 * s, 5.4 * s, { font: "inter", weight: 800, fill: p.paper === inks.mustard ? inks.mustard : inks.white, maxWidth: 30 * s, tracking: 0.6 * s }),
       line(val(ctx, "valid"), R, 50 * s, 2.8 * s, { font: "tajawal", fill: p.soft, align: "start", maxWidth: tw }),
+      rect(L - 0.15 * s, 10 * s, 0.3 * s, H - 20 * s, { fill: p.soft }),
+      [0, 1].map(i => g({ x: L, y: i ? H - 10 * s : 10 * s }, path(khatamPath(1.6 * s), { fill: p.accent }))),
     );
   },
 };
