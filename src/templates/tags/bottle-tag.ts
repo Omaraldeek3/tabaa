@@ -1,4 +1,4 @@
-import { oliveBranch } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, oliveBranch, ringsNode, rosetteLines, starTile } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, val } from "../kit.ts";
@@ -28,6 +28,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 60, 110), hr = 13 * s, hy = 18 * s;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 8 * s, 1.2 * s, p.accent, 0.08),
+      dotField(0, H * 0.72, W, H * 0.28, 3 * s, 0.45 * s, p.accent, { fade: "up", opacity: 0.5 }),
+      g({ x: cx, y: hy }, ringsNode(hr + 1.6 * s, hr + 3.6 * s, 3, p.accent, 0.25 * s, 0.7), rosetteLines(hr + 6 * s, p.accent, { rings: 2, lobes: 16, width: 0.2 * s, opacity: 0.6 })),
       circle(cx, hy, hr, { fill: inks.white }), circle(cx, hy, hr, { fill: null, stroke: p.soft, strokeWidth: 0.4 * s }),
       path(`M${cx} ${hy + hr} L${cx} ${hy + hr + 6 * s}`, { fill: null, stroke: p.soft, strokeWidth: 0.4 * s }),
       g({ x: cx - 13 * s, y: 46 * s, rotate: -6 }, oliveBranch(26 * s, p.accent, p.accent2, { leaves: 7, olives: 3 })),
@@ -36,6 +39,7 @@ const t: Template = {
       line(val(ctx, "family"), cx, 74 * s, 3.8 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: W - 12 * s }),
       line(val(ctx, "place"), cx, 81 * s, 3.4 * s, { font: "amiri", fill: p.ink, maxWidth: W - 12 * s }),
       line(val(ctx, "season"), cx, 96 * s, 3.4 * s, { font: "tajawal", weight: 800, fill: p.accent2, maxWidth: W - 12 * s }),
+      doubleFrame(3 * s, 3 * s, W - 6 * s, H - 6 * s, p.accent, p.paper, { gap: 1.6 * s, heavy: 0.4 * s, thin: 0.15 * s, corner: "khatam", r: 1.8 * s }),
     );
   },
 };

@@ -1,4 +1,4 @@
-import { archPath, dove } from "../../lib/motifs/index.ts";
+import { archPath, beadRule, dotField, dove, starTile } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -27,12 +27,15 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, u, cx } = dims(ctx, 45, 75), s = u, m = 4 * s;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 6 * s, 0.8 * s, p.accent, 0.08),
+      dotField(m, H * 0.7, W - 2 * m, H * 0.25, 2.4 * s, 0.3 * s, p.accent, { fade: "up", opacity: 0.35 }),
       circle(cx, 6.4 * s, 2 * s, { fill: null, stroke: p.accent, strokeWidth: 0.5 * s }),
       g({ x: m, y: 12 * s }, path(archPath(W - 2 * m, H - 12 * s - m, 0.5), { fill: null, stroke: p.accent, strokeWidth: 0.4 * s })),
       g({ x: cx, y: 25 * s }, dove(14 * s, p.accent2, p.paper)),
       line(val(ctx, "thanks"), cx, 40 * s, 3.4 * s, { font: "amiri", fill: p.ink, maxWidth: W - 12 * s }),
       line(val(ctx, "names"), cx, 52 * s, 7 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: W - 12 * s }),
       line(val(ctx, "date"), cx, 60 * s, 2.8 * s, { font: "amiri", fill: p.ink, maxWidth: W - 14 * s }),
+      beadRule(m + 3 * s, W - m - 3 * s, H - m - 3 * s, p.accent, s, { bead: "dot", pitch: 2.2 }),
     );
   },
 };

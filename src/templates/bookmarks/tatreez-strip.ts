@@ -1,4 +1,4 @@
-import { tatreezUnit } from "../../lib/motifs/index.ts";
+import { beadRule, dotField, tatreezUnit } from "../../lib/motifs/index.ts";
 import { circle, g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -25,10 +25,12 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, u, cx } = dims(ctx, 50, 150), s = u, size = 22 * s, order = ["cypress", "star", "rose", "cypress", "star"] as const;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H, 3 * s, 0.3 * s, p.soft, { opacity: 0.25 }),
       circle(cx, 7 * s, 2.2 * s, { fill: null, stroke: p.soft, strokeWidth: 0.4 * s }),
       rect(cx - size / 2 - 2 * s, 13 * s, 0.5 * s, 112 * s, { fill: p.accent }), rect(cx + size / 2 + 1.5 * s, 13 * s, 0.5 * s, 112 * s, { fill: p.accent }),
       order.map((n, i) => g({ x: cx - size / 2, y: 14 * s + i * size }, tatreezUnit(n, size * 0.98, [i % 2 ? p.accent2 : p.accent, p.accent2]))),
       line(val(ctx, "name"), cx, 138 * s, 5 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W - 10 * s }),
+      [9, W / s - 9].map(x => g({ x: x * s, y: 0, rotate: 90 }, beadRule(10 * s, H - 26 * s, 0, p.accent2, s, { bead: "dot", pitch: 3 }))),
     );
   },
 };

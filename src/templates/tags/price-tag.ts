@@ -1,3 +1,4 @@
+import { dotField, guillocheNode, stepEdge } from "../../lib/motifs/index.ts";
 import { circle, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -29,6 +30,8 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, u, cx } = dims(ctx, 45, 75), s = u, band = 18 * s;
     return scene(W, H, p.paper,
+      guillocheNode(-b, -b, W + 2 * b, band + b, inks.white, { waves: 3, amp: 0.8 * s, period: 10 * s, width: 0.12 * s, opacity: 0.2 }),
+      dotField(0, H * 0.8, W, H * 0.2, 2.4 * s, 0.35 * s, p.soft, { fade: "up", opacity: 0.45 }),
       rect(-b, -b, W + 2 * b, band + b, { fill: p.accent }),
       circle(cx, 6 * s, 2 * s, { fill: inks.white }), circle(cx, 6 * s, 2 * s, { fill: null, stroke: p.soft, strokeWidth: 0.4 * s }),
       line(val(ctx, "brand"), cx, 15 * s, 5.6 * s, { font: ctx.font, weight: 700, fill: p.paper, maxWidth: W - 10 * s }),
@@ -38,6 +41,8 @@ const t: Template = {
       line(val(ctx, "price"), cx, 50 * s, 9 * s, { font: ctx.font, weight: 700, fill: p.accent2, maxWidth: W - 9 * s }),
       val(ctx, "code") ? barcode(cx - 15 * s, 55 * s, 30 * s, 10 * s, val(ctx, "code"), p.ink) : [],
       line(val(ctx, "code"), cx, 69 * s, 2.4 * s, { font: "inter", weight: 600, fill: p.ink, maxWidth: 30 * s }),
+      stepEdge(-b, band + 1.2 * s, W + 2 * b, 1.2 * s, p.accent),
+      rect(3 * s, band + 3 * s, W - 6 * s, H - band - 6 * s, { fill: null, stroke: p.soft, strokeWidth: 0.2 * s, r: 1 * s }),
     );
   },
 };

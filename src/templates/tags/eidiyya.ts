@@ -1,4 +1,4 @@
-import { crescentPath, lantern, starPath } from "../../lib/motifs/index.ts";
+import { crescentPath, dotField, doubleFrame, lantern, starPath, starTile } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -28,6 +28,8 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, u, cx } = dims(ctx, 55, 90), s = u;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 7 * s, 1 * s, p.accent, 0.08),
+      dotField(0, H * 0.75, W, H * 0.25, 2.6 * s, 0.4 * s, p.accent, { fade: "up", opacity: 0.5 }),
       circle(cx, 6 * s, 2.4 * s, { fill: null, stroke: p.soft, strokeWidth: 0.5 * s }),
       rect(W * 0.3 - 0.15 * s, 9 * s, 0.3 * s, 6 * s, { fill: p.accent }),
       g({ x: W * 0.3, y: 15 * s }, lantern(20 * s, p.accent, p.accent2)),
@@ -38,6 +40,7 @@ const t: Template = {
       val(ctx, "amount") ? rect(cx - 15 * s, 61 * s, 30 * s, 11 * s, { fill: null, stroke: p.accent, strokeWidth: 0.5 * s, r: 1.4 * s }) : null,
       line(val(ctx, "amount"), cx, 68.6 * s, 5.4 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: 26 * s }),
       line(val(ctx, "from"), cx, 80 * s, 3 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: W - 10 * s }),
+      doubleFrame(2.6 * s, 2.6 * s, W - 5.2 * s, H - 5.2 * s, p.accent, p.paper, { gap: 1.4 * s, heavy: 0.35 * s, thin: 0.15 * s, corner: "star", r: 1.8 * s }),
     );
   },
 };
