@@ -192,6 +192,14 @@ import programmes_programme from "./programmes/programme.ts";
 import programmes_tableNumber from "./programmes/table-number.ts";
 import programmes_welcomeSign from "./programmes/welcome-sign.ts";
 import programmes_enTableNumber from "./programmes/en-table-number.ts";
+import stationery_complimentSlip from "./stationery/compliment-slip.ts";
+import stationery_deliveryNote from "./stationery/delivery-note.ts";
+import stationery_invoice from "./stationery/invoice.ts";
+import stationery_letterhead from "./stationery/letterhead.ts";
+import stationery_prescription from "./stationery/prescription.ts";
+import stationery_quotation from "./stationery/quotation.ts";
+import stationery_receiptVoucher from "./stationery/receipt-voucher.ts";
+import stationery_enLetterhead from "./stationery/en-letterhead.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -387,6 +395,14 @@ export const templates: Template[] = [
   programmes_tableNumber,
   programmes_welcomeSign,
   programmes_enTableNumber,
+  stationery_complimentSlip,
+  stationery_deliveryNote,
+  stationery_invoice,
+  stationery_letterhead,
+  stationery_prescription,
+  stationery_quotation,
+  stationery_receiptVoucher,
+  stationery_enLetterhead,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
