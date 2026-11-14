@@ -1,4 +1,5 @@
-import { path, rect, scene } from "../../lib/scene.ts";
+import { beadRule, dotField, hatch, stampRing } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { ml, priced, tf } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, rows, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -30,14 +31,24 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, u, v } = dims(ctx, 210, 297), s = u, R = W - 18 * s, L = 18 * s, items = rows(ctx, "items", 8), top = 92 * v, ch = Math.min(16 * v, (H - top - 92 * v) / Math.max(items.length, 1));
     return scene(W, H, p.paper,
+      path(`M${-b} ${-b} H${W + b} V${46 * v} L${-b} ${68 * v} Z`, { fill: p.accent2 }),
       path(`M${-b} ${-b} H${W + b} V${40 * v} L${-b} ${62 * v} Z`, { fill: p.accent }),
+      dotField(-b, -b, W * 0.45, 46 * v, 4 * s, 0.6 * s, inks.white, { fade: "left", opacity: 0.35 }),
+      hatch(L, H - 70 * v, R - L, 34 * v, 3 * s, p.accent, 0.15 * s, 0.12),
+      rect(L, H - 70 * v, R - L, 34 * v, { fill: null, stroke: p.soft, strokeWidth: 0.3 * s, r: 1.6 * s }),
+      rect(R - 30 * s, H - 72 * v, 30 * s, 4 * v, { fill: p.accent, r: 1 * s }),
+      line("الشروط", R - 15 * s, H - 69 * v, 2.8 * s, { font: "tajawal", weight: 800, fill: inks.white, safe: false }),
+      g({ x: L + 18 * s, y: H - 53 * v, rotate: -12, opacity: 0.8 }, stampRing(13 * s, p.accent, s), line("معتمد", 0, 1.6 * s, 4.4 * s, { font: "tajawal", weight: 800, fill: p.accent, safe: false })),
+      beadRule(L, R, H - 26 * v, p.accent, s, { centre: true }),
       line("عرض سعر", R, 26 * v, 11 * s, { font: ctx.font, weight: 700, fill: inks.white, align: "start", safe: false }),
       line(val(ctx, "company"), R, 36 * v, 4.4 * s, { font: "tajawal", weight: 800, fill: inks.white, align: "start", maxWidth: W * 0.6 }),
       line(val(ctx, "to"), R, 72 * v, 4.4 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: R - L }),
       line(val(ctx, "subject"), R, 82 * v, 5 * s, { font: ctx.font, weight: 700, fill: p.accent2, align: "start", maxWidth: R - L }),
       items.flatMap(([item = "", price = ""], i) => {
         const y = top + i * ch;
-        return [rect(L, y, R - L, ch - 2 * s, { fill: null, stroke: p.soft, strokeWidth: 0.35 * s, r: 1.6 * s }), rect(R - 3 * s, y, 3 * s, ch - 2 * s, { fill: p.accent }),
+        return [rect(L, y, R - L, ch - 2 * s, { fill: i % 2 ? null : p.accent, opacity: 0.05, r: 1.6 * s }), rect(L, y, R - L, ch - 2 * s, { fill: null, stroke: p.soft, strokeWidth: 0.35 * s, r: 1.6 * s }), rect(R - 3 * s, y, 3 * s, ch - 2 * s, { fill: p.accent }),
+          g({ x: R - 3 * s, y: y + (ch - 2 * s) / 2 }, circle(0, 0, 2.4 * s, { fill: p.accent2 }), line("٠١٢٣٤٥٦٧٨٩"[(i + 1) % 10], 0, 1 * s, 2.6 * s, { font: "tajawal", weight: 800, fill: inks.white, safe: false })),
+          rect(L + (R - L) * 0.3, y + ch * 0.35, 0.25 * s, ch * 0.4, { fill: p.soft }),
           line(item, R - 8 * s, y + ch * 0.58, 4.2 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: (R - L) * 0.66 }),
           line(price, L + 6 * s, y + ch * 0.58, 4.6 * s, { font: "tajawal", weight: 800, fill: p.accent2, align: "end", maxWidth: (R - L) * 0.24 })];
       }),

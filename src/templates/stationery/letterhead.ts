@@ -1,5 +1,5 @@
-import { tatreezBand } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { beadRule, dotRing, flourishRule, guillocheNode, khatamPath, rosetteLines, tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -30,12 +30,16 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 210, 297), R = W - 26 * s, max = W - 50 * s;
     return scene(W, H, p.paper,
+      guillocheNode(0, 8 * s, W - 22 * s, 48 * s, p.accent2, { waves: 6, amp: 1.4 * s, period: 20 * s, width: 0.15 * s, opacity: 0.25 }),
+      g({ x: W / 2 - 8 * s, y: H / 2 + 10 * s, opacity: 0.06 }, path(khatamPath(60 * s), { fill: p.accent }), path(khatamPath(46 * s), { fill: p.paper }), rosetteLines(40 * s, p.accent, { rings: 6, lobes: 16, width: 0.6 * s }), g({ x: -12 * s, y: -12 * s }, tatreezUnit("star", 24 * s, [p.accent]))),
       g({ x: W - 10 * s, y: -b }, g({ rotate: 90 }, tatreezBand("chain", H + 2 * b, 10 * s, [p.accent, p.accent2]))),
+      rect(W - 22 * s, -b, 0.4 * s, H + 2 * b, { fill: p.accent2 }),
+      g({ x: 30 * s, y: 30 * s }, circle(0, 0, 11 * s, { fill: p.accent }), dotRing(9 * s, 28, 0.4 * s, p.paper), circle(0, 0, 7 * s, { fill: null, stroke: p.paper, strokeWidth: 0.3 * s }), tatreezUnit("star", 9 * s, [p.paper]).children.length ? g({ x: -4.5 * s, y: -4.5 * s }, tatreezUnit("star", 9 * s, [p.paper])) : null),
       line(val(ctx, "name"), R, 30 * s, 9 * s, { font: ctx.font, weight: 700, fill: p.accent, align: "start", maxWidth: max }),
       line(val(ctx, "line"), R, 39 * s, 4 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: max }),
-      rect(18 * s, 46 * s, R - 18 * s, 0.4 * s, { fill: p.accent }),
+      flourishRule((R + 18 * s) / 2, 46 * s, R - 18 * s, p.accent, s),
       line(val(ctx, "reg"), R, 52 * s, 3 * s, { font: "tajawal", fill: p.soft, align: "start", maxWidth: max }),
-      rect(18 * s, H - 26 * s, R - 18 * s, 0.3 * s, { fill: p.soft }),
+      beadRule(18 * s, R, H - 26 * s, p.accent2, s, { centre: true, pitch: 5 }),
       line(joined(ctx, ["address", "phone", "email"]), (R + 18 * s) / 2, H - 17 * s, 3.4 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: R - 26 * s }),
     );
   },

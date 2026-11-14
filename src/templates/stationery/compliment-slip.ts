@@ -1,5 +1,5 @@
-import { oliveBranch } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { dotField, doubleFrame, flourishRule, guillocheNode, khatamPath, oliveBranch, rosetteLines } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, more, pal, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -30,6 +30,13 @@ const t: Template = {
     const { W, H, p, b, s } = dims(ctx, 210, 99), side = 62 * s;
     return scene(W, H, p.paper,
       rect(-b, -b, side + b, H + 2 * b, { fill: p.accent }),
+      g({ x: side / 2, y: 20 * s, opacity: 0.35 }, rosetteLines(16 * s, p.paper, { rings: 5, lobes: 12, width: 0.25 * s })),
+      g({ x: side / 2, y: 20 * s }, path(khatamPath(6 * s), { fill: p.accent2 }), path(khatamPath(3 * s), { fill: p.accent })),
+      rect(side - 2.4 * s, -b, 0.6 * s, H + 2 * b, { fill: p.accent2 }),
+      dotField(-b, H - 22 * s, side + b, 22 * s + b, 3 * s, 0.5 * s, p.paper, { fade: "up", opacity: 0.4 }),
+      doubleFrame(side + 6 * s, 6 * s, W - side - 12 * s, H - 12 * s, p.accent, p.paper, { gap: 2.4 * s, heavy: 0.5 * s, thin: 0.2 * s, corner: "khatam", r: 2.4 * s }),
+      flourishRule(side + (W - side) / 2, 72 * s, 70 * s, p.accent2, s),
+      guillocheNode(side + 10 * s, 76 * s, W - side - 20 * s, 12 * s, p.accent, { waves: 2, amp: 1 * s, period: 14 * s, width: 0.15 * s, opacity: 0.35 }),
       line(val(ctx, "company"), side / 2, 40 * s, 6.4 * s, { font: "amiri", weight: 700, fill: p.paper === inks.white ? inks.navy : inks.white, maxWidth: side - 14 * s }),
       line(joined(ctx, ["address"]), side / 2, 52 * s, 3.4 * s, { font: "tajawal", weight: 500, fill: p.paper === inks.white ? inks.navy : inks.white, maxWidth: side - 14 * s }),
       line(val(ctx, "phone"), side / 2, 59 * s, 3.4 * s, { font: "tajawal", weight: 700, fill: p.paper === inks.white ? inks.navy : inks.white, maxWidth: side - 14 * s }),

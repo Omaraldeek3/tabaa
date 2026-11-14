@@ -1,3 +1,4 @@
+import { beadRule, dashedV, hatch, khatamPath, stampRing } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
@@ -32,7 +33,18 @@ const t: Template = {
       path(`M${22.6 * s} ${-9 * s} H${29 * s} L${32 * s} ${-5 * s} V${-1 * s} H${22.6 * s} Z`, { fill: p.accent2 }),
       [5, 27].map(x => circle(x * s, 0, 2.4 * s, { fill: p.ink })));
     return scene(W, H, p.paper,
-      rect(-b, 36 * s, W + 2 * b, 0.8 * s, { fill: p.accent }), lorry,
+      rect(-b, -b, W + 2 * b, 36 * s + b, { fill: p.accent, opacity: 0.07 }),
+      hatch(-b, -b, W + 2 * b, 36 * s + b, 3 * s, p.accent, 0.15 * s, 0.15),
+      rect(-b, 36 * s, W + 2 * b, 0.8 * s, { fill: p.accent }),
+      path(`M${-b} ${32.6 * s} H${W + b}`, { fill: null, stroke: p.ink, strokeWidth: 0.3 * s }),
+      g({ x: L + 40 * s, y: 31.4 * s, rotate: 90 }, dashedV(0, -20 * s, 20 * s, p.soft, s)),
+      [0, 1, 2].map(i => circle(L + 40 * s + i * 4 * s, 26 * s, (0.8 + i * 0.4) * s, { fill: p.soft, opacity: 0.6 - i * 0.15 })),
+      lorry,
+      g({ x: L + 11 * s, y: 23.5 * s }, rect(-6 * s, -2.4 * s, 12 * s, 4.8 * s, { fill: inks.white, r: 0.6 * s }), path(khatamPath(1.6 * s), { fill: p.accent })),
+      rect(L, 42 * s, R - L, 20 * s, { fill: null, stroke: p.soft, strokeWidth: 0.3 * s, r: 1.4 * s }),
+      rect(R - 1 * s, 42 * s, 1 * s, 20 * s, { fill: p.accent2 }),
+      g({ x: L + 12 * s, y: H - 36 * s, rotate: -10 }, stampRing(10 * s, p.soft, s)),
+      beadRule(L, R, H - 8 * s, p.accent, s, { bead: "dot", pitch: 3 }),
       line("سند تسليم", R, 18 * s, 9 * s, { font: ctx.font, weight: 700, fill: p.accent, align: "start", safe: false }),
       line(val(ctx, "company"), R, 28 * s, 3.6 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: W * 0.62 }),
       line(val(ctx, "number") ? "رقم " + val(ctx, "number") : "", L + 34 * s, 22 * s, 3.8 * s, { font: "tajawal", weight: 800, fill: inks.red, align: "end", maxWidth: 30 * s }),

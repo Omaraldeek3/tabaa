@@ -1,4 +1,5 @@
-import { rect, scene } from "../../lib/scene.ts";
+import { beadRule, guillocheNode, khatamPath, rosetteLines, stampRing, stepEdge } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { toArabicDigits, toLatinDigits } from "../calendar-kit.ts";
 import { lf, tf } from "../fields.ts";
 import { dims, inks, line, pal, rows, sizes, val } from "../kit.ts";
@@ -50,6 +51,16 @@ const t: Template = {
     const ty = top + (items.length + 2) * pitch;
     return scene(W, H, p.paper,
       rect(-b, -b, W + 2 * b, head + b, { fill: p.accent }),
+      guillocheNode(-b, -b, W + 2 * b, head + b, inks.white, { waves: 5, amp: 1.6 * s, period: 22 * s, width: 0.15 * s, opacity: 0.18 }),
+      stepEdge(-b, head + 3 * s, W + 2 * b, 1.6 * s, p.accent2),
+      rect(-b, head, W + 2 * b, 1.6 * s, { fill: p.accent2 }),
+      g({ x: W / 2, y: H * 0.58, opacity: 0.05 }, path(khatamPath(55 * s), { fill: p.accent }), rosetteLines(38 * s, p.accent, { rings: 5, lobes: 14, width: 0.8 * s })),
+      rect(L, head + 9 * v, R - L, 11 * v, { fill: p.accent, opacity: 0.05, r: 1.6 * s }),
+      rect(R - 1.2 * s, head + 9 * v, 1.2 * s, 11 * v, { fill: p.accent2 }),
+      g({ x: R - 18 * s, y: H - 42 * v }, stampRing(13 * s, p.soft, s)),
+      rect(R - 70 * s, H - 34 * v, 34 * s, 0.3 * s, { fill: p.ink }),
+      line("التوقيع والختم", R - 53 * s, H - 29 * v, 3 * s, { font: "tajawal", weight: 700, fill: p.ink, safe: false }),
+      beadRule(L, R, H - 24 * v, p.accent2, s, { bead: "dot", pitch: 3.5 }),
       line(val(ctx, "company"), R, 22 * v, 8 * s, { font: ctx.font, weight: 700, fill: inks.white, align: "start", maxWidth: W * 0.55 }),
       line(val(ctx, "contact"), R, 32 * v, 3.4 * s, { font: "tajawal", weight: 500, fill: inks.white, align: "start", maxWidth: W * 0.55 }),
       line("فاتورة", L, 22 * v, 9 * s, { font: ctx.font, weight: 700, fill: inks.white, align: "end", safe: false }),
@@ -59,6 +70,9 @@ const t: Template = {
       ["الصنف", "الكمية", "السعر", "المجموع"].map((h, i) => line(h, i ? ((i === 3 ? L : cols[i + 1]) + cols[i]) / 2 : cols[0] - 2 * s, top + pitch * 0.45, 3.6 * s, { font: "tajawal", weight: 800, fill: inks.white, align: i ? "center" : "start", safe: false })),
       body,
       any ? rect(L, ty - pitch * 0.8, (R - L) * 0.4, pitch * 1.4, { fill: p.accent2 }) : null,
+      any ? rect(L + 1.2 * s, ty - pitch * 0.8 + 1.2 * s, (R - L) * 0.4 - 2.4 * s, pitch * 1.4 - 2.4 * s, { fill: null, stroke: inks.white, strokeWidth: 0.25 * s }) : null,
+      any ? rect(L + (R - L) * 0.42, ty - 0.15 * s, (R - L) * 0.58, 0.3 * s, { fill: p.accent2 }) : null,
+      any ? circle(L + (R - L) * 0.42, ty, 1 * s, { fill: p.accent2 }) : null,
       line(any ? `المجموع: ${money(total)} ${cur}` : "", L + (R - L) * 0.2, ty + pitch * 0.1, 4.6 * s, { font: "tajawal", weight: 800, fill: inks.white, maxWidth: (R - L) * 0.38 }),
       line(val(ctx, "note"), (R + L) / 2, H - 16 * v, 3.4 * s, { font: "tajawal", fill: p.soft, maxWidth: R - L }),
     );
