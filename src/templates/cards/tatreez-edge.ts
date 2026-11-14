@@ -1,5 +1,5 @@
-import { tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { khatamPath, starTile, tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -27,7 +27,9 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, b } = dims(ctx, 85, 55), s = H / 55, right = W - 6 * s, max = W - 12 * s, hem = 9 * s;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H * 0.78, 6 * z, 0.5 * z, p.accent, 0.06),
       g({ x: -b, y: H - hem }, rect(0, -1.2 * s, W + 2 * b, 0.5 * s, { fill: p.accent2 }), tatreezBand("chain", W + 2 * b, hem * 0.8, [p.accent, p.accent2])),
       rect(-b, H - hem * 0.12, W + 2 * b, hem * 0.12 + b, { fill: p.accent }),
       g({ x: 6 * s, y: 6 * s }, tatreezUnit("rose", 13 * s, [p.accent, p.accent2])),
@@ -36,6 +38,7 @@ const t: Template = {
       line(val(ctx, "phone"), right, 33 * s, 3.4 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: max * 0.55 }),
       line(val(ctx, "address"), right, 38.4 * s, 3 * s, { font: "tajawal", fill: p.ink, align: "start", maxWidth: max * 0.55 }),
       line(val(ctx, "social"), 6 * s, 38.4 * s, 2.8 * s, { font: "inter", weight: 500, fill: p.soft, align: "start", dir: "ltr", maxWidth: max * 0.4 }),
+      [[3.4, 3.4], [W / z - 3.4, 3.4]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(1.2 * z), { fill: p.accent }))),
     );
   },
 };

@@ -1,4 +1,5 @@
-import { g, path, scene } from "../../lib/scene.ts";
+import { dotField } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { cardAr, tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -22,13 +23,17 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s } = dims(ctx, 85, 55), a = H * 0.26, r = a * 0.3, R = W - 6 * s, max = W - 44 * s;
     const plus = `M${-a / 2 + r} ${-a * 1.5} H${a / 2 - r} Q${a / 2} ${-a * 1.5} ${a / 2} ${-a * 1.5 + r} V${-a / 2} H${a * 1.5 - r} Q${a * 1.5} ${-a / 2} ${a * 1.5} ${-a / 2 + r} V${a / 2 - r} Q${a * 1.5} ${a / 2} ${a * 1.5 - r} ${a / 2} H${a / 2} V${a * 1.5 - r} Q${a / 2} ${a * 1.5} ${a / 2 - r} ${a * 1.5} H${-a / 2 + r} Q${-a / 2} ${a * 1.5} ${-a / 2} ${a * 1.5 - r} V${a / 2} H${-a * 1.5 + r} Q${-a * 1.5} ${a / 2} ${-a * 1.5} ${a / 2 - r} V${-a / 2 + r} Q${-a * 1.5} ${-a / 2} ${-a * 1.5 + r} ${-a / 2} H${-a / 2} V${-a * 1.5 + r} Q${-a / 2} ${-a * 1.5} ${-a / 2 + r} ${-a * 1.5} Z`;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      dotField(W * 0.4, 0, W * 0.6, H, 2.6 * z, 0.22 * z, p.accent, { fade: "left", opacity: 0.18 }),
       g({ x: W * 0.17, y: H * 0.5 }, path(plus, { fill: p.accent })),
       line(val(ctx, "name"), R, 15 * s, 6 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "role"), R, 21.5 * s, 3.2 * s, { font: "tajawal", weight: 700, fill: p.accent2, align: "start", maxWidth: max }),
       line(val(ctx, "phone"), R, 33 * s, 4 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: max }),
       line(joined(ctx, ["address"]), R, 40 * s, 2.6 * s, { font: "tajawal", fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "hours"), R, 45.4 * s, 2.5 * s, { font: "tajawal", fill: p.soft, align: "start", maxWidth: max }),
+      rect(W * 0.45, H - 3 * z, W * 0.55 - 3 * z, 0.4 * z, { fill: p.accent }),
+      rect(W - 3.4 * z, 3 * z, 0.4 * z, H - 6 * z, { fill: p.accent }),
     );
   },
 };

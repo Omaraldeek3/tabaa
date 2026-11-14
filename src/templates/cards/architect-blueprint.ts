@@ -1,4 +1,5 @@
-import { path, rect, scene } from "../../lib/scene.ts";
+import { ringsNode } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { cardAr } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -24,7 +25,9 @@ const t: Template = {
     for (let x = -b; x < W + b; x += gs) grid.push(`M${x} ${-b} V${H + b}`);
     for (let y = -b; y < H + b; y += gs) grid.push(`M${-b} ${y} H${W + b}`);
     const y = 24 * s, x0 = 10 * s, x1 = W - 10 * s, tick = (x: number) => `M${x} ${y - 2 * s} V${y + 2 * s} M${x - 1.2 * s} ${y + 1.2 * s} L${x + 1.2 * s} ${y - 1.2 * s}`;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      g({ x: W * 0.85, y: H * 0.8, opacity: 0.25 }, ringsNode(4 * z, 10 * z, 3, p.paper, 0.15 * z), path(`M${-12 * z} 0 H${12 * z} M0 ${-12 * z} V${12 * z}`, { fill: null, stroke: p.paper, strokeWidth: 0.15 * z })),
       path(grid.join(" "), { fill: null, stroke: p.accent, strokeWidth: 0.08 * s, opacity: 0.6 }),
       rect(4 * s, 4 * s, W - 8 * s, H - 8 * s, { fill: null, stroke: p.accent, strokeWidth: 0.3 * s }),
       line(val(ctx, "name"), cx, 18 * s, 6.6 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
@@ -33,6 +36,7 @@ const t: Template = {
       line(val(ctx, "phone"), cx, 38.4 * s, 3.6 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: max }),
       line(val(ctx, "email"), cx, 43.4 * s, 2.7 * s, { font: "inter", fill: p.ink, maxWidth: max }),
       line(val(ctx, "address"), cx, 47.8 * s, 2.4 * s, { font: "tajawal", fill: p.ink, maxWidth: max }),
+      [[4.5, 4.5], [W / z - 4.5, 4.5], [4.5, H / z - 4.5], [W / z - 4.5, H / z - 4.5]].map(([x, y]) => g({ x: x * z, y: y * z }, circle(0, 0, 0.8 * z, { fill: null, stroke: p.accent, strokeWidth: 0.2 * z }))),
     );
   },
 };

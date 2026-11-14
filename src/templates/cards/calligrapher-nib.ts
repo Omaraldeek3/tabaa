@@ -1,3 +1,4 @@
+import { doubleFrame, guillocheNode } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { cardAr } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -21,7 +22,9 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, s } = dims(ctx, 85, 55), max = W * 0.66, px = W * 0.2, py = H * 0.84;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      guillocheNode(W * 0.3, 2 * z, W * 0.7 - 2 * z, H - 4 * z, p.accent, { waves: 5, amp: 0.5 * z, period: 8 * z, width: 0.08 * z, opacity: 0.2 }),
       g({ x: px, y: py, rotate: -20 },
         path(`M0 0 L${2.4 * s} ${-6 * s} L${2.4 * s} ${-60 * s} L${-2.4 * s} ${-60 * s} L${-2.4 * s} ${-6 * s} Z`, { fill: p.accent }),
         path(`M0 0 L${0.25 * s} ${-5 * s} L${-0.25 * s} ${-5 * s} Z`, { fill: p.paper }),
@@ -32,6 +35,7 @@ const t: Template = {
       line(val(ctx, "role"), W * 0.58, 27.4 * s, 2.8 * s, { font: "tajawal", weight: 500, fill: p.soft, maxWidth: max }),
       line(val(ctx, "phone"), W - 6 * s, 39 * s, 3.8 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: W * 0.56 }),
       line(val(ctx, "address"), W - 6 * s, 45 * s, 2.6 * s, { font: "tajawal", fill: p.ink, align: "start", maxWidth: W * 0.56 }),
+      doubleFrame(2.4 * z, 2.4 * z, W - 4.8 * z, H - 4.8 * z, p.ink, p.paper, { gap: 1 * z, heavy: 0.25 * z, thin: 0.1 * z, corner: "diamond", r: 1 * z }),
     );
   },
 };

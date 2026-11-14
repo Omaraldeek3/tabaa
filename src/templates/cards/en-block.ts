@@ -1,4 +1,4 @@
-import { tatreezBand } from "../../lib/motifs/index.ts";
+import { dotField, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -29,7 +29,9 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, b } = dims(ctx, 85, 55), s = H / 55, m = 6 * s, max = W - 2 * m, block = H * 0.64;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      dotField(W * 0.6, 0, W * 0.4, H * 0.5, 2.4 * z, 0.3 * z, p.paper, { fade: "left", opacity: 0.3 }),
       rect(-b, -b, W + 2 * b, block + b, { fill: p.accent }),
       g({ x: -b, y: block - 1.5 * s }, rect(0, 0, W + 2 * b, 3 * s, { fill: p.paper }), g({ y: 0.4 * s }, tatreezBand("chain", W + 2 * b, 2.2 * s, [p.accent2, p.accent]))),
       line(val(ctx, "first"), m, 16.5 * s, 10.5 * s, { font: ctx.font, weight: 800, fill: inks.ivory, align: "start", maxWidth: max }),

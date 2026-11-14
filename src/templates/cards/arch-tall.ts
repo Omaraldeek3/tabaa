@@ -1,4 +1,4 @@
-import { archPath, starPath } from "../../lib/motifs/index.ts";
+import { archPath, doubleFrame, starPath, starTile } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -29,7 +29,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, cx } = dims(ctx, 55, 85), s = W / 55, aw = W - 12 * s, ah = 50 * s, max = aw - 9 * s;
     const lines = (typeof ctx.values.name === "string" ? ctx.values.name : "").split(/\r?\n/).map(l => l.trim()).filter(Boolean).slice(0, 2);
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      starTile(0, H * 0.55, W, H * 0.45, 5 * z, 0.6 * z, p.accent, 0.1),
       g({ x: 6 * s, y: 6 * s }, path(archPath(aw, ah, 0.56), { fill: p.accent })),
       g({ x: cx, y: 17 * s }, path(starPath(8, 2.6 * s, 1.2 * s), { fill: p.accent2 })),
       lines.map((l, i) => line(l, cx, (lines.length === 1 ? 40 : 33) * s + i * 12 * s, 11 * s, { font: ctx.font, weight: 700, fill: inks.ivory, maxWidth: max })),
@@ -37,6 +39,7 @@ const t: Template = {
       line(val(ctx, "phone"), cx, 70 * s, 3.4 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: W - 10 * s }),
       line(val(ctx, "address"), cx, 75 * s, 2.8 * s, { font: "tajawal", fill: p.ink, maxWidth: W - 10 * s }),
       line(val(ctx, "hours"), cx, 79.6 * s, 2.6 * s, { font: "tajawal", fill: p.soft, maxWidth: W - 10 * s }),
+      doubleFrame(2.4 * z, 2.4 * z, W - 4.8 * z, H - 4.8 * z, p.accent, p.paper, { gap: 1 * z, heavy: 0.25 * z, thin: 0.1 * z, corner: "dot", r: 1 * z }),
     );
   },
 };

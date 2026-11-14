@@ -1,4 +1,5 @@
-import { path, rect, scene } from "../../lib/scene.ts";
+import { dotField } from "../../lib/motifs/index.ts";
+import { circle, path, rect, scene } from "../../lib/scene.ts";
 import { cardAr, tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -26,7 +27,9 @@ const t: Template = {
       (i % 2 ? blue : red).push(d);
     }
     const R = W - 6 * s, max = W - pw - 12 * s;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      dotField(W * 0.3, 0, W * 0.7, H, 2.6 * z, 0.22 * z, p.accent, { fade: "left", opacity: 0.2 }),
       rect(-b, -b, pw + b, H + 2 * b, { fill: p.paper === inks.charcoal ? inks.ivory : inks.white }),
       path(red.join(" "), { fill: p.accent }), path(blue.join(" "), { fill: p.accent2 }),
       rect(pw, -b, 1 * s, H + 2 * b, { fill: p.ink }),
@@ -35,6 +38,8 @@ const t: Template = {
       line(val(ctx, "phone"), R, 37 * s, 4.6 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "address"), R, 43 * s, 2.7 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "hours"), R, 47.8 * s, 2.4 * s, { font: "tajawal", fill: p.soft, align: "start", maxWidth: max }),
+      rect(W * 0.28, H - 3 * z, W * 0.72 - 3 * z, 0.3 * z, { fill: p.accent }),
+      [0, 1, 2].map(i => circle(W - 6 * z - i * 2 * z, H - 3 * z, 0.5 * z, { fill: i === 1 ? p.accent2 : p.accent })),
     );
   },
 };

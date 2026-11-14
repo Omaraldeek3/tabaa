@@ -1,5 +1,5 @@
-import { gearPath } from "../../lib/motifs/index.ts";
-import { g, path, scene } from "../../lib/scene.ts";
+import { gearPath, hatch } from "../../lib/motifs/index.ts";
+import { circle, g, path, scene } from "../../lib/scene.ts";
 import { cardAr, tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -22,7 +22,9 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, s } = dims(ctx, 85, 55), R = W - 6 * s, max = W * 0.6, r1 = H * 0.38, r2 = H * 0.24;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      hatch(0, 0, W, H, 2.4 * z, p.paper, 0.1 * z, 0.05),
       g({ x: 2 * s, y: H - 2 * s, rotate: 8 }, path(gearPath(r1, 12), { fill: p.accent, evenOdd: true })),
       g({ x: 2 * s + r1 * 0.98 + r2 * 0.86, y: H - 2 * s - r1 * 0.55, rotate: 2 }, path(gearPath(r2, 8, 0.22), { fill: p.accent2 === p.accent ? p.soft : p.accent2, evenOdd: true })),
       line(val(ctx, "name"), R, 17 * s, 8.6 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: max }),
@@ -30,6 +32,7 @@ const t: Template = {
       line(val(ctx, "owner"), R, 32 * s, 3.2 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: max * 0.8 }),
       line(val(ctx, "phone"), R, 39 * s, 4.4 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: max * 0.8 }),
       line(val(ctx, "address"), R, 45 * s, 2.6 * s, { font: "tajawal", fill: p.ink, align: "start", maxWidth: max * 0.7 }),
+      [[3.4, 3.4], [W / z - 3.4, 3.4], [W / z - 3.4, H / z - 3.4]].map(([x, y]) => g({ x: x * z, y: y * z }, circle(0, 0, 0.9 * z, { fill: p.soft }), path(`M${-0.6 * z} 0 H${0.6 * z}`, { fill: null, stroke: p.paper, strokeWidth: 0.25 * z }))),
     );
   },
 };

@@ -1,4 +1,4 @@
-import { oliveBranch } from "../../lib/motifs/index.ts";
+import { doubleFrame, oliveBranch, starTile } from "../../lib/motifs/index.ts";
 import { g, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,12 +27,15 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, cx } = dims(ctx, 85, 55), s = H / 55, max = W - 14 * s;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 6 * z, 0.5 * z, p.accent, 0.06),
       line(val(ctx, "name"), cx, 20 * s, 8.4 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "role"), cx, 26.6 * s, 3.3 * s, { font: "tajawal", weight: 500, fill: p.accent2, maxWidth: max }),
       g({ x: cx - 11 * s, y: 33.6 * s }, oliveBranch(22 * s, p.accent, p.ink === inks.ivory ? null : p.ink, { leaves: 7, bend: 0.07, olives: 2 })),
       line(joined(ctx, ["phone", "address"]), cx, 42.4 * s, 3 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(val(ctx, "hours"), cx, 47.6 * s, 2.7 * s, { font: "tajawal", fill: p.soft, maxWidth: max }),
+      doubleFrame(2.4 * z, 2.4 * z, W - 4.8 * z, H - 4.8 * z, p.accent, p.paper, { gap: 1 * z, heavy: 0.25 * z, thin: 0.1 * z, corner: "khatam", r: 1.2 * z }),
     );
   },
 };

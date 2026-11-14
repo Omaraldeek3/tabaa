@@ -1,4 +1,4 @@
-import { leafPath } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, leafPath, ringsNode } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { cardAr, tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -24,7 +24,10 @@ const t: Template = {
     const { W, H, p, b, s } = dims(ctx, 85, 55), sx = W * 0.14, R = W - 6 * s, max = W * 0.66;
     const stem = `M${sx + 3 * s} ${H + b} C${sx - 4 * s} ${H * 0.6} ${sx + 6 * s} ${H * 0.4} ${sx} ${H * 0.2}`;
     const petals = Array.from({ length: 6 }, (_, i) => g({ rotate: -90 + (i - 2.5) * 26 }, path(leafPath(7 * s, 2.6 * s), { fill: p.accent, opacity: 0.9 })));
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      dotField(W * 0.3, 0, W * 0.7, H, 2.6 * z, 0.3 * z, p.paper, { fade: "left", opacity: 0.5 }),
+      g({ x: W * 0.12, y: H * 0.18, opacity: 0.25 }, ringsNode(5 * z, 9 * z, 3, p.accent, 0.15 * z)),
       path(stem, { fill: null, stroke: p.accent2, strokeWidth: 0.7 * s }),
       [[0.75, -40], [0.55, 210], [0.42, -30]].map(([k, a]) => g({ x: sx + (k > 0.5 ? 0 : 2 * s), y: H * k, rotate: a }, path(leafPath(8 * s, 2.4 * s), { fill: p.accent2 }))),
       g({ x: sx, y: H * 0.2 }, petals, circle(0, -1 * s, 1.6 * s, { fill: p.soft })),
@@ -33,6 +36,7 @@ const t: Template = {
       line(val(ctx, "phone"), R, 35 * s, 4 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "social"), R, 41 * s, 2.9 * s, { font: "inter", weight: 600, fill: p.ink, align: "start", dir: "rtl", maxWidth: max }),
       line(val(ctx, "address"), R, 46.4 * s, 2.6 * s, { font: "tajawal", fill: p.ink, align: "start", maxWidth: max }),
+      doubleFrame(2.4 * z, 2.4 * z, W - 4.8 * z, H - 4.8 * z, p.accent, p.paper, { gap: 1 * z, heavy: 0.2 * z, thin: 0.1 * z, corner: "dot", r: 1 * z }),
     );
   },
 };

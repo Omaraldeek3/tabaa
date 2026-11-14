@@ -1,5 +1,5 @@
-import { khatamPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { doubleFrame, khatamPath, starTile } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -28,7 +28,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b } = dims(ctx, 85, 55), s = H / 55, right = W - 7 * s, max = W - 14 * s;
     const rosette: SceneNode[] = [34, 26, 18, 10].map((r, i) => g({ rotate: i * 11.25 }, path(khatamPath(r * s), { fill: null, stroke: p.accent, strokeWidth: (0.22 + i * 0.05) * s, opacity: 0.55 + i * 0.12 })));
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      starTile(W * 0.45, 0, W * 0.55, H, 6 * z, 0.6 * z, p.accent, 0.06),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       g({ x: 0, y: H }, rosette), g({ x: 0, y: H }, path(khatamPath(4.4 * s), { fill: p.accent })),
       line(val(ctx, "name"), right, 18 * s, 9 * s, { font: ctx.font, weight: 700, fill: p.accent, align: "start", maxWidth: max }),
@@ -37,6 +39,7 @@ const t: Template = {
       line(val(ctx, "person"), right, 36.4 * s, 4 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: max * 0.56 }),
       line(val(ctx, "phone"), right, 42 * s, 3 * s, { font: "tajawal", weight: 500, fill: p.soft, align: "start", maxWidth: max * 0.56 }),
       line(val(ctx, "address"), right, 47 * s, 3 * s, { font: "tajawal", fill: p.soft === inks.sand ? inks.sand : p.soft, align: "start", maxWidth: max * 0.56 }),
+      doubleFrame(2.4 * z, 2.4 * z, W - 4.8 * z, H - 4.8 * z, p.accent, p.paper, { gap: 1 * z, heavy: 0.25 * z, thin: 0.1 * z, corner: "bracket", r: 1.2 * z }),
     );
   },
 };

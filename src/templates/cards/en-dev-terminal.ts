@@ -1,3 +1,4 @@
+import { dotField } from "../../lib/motifs/index.ts";
 import { circle, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -28,7 +29,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 85, 55), L = 6 * s, max = W - 12 * s, ltr = { align: "start" as const, dir: "ltr" as const, font: "inter" };
     const row = (y: number, cmd: string, out: string) => cmd && out ? [line("$ " + cmd, L, y, 2.4 * s, { ...ltr, weight: 600, fill: p.accent, maxWidth: max }), line(out, L, y + 4 * s, 3 * s, { ...ltr, weight: 500, fill: p.ink, maxWidth: max })] : [];
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      dotField(W * 0.55, H * 0.2, W * 0.45, H * 0.8, 2.4 * z, 0.2 * z, p.accent, { fade: "left", opacity: 0.25 }),
       rect(-b, -b, W + 2 * b, 7 * s + b, { fill: p.soft, opacity: 0.35 }),
       [inks.red, inks.mustard, inks.olive].map((c, i) => circle(L + i * 3.6 * s, 3.6 * s, 1.1 * s, { fill: c })),
       line(val(ctx, "name"), L, 17 * s, 6.2 * s, { ...ltr, weight: 800, fill: p.ink, maxWidth: max }),
@@ -36,6 +39,7 @@ const t: Template = {
       row(30 * s, "mail", val(ctx, "email")),
       row(39 * s, "call", val(ctx, "phone")),
       line(val(ctx, "site"), L, 50 * s, 2.6 * s, { ...ltr, weight: 500, fill: p.accent, maxWidth: max }),
+      [0, 1, 2, 3].map(i => rect(W - 9 * z, H - 12 * z + i * 2 * z, (6 - i * 1.2) * z, 0.5 * z, { fill: i % 2 ? p.accent2 : p.accent, opacity: 0.6 })),
     );
   },
 };

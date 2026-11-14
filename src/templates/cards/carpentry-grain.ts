@@ -1,4 +1,5 @@
-import { path, rect, scene } from "../../lib/scene.ts";
+import { ringsNode } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { cardAr } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -30,7 +31,9 @@ const t: Template = {
       lines.push(pts.join(" "));
     }
     const bw = W * 0.74, bx = cx - bw / 2;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      [[0.1, 0.2], [0.88, 0.85]].map(([x, y]) => g({ x: W * x, y: H * y, opacity: 0.25 }, ringsNode(1 * z, 5 * z, 5, p.ink, 0.12 * z))),
       path(lines.join(" "), { fill: null, stroke: p.accent, strokeWidth: 0.35 * s, opacity: 0.7 }),
       path(`M${kx - 2.4 * s} ${ky} a${2.4 * s} ${1.4 * s} 0 1 0 ${4.8 * s} 0 a${2.4 * s} ${1.4 * s} 0 1 0 ${-4.8 * s} 0 Z`, { fill: p.accent, opacity: 0.8 }),
       rect(bx, 9 * s, bw, 20 * s, { fill: p.accent2, r: 1 * s }),

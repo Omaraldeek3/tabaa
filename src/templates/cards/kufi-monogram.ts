@@ -1,4 +1,4 @@
-import { keffiyeh, khatamPath } from "../../lib/motifs/index.ts";
+import { dotField, keffiyeh, khatamPath } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -31,7 +31,9 @@ const kufiMonogram: Template = {
     const { widthMm: W, heightMm: H } = ctx.size, p = ctx.palette, b = ctx.bleedMm + 0.5;
     const panel = W * 0.36, s = H / 55, right = W - 6 * s, max = W - panel - 12 * s;
     const pcx = panel / 2, r = 13 * s;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      dotField(W * 0.4, 0, W * 0.6, H, 2.6 * z, 0.25 * z, p.accent, { fade: "left", opacity: 0.25 }),
       rect(-b, -b, panel + b, H + 2 * b, { fill: p.accent }),
       g({ x: -b, y: -b, opacity: 0.16 }, keffiyeh(panel + b, H + 2 * b, 4.2 * s, p.paper, 0.14)),
       g({ x: pcx, y: H / 2 }, path(khatamPath(r), { fill: p.paper }), path(khatamPath(r * 0.88), { fill: null, stroke: p.accent2, strokeWidth: 0.35 * s })),
@@ -42,6 +44,8 @@ const kufiMonogram: Template = {
       line(val(ctx, "phone"), right, 38.5 * s, 3.3 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "email"), right, 43.5 * s, 3.1 * s, { font: "inter", weight: 500, fill: p.ink, align: "end", dir: "ltr", maxWidth: max }),
       line(val(ctx, "address"), right, 48.5 * s, 3 * s, { font: "tajawal", fill: p.soft, align: "start", maxWidth: max }),
+      rect(W * 0.38, H - 3 * z, W * 0.62, 0.3 * z, { fill: p.accent }),
+      rect(W - 3 * z, 3 * z, 0.3 * z, H - 6 * z, { fill: p.accent, opacity: 0.5 }),
     );
   },
 };

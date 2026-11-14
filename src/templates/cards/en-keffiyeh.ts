@@ -1,4 +1,4 @@
-import { keffiyeh, tatreezUnit } from "../../lib/motifs/index.ts";
+import { dotField, keffiyeh, tatreezUnit } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -29,7 +29,9 @@ const enKeffiyeh: Template = {
   render(ctx) {
     const { widthMm: W, heightMm: H } = ctx.size, p = ctx.palette, b = ctx.bleedMm + 0.5;
     const s = H / 55, band = 15 * s, left = band + 8 * s, max = W - left - 6 * s;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      dotField(W * 0.3, 0, W * 0.7, H, 2.6 * z, 0.2 * z, p.accent, { fade: "left", opacity: 0.12 }),
       rect(-b, -b, band + b, H + 2 * b, { fill: p.accent }),
       g({ x: -b, y: -b, opacity: 0.85 }, keffiyeh(band + b, H + 2 * b, 3.6 * s, p.paper, 0.13)),
       rect(band, -b, 1 * s, H + 2 * b, { fill: p.accent2 }),
@@ -41,6 +43,7 @@ const enKeffiyeh: Template = {
       line(val(ctx, "email"), left, 43.9 * s, 2.9 * s, { font: "inter", weight: 500, fill: p.ink, align: "start", maxWidth: max }),
       line(val(ctx, "web"), left, 48.4 * s, 2.9 * s, { font: "inter", weight: 500, fill: p.ink, align: "start", maxWidth: max * 0.55 }),
       line(val(ctx, "city"), W - 6 * s, 48.4 * s, 2.6 * s, { font: "inter", weight: 400, fill: p.soft, align: "end", maxWidth: max * 0.42 }),
+      rect(W * 0.3, H - 3 * z, W * 0.7 - 3 * z, 0.3 * z, { fill: p.accent }),
     );
   },
 };
