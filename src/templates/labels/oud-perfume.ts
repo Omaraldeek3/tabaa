@@ -1,4 +1,4 @@
-import { incenseBurner, khatamPath } from "../../lib/motifs/index.ts";
+import { incenseBurner, khatamPath, ringsNode, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -34,7 +34,10 @@ const t: Template = {
       line(val(ctx, "volume"), cx, 41.6 * k, 2.4 * k, { font: "tajawal", weight: 800, fill: p.accent, maxWidth: 20 * k }),
     );
     const R = W - 8 * s;
+    const z = Math.min(W, H) / 55;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 6 * z, 0.6 * z, p.accent, 0.06),
+      g({ x: W * 0.22, y: H * 0.42, opacity: 0.25 }, ringsNode(8 * z, 16 * z, 4, p.accent, 0.15 * z)),
       rect(3 * s, 3 * s, W - 6 * s, H - 6 * s, { fill: null, stroke: p.accent, strokeWidth: 0.35 * s }),
       g({ x: W * 0.22, y: H * 0.78 }, incenseBurner(H * 0.6, p.accent, p.accent2)),
       g({ x: R - 4 * s, y: 11 * s }, path(khatamPath(3 * s), { fill: p.accent })),

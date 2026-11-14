@@ -1,6 +1,6 @@
-import { dotRing, tatreezUnit } from "../../lib/motifs/index.ts";
+import { dotRing, rosetteLines, tatreezUnit } from "../../lib/motifs/index.ts";
 import { circle, g, rect, scene } from "../../lib/scene.ts";
-import { dims, joined, line, pal, sizes, val, inks } from "../kit.ts";
+import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
 const t: Template = {
@@ -27,7 +27,9 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, p, b } = dims(ctx, 50, 50), s = W / 50, c = W / 2, R = W / 2 - 3.2 * s, unit = 12 * s;
+    const z = W / 50;
     return scene(W, W, p.paper,
+      g({ x: W / 2, y: W / 2, opacity: 0.25 }, rosetteLines(W / 2 - 6 * z, p.accent, { rings: 2, lobes: 20, width: 0.1 * z })),
       rect(-b, -b, W + 2 * b, W + 2 * b, { fill: p.paper }),
       circle(c, c, R, { fill: p.soft }), circle(c, c, R - 1.5 * s, { fill: null, stroke: p.accent, strokeWidth: 0.25 * s }),
       g({ x: c, y: c }, dotRing(R + 1.6 * s, 44, 0.3 * s, p.soft)),

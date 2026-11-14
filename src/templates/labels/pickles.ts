@@ -1,5 +1,5 @@
-import { pickledVeg } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { dotField, khatamPath, pickledVeg } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, more, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,9 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 100, 70), R = W - 7 * s, max = W * 0.58;
+    const z = Math.min(W, H) / 70;
     return scene(W, H, p.paper,
+      dotField(0, 0, W * 0.4, H * 0.85, 2.6 * z, 0.3 * z, p.accent, { fade: "right", opacity: 0.15 }),
       rect(-b, H - 9 * s, W + 2 * b, 9 * s + b, { fill: p.accent }),
       g({ x: W * 0.2, y: H * 0.46 }, pickledVeg(W * 0.34, p.accent, p.accent2, p.soft, p.ink)),
       line(val(ctx, "name"), R, 22 * s, 11 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: max }),
@@ -36,6 +38,7 @@ const t: Template = {
       line(val(ctx, "maker"), R, 40 * s, 3.6 * s, { font: "tajawal", weight: 800, fill: p.accent2 === inks.ivory ? p.ink : p.accent2, align: "start", maxWidth: max }),
       line(val(ctx, "date"), R, 47 * s, 3 * s, { font: "tajawal", fill: p.ink, align: "start", maxWidth: max }),
       line(joined(ctx, ["weight"]), W / 2, H - 3.4 * s - 2, 3 * s, { font: "tajawal", weight: 800, fill: p.paper === inks.red ? inks.red : inks.ivory, maxWidth: W - 14 * s }),
+      [[3.4, 3.4], [W / z - 3.4, 3.4]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(1.3 * z), { fill: p.accent }))),
     );
   },
 };

@@ -1,4 +1,4 @@
-import { dotRing, oliveWreath, starPath } from "../../lib/motifs/index.ts";
+import { dotRing, oliveWreath, starPath, starTile } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -29,7 +29,9 @@ const oliveOil: Template = {
   render(ctx) {
     const W = ctx.size.widthMm, p = ctx.palette, b = ctx.bleedMm + 0.5, s = W / 70, c = W / 2;
     const R = W / 2, inner = R - 4.2 * s;
+    const z = W / 70;
     return scene(W, W, p.paper,
+      starTile(0, 0, W, W, 6 * z, 0.7 * z, p.paper, 0.08),
       rect(-b, -b, W + 2 * b, W + 2 * b, { fill: p.paper }),
       circle(c, c, inner, { fill: p.soft }),
       circle(c, c, inner - 1.3 * s, { fill: null, stroke: p.accent2, strokeWidth: 0.3 * s }),

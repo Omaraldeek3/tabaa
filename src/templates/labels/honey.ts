@@ -1,5 +1,5 @@
-import { scallopPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, circle, g, path, rect, scene } from "../../lib/scene.ts";
+import { scallopPath, starTile } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -35,7 +35,9 @@ const t: Template = {
       const x = c + col * hr * 1.5, y = 13 * s + row * hr * 1.732 + (Math.abs(col) % 2 ? hr * 0.866 : 0);
       if (Math.hypot(x - c, y - c) < R - hr * 1.5) comb.push(g({ x, y }, path(hex(hr * 0.88), { fill: (row + col) % 3 === 0 ? p.accent2 : null, stroke: p.accent2, strokeWidth: 0.35 * s })));
     }
+    const z = W / 70;
     return scene(W, W, p.paper,
+      starTile(0, 0, W, W, 5 * z, 0.6 * z, p.ink, 0.06),
       rect(-b, -b, W + 2 * b, W + 2 * b, { fill: p.paper }),
       g({ x: c, y: c }, path(scallopPath(R, 28, 0.1), { fill: p.soft }), circle(0, 0, R * 0.9, { fill: null, stroke: p.accent2, strokeWidth: 0.25 * s })),
       comb,

@@ -1,4 +1,4 @@
-import { khatamPath, oliveBranch } from "../../lib/motifs/index.ts";
+import { guillocheNode, khatamPath, oliveBranch } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, more, pal, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,7 +27,9 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, p, cx } = dims(ctx, 60, 60), s = W / 60, max = W - 16 * s;
+    const z = W / 60;
     return scene(W, W, p.paper,
+      guillocheNode(4 * z, 4 * z, W - 8 * z, W - 8 * z, p.accent, { waves: 8, amp: 0.6 * z, period: 9 * z, width: 0.1 * z, opacity: 0.15 }),
       rect(3.4 * s, 3.4 * s, W - 6.8 * s, W - 6.8 * s, { fill: null, stroke: p.accent, strokeWidth: 0.9 * s }),
       rect(5.4 * s, 5.4 * s, W - 10.8 * s, W - 10.8 * s, { fill: null, stroke: p.accent, strokeWidth: 0.2 * s }),
       [[1, 1], [-1, 1], [1, -1], [-1, -1]].map(([x, y]) => g({ x: cx + x * (W / 2 - 5.4 * s), y: cx + y * (W / 2 - 5.4 * s) }, path(khatamPath(1.5 * s), { fill: p.accent2 }))),

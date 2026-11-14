@@ -1,4 +1,4 @@
-import { wheat } from "../../lib/motifs/index.ts";
+import { burstLines, hatch, wheat } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -28,7 +28,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 90, 60), R = W - 7 * s, max = W * 0.56, st = 2.6 * s;
     const stitch = (y: number) => Array.from({ length: Math.ceil((W + 2 * b) / (2 * st)) }, (_, i) => `M${-b + i * 2 * st} ${y} h${st}`).join(" ");
+    const z = Math.min(W, H) / 60;
     return scene(W, H, p.paper,
+      hatch(0, 0, W * 0.45, H, 2.4 * z, p.accent2, 0.12 * z, 0.1),
+      g({ x: W * 0.68, y: H * 0.85, opacity: 0.15 }, burstLines(30, 4 * z, 30 * z, p.accent, 0.2 * z)),
       path(`${stitch(3 * s)} ${stitch(H - 3 * s)}`, { fill: null, stroke: p.ink, strokeWidth: 0.35 * s, opacity: 0.6 }),
       path(`M${W * 0.18} ${H * 0.24} c${-3 * s} ${-4 * s} ${3 * s} ${-6 * s} 0 ${-10 * s} M${W * 0.26} ${H * 0.2} c${3 * s} ${-4 * s} ${-3 * s} ${-6 * s} 0 ${-9 * s}`, { fill: null, stroke: p.accent2, strokeWidth: 0.6 * s, opacity: 0.7 }),
       [-1, 0, 1].map(k => g({ x: W * 0.22 + k * 6 * s, y: H - 7 * s, rotate: k * 14 }, wheat(H * 0.62, p.accent))),

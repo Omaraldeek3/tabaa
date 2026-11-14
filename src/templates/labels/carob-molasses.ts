@@ -1,4 +1,4 @@
-import { carobPod } from "../../lib/motifs/index.ts";
+import { carobPod, dotField, doubleFrame } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -27,13 +27,16 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 90, 60), max = W - 14 * s;
+    const z = Math.min(W, H) / 60;
     return scene(W, H, p.paper,
+      dotField(W * 0.35, 0, W * 0.65, H * 0.8, 2.6 * z, 0.25 * z, p.accent, { fade: "left", opacity: 0.15 }),
       [[-6, 78, p.accent], [0, 96, p.soft], [6, 114, p.accent]].map(([dx, a, c]) => g({ x: W * 0.17 + (dx as number) * s, y: 4 * s + 17 * s, rotate: a as number }, carobPod(34 * s, c as typeof p.ink, a === 96 ? p.accent : p.soft, 0.14))),
       line(val(ctx, "name"), W - 7 * s, 20 * s, 10 * s, { font: ctx.font, weight: 700, fill: p.ink, align: "start", maxWidth: W * 0.6 }),
       line(val(ctx, "note"), W - 7 * s, 28.6 * s, 3 * s, { font: "tajawal", weight: 700, fill: p.accent2, align: "start", maxWidth: W * 0.6 }),
       line(val(ctx, "origin"), W - 7 * s, 35 * s, 3 * s, { font: "tajawal", fill: p.ink, align: "start", maxWidth: W * 0.6 }),
       val(ctx, "volume") ? rect(-b, H - 9 * s, W + 2 * b, 9 * s + b, { fill: p.accent }) : null,
       line(val(ctx, "volume"), cx, H - 3.2 * s - 1.4, 3.4 * s, { font: "tajawal", weight: 800, fill: p.paper === inks.charcoal ? inks.paper : inks.ivory, maxWidth: max }),
+      doubleFrame(2.6 * z, 2.6 * z, W - 5.2 * z, H * 0.84 - 5.2 * z, p.accent, p.paper, { gap: 1 * z, heavy: 0.3 * z, thin: 0.12 * z, corner: "khatam", r: 1.4 * z }),
     );
   },
 };

@@ -1,4 +1,4 @@
-import { crescentPath, khatamPath } from "../../lib/motifs/index.ts";
+import { burstLines, crescentPath, khatamPath } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, more, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -33,7 +33,9 @@ const t: Template = {
   safeMm: 3.5,
   render(ctx) {
     const { W, H, p, b, cx } = dims(ctx, 100, 70), s = H / 70, ground = H - 13 * s, max = W - 52 * s;
+    const z = Math.min(W, H) / 70;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: 8 * z, opacity: 0.3 }, burstLines(36, 5 * z, 20 * z, p.accent, 0.2 * z)),
       rect(-b, ground, W + 2 * b, H - ground + b, { fill: p.soft }),
       g({ x: 13 * s, y: ground }, path(palm(44 * s), { fill: p.accent2 })), g({ x: W - 13 * s, y: ground }, path(palm(38 * s), { fill: p.accent2 })),
       g({ x: 22 * s, y: ground }, path(palm(22 * s), { fill: p.accent2, opacity: 0.6 })), g({ x: W - 22 * s, y: ground }, path(palm(20 * s), { fill: p.accent2, opacity: 0.6 })),

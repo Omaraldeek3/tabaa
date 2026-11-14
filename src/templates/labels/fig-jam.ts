@@ -1,4 +1,4 @@
-import { dotRing, figHalf } from "../../lib/motifs/index.ts";
+import { dotRing, figHalf, rosetteLines } from "../../lib/motifs/index.ts";
 import { circle, g, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -27,13 +27,16 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, p, s, cx } = dims(ctx, 70, 70), c = W / 2;
+    const z = W / 70;
     return scene(W, W, p.paper,
+      g({ x: W / 2, y: W / 2 }, circle(0, 0, W / 2 - 6 * z, { fill: p.paper, opacity: 0.5 }), rosetteLines(W / 2 - 7 * z, p.accent, { rings: 2, lobes: 24, width: 0.12 * z, opacity: 0.3 })),
       circle(c, c, W / 2 - 3 * s, { fill: null, stroke: p.accent, strokeWidth: 0.5 * s }),
       g({ x: c, y: c }, dotRing(W / 2 - 5 * s, 48, 0.35 * s, p.soft)),
       g({ x: c, y: c + 2 * s }, figHalf(26 * s, p.accent, p.accent2, p.paper === inks.oliveDark ? inks.ivory : p.ink)),
       line(val(ctx, "name"), cx, 18 * s, 7.6 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: 38 * s }),
       line(val(ctx, "maker"), cx, 54 * s, 3.2 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 36 * s }),
       line(val(ctx, "weight"), cx, 59.4 * s, 3 * s, { font: "tajawal", weight: 800, fill: p.accent, maxWidth: 20 * s }),
+      g({ x: W / 2, y: W / 2 }, dotRing(W / 2 - 1.6 * z, 64, 0.25 * z, p.accent2)),
     );
   },
 };

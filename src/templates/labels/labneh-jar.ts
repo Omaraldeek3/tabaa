@@ -1,3 +1,4 @@
+import { khatamPath, ringsNode, starTile } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -27,13 +28,17 @@ const t: Template = {
   render(ctx) {
     const { W, p, s, cx } = dims(ctx, 70, 70), c = W / 2, pool = 15 * s;
     const balls = [[-6, 2], [0, 3], [6, 2], [-3, -2.5], [3, -2.5], [0, -7]].map(([x, y]) => g({}, circle(c + x * s, c + 4 * s + y * s, 3.6 * s, { fill: p.accent2 }), circle(c + x * s - 1.1 * s, c + 4 * s + y * s - 1.1 * s, 0.9 * s, { fill: p.accent, opacity: 0.5 })));
+    const z = W / 70;
     return scene(W, W, p.paper,
+      starTile(0, 0, W, W, 6 * z, 0.7 * z, p.paper, 0.07),
+      g({ x: W / 2, y: W / 2 }, ringsNode(W / 2 - 1.8 * z, W / 2 - 0.8 * z, 2, p.paper, 0.15 * z, 0.5)),
       circle(c, c, W / 2 - 3.2 * s, { fill: null, stroke: p.ink, strokeWidth: 0.4 * s }),
       path(`M${c - pool} ${c + 4 * s} a${pool} ${pool * 0.62} 0 1 0 ${2 * pool} 0 a${pool} ${pool * 0.62} 0 1 0 ${-2 * pool} 0 Z`, { fill: p.accent }),
       balls,
       line(val(ctx, "name"), cx, 18 * s, 7.4 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: 40 * s }),
       line(val(ctx, "note"), cx, 52 * s, 2.8 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 40 * s }),
       line(val(ctx, "weight"), cx, 58 * s, 3.2 * s, { font: "tajawal", weight: 800, fill: p.accent, maxWidth: 20 * s }),
+      [W / 2 - 22 * z, W / 2 + 22 * z].map(x => g({ x, y: W / 2 }, path(khatamPath(1.3 * z), { fill: p.accent2 }))),
     );
   },
 };

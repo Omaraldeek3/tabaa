@@ -1,5 +1,5 @@
-import { candle } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { burstLines, candle, dotField, khatamPath, ringsNode } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,13 +27,17 @@ const t: Template = {
   safeMm: 4,
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 60, 60), max = W - 12 * s;
+    const z = Math.min(W, H) / 60;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: 16 * z, opacity: 0.4 }, ringsNode(5 * z, 11 * z, 4, p.accent, 0.15 * z), burstLines(24, 6 * z, 12 * z, p.accent, 0.15 * z)),
+      dotField(0, H * 0.75, W, H * 0.25, 2.4 * z, 0.25 * z, p.accent, { fade: "up", opacity: 0.3 }),
       rect(4 * s, 4 * s, W - 8 * s, H - 8 * s, { fill: null, stroke: p.ink, strokeWidth: 0.25 * s }),
       g({ x: cx, y: 22 * s }, candle(16 * s, p.accent, p.accent2, p.accent2)),
       line(val(ctx, "name"), cx, 33 * s, 7 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "notes"), cx, 39.4 * s, 2.5 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(val(ctx, "maker"), cx, 46 * s, 2.6 * s, { font: "tajawal", weight: 700, fill: p.soft, maxWidth: max }),
       line(val(ctx, "burn"), cx, 51 * s, 2.4 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: max }),
+      [[4.2, 4.2], [W / z - 4.2, 4.2], [4.2, H / z - 4.2], [W / z - 4.2, H / z - 4.2]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(1.2 * z), { fill: p.ink }))),
     );
   },
 };

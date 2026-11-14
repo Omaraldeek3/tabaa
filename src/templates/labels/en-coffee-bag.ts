@@ -1,4 +1,4 @@
-import { coffeeBean } from "../../lib/motifs/index.ts";
+import { coffeeBean, doubleFrame, hatch, ringsNode } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -31,7 +31,10 @@ const t: Template = {
     const { W, H, p, b, s } = dims(ctx, 100, 70), tall = H > W, L = 6 * s, ltr = { align: "start" as const, dir: "ltr" as const };
     const fieldW = tall ? W - 12 * s : W * 0.5, x0 = tall ? L : W * 0.46, y0 = tall ? H * 0.46 : 16 * s;
     const beans = Array.from({ length: 14 }, (_, i) => g({ x: (tall ? W : W * 0.4) * (((i * 37) % 100) / 100) , y: (tall ? H * 0.38 : H) * (((i * 61) % 100) / 100) }, coffeeBean(7 * s, p.accent, p.paper, (i * 47) % 180)));
+    const z = Math.min(W, H) / 70;
     return scene(W, H, p.paper,
+      g({ x: W * 0.2, y: H * 0.5, opacity: 0.12 }, ringsNode(6 * z, 30 * z, 7, p.ink, 0.2 * z)),
+      hatch(W * 0.4, 0, W * 0.6, H, 2.4 * z, p.ink, 0.1 * z, 0.05),
       rect(-b, -b, tall ? W + 2 * b : W * 0.4 + b, tall ? H * 0.38 + b : H + 2 * b, { fill: p.soft }),
       beans,
       line(val(ctx, "name"), x0, y0, 7.4 * s, { ...ltr, font: ctx.font, weight: 800, fill: p.ink, maxWidth: fieldW }),
@@ -40,6 +43,7 @@ const t: Template = {
       line(val(ctx, "grind") ? "GRIND  " + val(ctx, "grind") : "", x0, y0 + 21 * s, 2.8 * s, { ...ltr, font: "inter", weight: 600, fill: p.ink, maxWidth: fieldW }),
       line(val(ctx, "weight"), x0, y0 + 31 * s, 5 * s, { ...ltr, font: "inter", weight: 800, fill: p.ink, maxWidth: fieldW }),
       line(val(ctx, "maker"), x0, y0 + 38 * s, 2.5 * s, { ...ltr, font: "inter", fill: p.ink, maxWidth: fieldW }),
+      doubleFrame(2.4 * z, 2.4 * z, W - 4.8 * z, H - 4.8 * z, p.ink, p.paper, { gap: 1 * z, heavy: 0.3 * z, thin: 0.12 * z, corner: "bracket", r: 1.4 * z }),
     );
   },
 };
