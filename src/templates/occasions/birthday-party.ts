@@ -1,4 +1,4 @@
-import { rays, scallopPath, starPath, watermelon } from "../../lib/motifs/index.ts";
+import { dotField, rays, scallopPath, starPath, watermelon } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,9 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 105, 148), max = W - 20 * s, cy = H * 0.27, r = 20 * s, y = (k: number) => cy + r + (H - cy - r) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H * 0.9, 4 * z, 0.5 * z, p.paper, { opacity: 0.18 }),
       g({ x: cx, y: cy, opacity: 0.2 }, rays(18, r, Math.hypot(W, H), p.ink, 0.5)),
       rect(-b, H - 16 * s, W + 2 * b, 16 * s + b, { fill: p.accent2 }),
       [0.14, 0.38, 0.62, 0.86].map((x, i) => g({ x: x * W, y: H - 16 * s, rotate: i % 2 ? 8 : -8 }, watermelon(19 * s, inks.red, inks.oliveDark, inks.ivory, inks.black))),
@@ -39,6 +41,7 @@ const t: Template = {
       line(val(ctx, "invite"), cx, y(0.4), 4.6 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(val(ctx, "date"), cx, y(0.54), 6.4 * s, { font: "tajawal", weight: 800, fill: p.accent, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, y(0.64), 4.8 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: max }),
+      [[0.08, 0.5], [0.92, 0.55], [0.12, 0.7], [0.9, 0.36]].map(([x, y], i) => g({ x: W * x, y: H * y, rotate: i * 25 }, rect(-1 * z, -0.4 * z, 2 * z, 0.8 * z, { fill: i % 2 ? p.accent : p.accent2 }))),
     );
   },
 };

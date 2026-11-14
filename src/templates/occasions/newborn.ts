@@ -1,5 +1,5 @@
-import { crescentPath, starPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, circle, g, path, rect, scene } from "../../lib/scene.ts";
+import { crescentPath, dotField, ringsNode, starPath } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -30,7 +30,10 @@ const t: Template = {
     const hang = (x: number, len: number, node: SceneNode) => g({ x: x * W, y: -b }, path(`M0 0 L0 ${len + b}`, { fill: null, stroke: p.soft, strokeWidth: 0.25 * s, opacity: 0.6 }), g({ y: len + b }, node));
     const star = (r: number) => path(starPath(5, r * s, r * 0.45 * s), { fill: p.accent2 });
     const y = (k: number) => drop + 8 * s + (H - drop - 8 * s) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H, 4 * z, 0.35 * z, p.paper, { opacity: 0.25 }),
+      g({ x: W * 0.5, y: H * 0.18, opacity: 0.2 }, ringsNode(14 * z, 30 * z, 5, p.paper, 0.3 * z)),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       hang(0.16, drop * 0.5, star(4)), hang(0.32, drop * 0.82, star(3)), hang(0.7, drop * 0.72, star(3.4)), hang(0.86, drop * 0.42, star(4.4)),
       hang(0.5, drop * 0.3, g({ y: 9 * s, rotate: 205 }, path(crescentPath(10 * s, 0.5), { fill: p.accent }))),

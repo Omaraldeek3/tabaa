@@ -1,4 +1,4 @@
-import { rays, starPath, wheat } from "../../lib/motifs/index.ts";
+import { doubleFrame, rays, starPath, starTile, wheat } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,9 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 105, 148), max = W - 20 * s, cy = H * 0.25, r = 13 * s, y = (k: number) => cy + r + (H - cy - r) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 9 * z, 1.1 * z, p.accent, 0.08),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       g({ x: cx, y: cy }, g({ opacity: 0.5 }, rays(20, r * 1.25, r * 1.95, p.accent, 0.45)), circle(0, 0, r, { fill: p.accent }), path(starPath(5, r * 0.62, r * 0.26), { fill: p.paper })),
       g({ x: cx - r * 2.9, y: cy + r * 1.6, rotate: -16 }, wheat(r * 3, p.accent2)), g({ x: cx + r * 2.9, y: cy + r * 1.6, rotate: 16 }, wheat(r * 3, p.accent2)),
@@ -39,6 +41,7 @@ const t: Template = {
       rect(cx - 10 * s, y(0.67), 20 * s, 0.35 * s, { fill: p.accent2 }),
       line(val(ctx, "date"), cx, y(0.79), 5.4 * s, { font: "tajawal", weight: 800, fill: p.accent2 === inks.goldDeep ? p.ink : p.accent2, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, y(0.88), 4.2 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
+doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "star", r: 2.2 * z }),
     );
   },
 };

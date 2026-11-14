@@ -1,4 +1,4 @@
-import { suitcase } from "../../lib/motifs/index.ts";
+import { doubleFrame, rosetteLines, suitcase } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -28,7 +28,10 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 105, 148), max = W - 16 * s, sw = Math.min(W * 0.46, H * 0.3), sy = H * 0.5;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.35, opacity: 0.15 }, rosetteLines(30 * z, p.accent, { rings: 4, lobes: 12, width: 0.25 * z })),
+      [0, 1, 2, 3, 4].map(i => path(`M${W * 0.1} ${H * 0.25 + i * 3 * z} H${W * 0.3}`, { fill: null, stroke: p.accent2, strokeWidth: 0.3 * z, opacity: 0.4 })),
       path(`M${8 * s} ${sy + 1 * s} H${W - 8 * s}`, { fill: null, stroke: p.ink, strokeWidth: 0.4 * s }),
       g({ x: cx, y: sy }, suitcase(sw, p.accent, p.ink, p.accent2, p.soft)),
       line(val(ctx, "title"), cx, 9 + 10 * s, 9 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
@@ -36,6 +39,7 @@ const t: Template = {
       line(val(ctx, "lead"), cx, sy + 24 * s, 4 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "invite"), cx, sy + 32 * s, 3.8 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["date", "place"]), cx, Math.min(H - 7 - 2 * s, sy + 42 * s), 4.2 * s, { font: "tajawal", weight: 800, fill: p.accent2 === inks.mustard ? p.ink : p.accent2, maxWidth: max }),
+doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent2, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 2.2 * z }),
     );
   },
 };

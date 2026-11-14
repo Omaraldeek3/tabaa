@@ -1,5 +1,5 @@
-import { oliveBranch } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { guillocheNode, khatamPath, oliveBranch } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -25,7 +25,9 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 148, 105), m = 7 * s, max = W - 2 * m - 16 * s, y = (k: number) => m + (H - 2 * m) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      guillocheNode(14 * z, 14 * z, W - 28 * z, H - 28 * z, p.soft, { waves: 8, amp: 0.8 * z, period: 16 * z, width: 0.12 * z, opacity: 0.25 }),
       rect(m, m, W - 2 * m, H - 2 * m, { fill: null, stroke: p.ink, strokeWidth: 1.1 * s }),
       rect(m + 2.2 * s, m + 2.2 * s, W - 2 * m - 4.4 * s, H - 2 * m - 4.4 * s, { fill: null, stroke: p.ink, strokeWidth: 0.2 * s }),
       line(val(ctx, "opening"), cx, y(0.17), 5 * s, { font: "amiri", fill: p.soft === inks.grey ? inks.grey : p.ink, maxWidth: max }),
@@ -33,6 +35,7 @@ const t: Template = {
       g({ x: cx - 13 * s, y: y(0.43) }, oliveBranch(26 * s, p.accent2, null, { leaves: 8, bend: 0.06 })),
       stack(linesOf(val(ctx, "body"), 4), cx, y(0.56), 5 * s, (H - 2 * m) * 0.085, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "closing"), cx, y(0.92), 4.4 * s, { font: "amiri", weight: 700, fill: p.accent, maxWidth: max }),
+      [[10, 10], [W / z - 10, 10], [10, H / z - 10], [W / z - 10, H / z - 10]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(2 * z), { fill: p.ink }), circle(0, 0, 0.7 * z, { fill: p.paper }))),
     );
   },
 };

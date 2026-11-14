@@ -1,4 +1,4 @@
-import { nurseryMobile } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, nurseryMobile, ringsNode } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -30,7 +30,10 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 105, 148), max = W - 18 * s, mw = Math.min(W * 0.72, H * 0.42), y0 = 6 * s + mw * 0.72;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.45, W, H * 0.55, 4 * z, 0.35 * z, p.accent2, { fade: "up", opacity: 0.25 }),
+      g({ x: W / 2, y: H * 0.06, opacity: 0.2 }, ringsNode(10 * z, 34 * z, 6, p.accent, 0.25 * z)),
       rect(cx - 0.15 * s, -4, 0.3 * s, 10 * s, { fill: p.ink }),
       g({ x: cx, y: 10 * s }, nurseryMobile(mw, p.ink, p.accent, p.accent2, p.soft)),
       line(val(ctx, "lead"), cx, y0 + 6 * s, 4 * s, { font: "playfairdisplay", fill: p.ink, maxWidth: max }),
@@ -40,6 +43,7 @@ const t: Template = {
       line(joined(ctx, ["date", "time"], " · "), cx, y0 + 44 * s, 3.8 * s, { font: "inter", weight: 600, fill: p.ink, maxWidth: max }),
       line(val(ctx, "venue"), cx, y0 + 50 * s, 3.4 * s, { font: "inter", fill: p.ink, maxWidth: max }),
       line(val(ctx, "rsvp"), cx, Math.min(H - 7 - 2 * s, y0 + 58 * s), 3 * s, { font: "inter", fill: p.ink, maxWidth: max }),
+doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "dot", r: 2.2 * z }),
     );
   },
 };

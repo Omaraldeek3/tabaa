@@ -1,4 +1,5 @@
-import { rect, scene } from "../../lib/scene.ts";
+import { guillocheNode, khatamPath } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { ml, tf } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -29,7 +30,9 @@ const t: Template = {
   safeMm: 12,
   render(ctx) {
     const { W, H, p, u, cx } = dims(ctx, 210, 297), s = u, m = 8 * s, max = W - 34 * s;
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(0, 0, W, H * 0.14, p.soft, { waves: 3, amp: 1 * z, period: 18 * z, width: 0.15 * z, opacity: 0.25 }),
       rect(m, m, W - 2 * m, H - 2 * m, { fill: null, stroke: p.ink, strokeWidth: 3.2 * s }),
       rect(m + 4 * s, m + 4 * s, W - 2 * m - 8 * s, H - 2 * m - 8 * s, { fill: null, stroke: p.ink, strokeWidth: 0.5 * s }),
       line("بسم الله الرحمن الرحيم", cx, 30 * s, 6 * s, { font: "amiri", fill: p.ink, maxWidth: max * 0.6, safe: false }),
@@ -42,6 +45,7 @@ const t: Template = {
       val(ctx, "condolence") ? rect(m + 4 * s, 222 * s, W - 2 * m - 8 * s, 20 * s, { fill: p.ink }) : null,
       line(val(ctx, "condolence"), cx, 235 * s, 7 * s, { font: ctx.font, weight: 700, fill: p.accent2, maxWidth: max }),
       line(val(ctx, "closing"), cx, 266 * s, 8 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
+      [[13, 13], [W / z - 13, 13], [13, H / z - 13], [W / z - 13, H / z - 13]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(2.4 * z), { fill: p.ink }), circle(0, 0, 0.8 * z, { fill: p.paper }))),
     );
   },
 };

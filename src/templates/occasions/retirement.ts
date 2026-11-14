@@ -1,4 +1,4 @@
-import { clockFace } from "../../lib/motifs/index.ts";
+import { burstLines, clockFace, dotField, doubleFrame } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -29,7 +29,10 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 105, 148), max = W - 16 * s, r = Math.min(W * 0.28, H * 0.19), cy = 9 + 14 * s + r;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.25, opacity: 0.4 }, burstLines(60, 21 * z, 30 * z, p.accent, 0.3 * z)),
+      dotField(0, H * 0.75, W, H * 0.25, 4 * z, 0.35 * z, p.accent, { fade: "up", opacity: 0.2 }),
       line(val(ctx, "title"), cx, 9 + 8 * s, 7 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
       g({ x: cx, y: cy }, clockFace(r, p.paper === inks.navy ? inks.ivory : inks.white, inks.black, p.accent2, 4, 0)),
       line(val(ctx, "name"), cx, cy + r + 13 * s, 8.5 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
@@ -38,6 +41,7 @@ const t: Template = {
       line(val(ctx, "invite"), cx, cy + r + 34 * s, 3.8 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(val(ctx, "date"), cx, cy + r + 42 * s, 4.4 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: max }),
       line(joined(ctx, ["time", "venue"]), cx, Math.min(H - 7 - 2 * s, cy + r + 49 * s), 3.8 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
+doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 2.2 * z }),
     );
   },
 };

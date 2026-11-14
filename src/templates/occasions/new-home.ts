@@ -1,4 +1,4 @@
-import { archPath, key, tatreezBand } from "../../lib/motifs/index.ts";
+import { archPath, dotField, doubleFrame, key, starTile, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,7 +27,10 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 105, 148), max = W - 20 * s, dw = 40 * s, dh = H * 0.4, dy = H * 0.07, y = (k: number) => dy + dh + (H - dy - dh) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H * 0.36, 8 * z, 1 * z, p.ink, 0.06),
+      dotField(0, H * 0.45, W, H * 0.55, 4 * z, 0.35 * z, p.accent2, { fade: "up", opacity: 0.2 }),
       rect(-b, -b, W + 2 * b, dy + dh + b, { fill: p.soft }),
       g({ x: cx - dw / 2 - 3 * s, y: dy - 3 * s }, path(archPath(dw + 6 * s, dh + 3 * s, 0.66), { fill: p.paper })),
       g({ x: cx - dw / 2, y: dy }, path(archPath(dw, dh, 0.66), { fill: p.accent })),
@@ -40,6 +43,7 @@ const t: Template = {
       rect(cx - 10 * s, y(0.58), 20 * s, 0.3 * s, { fill: p.accent2 }),
       line(joined(ctx, ["date", "time"]), cx, y(0.7), 5 * s, { font: "amiri", weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "address"), cx, y(0.8), 4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
+      doubleFrame(5 * z, H * 0.41, W - 10 * z, H * 0.59 - 5 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.35 * z, thin: 0.15 * z, corner: "diamond", r: 2 * z }),
     );
   },
 };

@@ -1,4 +1,4 @@
-import { dotRing, khatamPath, poppy, tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
+import { dotRing, khatamPath, poppy, rosetteLines, starTile, tatreezBand, tatreezUnit } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -31,7 +31,10 @@ const hennaNight: Template = {
     const u = W / 148, v = H / 210, s = Math.min(u, v), cx = W / 2, max = W - 30 * s;
     const bandH = 7 * s, cy = 70 * v, r = 34 * s;
     const flowers = [[-0.33, 0.2, 13], [0.33, 0.2, 13], [-0.22, -0.05, 9], [0.22, -0.05, 9]] as const;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      starTile(0, H * 0.08, W, H * 0.84, 9 * z, 1 * z, p.accent, 0.07),
+      g({ x: W / 2, y: H * 0.33, opacity: 0.3 }, rosetteLines(34 * z, p.accent, { rings: 3, lobes: 16, width: 0.2 * z })),
       g({ x: -3, y: 12 * v }, tatreezBand("chain", W + 6, bandH, [p.accent, p.accent2])),
       g({ x: -3, y: H - 12 * v - bandH }, tatreezBand("chain", W + 6, bandH, [p.accent, p.accent2])),
       g({ x: cx, y: cy },

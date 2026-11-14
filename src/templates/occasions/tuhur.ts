@@ -1,4 +1,4 @@
-import { darbuka, starPath } from "../../lib/motifs/index.ts";
+import { darbuka, dotField, doubleFrame, ringsNode, starPath } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, sizes, val } from "../kit.ts";
@@ -29,7 +29,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s } = dims(ctx, 148, 105), dh = H * 0.62, dx = W * 0.22, base = H * 0.86, x0 = W - 9 * s, tw = W * 0.56;
     const burst = [[-0.9, -0.95, 3], [0.7, -1.05, 2.4], [-0.2, -1.25, 2], [1.05, -0.7, 1.6], [-1.15, -0.55, 1.8]];
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(W * 0.45, 0, W * 0.55, H, 4 * z, 0.35 * z, p.accent2, { fade: "left", opacity: 0.25 }),
+      g({ x: W * 0.25, y: H * 0.55, opacity: 0.2 }, ringsNode(30 * z, 44 * z, 4, p.accent, 0.35 * z)),
       burst.map(([x, y, k], i) => g({ x: dx + x * dh * 0.4, y: base - dh + y * dh * 0.18, rotate: i * 23 }, path(starPath(5, k * s, k * 0.42 * s), { fill: i % 2 ? p.accent2 : p.accent }))),
       [[-0.55, -1.1], [0.35, -1.2], [0.95, -0.95], [-1, -0.8]].map(([x, y], i) => circle(dx + x * dh * 0.4, base - dh + y * dh * 0.08, (0.9 + i * 0.2) * s, { fill: p.soft })),
       g({ x: dx, y: base }, darbuka(dh, p.accent, p.paper === inks.ivory ? inks.sand : p.ink === inks.black ? inks.ivory : inks.paper, p.accent2)),
@@ -39,6 +42,7 @@ const t: Template = {
       line(val(ctx, "date"), x0, H * 0.71, 4.6 * s, { font: "tajawal", weight: 800, fill: p.accent, align: "start", maxWidth: tw }),
       line(val(ctx, "time"), x0, H * 0.79, 3.8 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: tw }),
       line(val(ctx, "venue"), x0, H * 0.87, 3.8 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: tw }),
+doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "star", r: 2.2 * z }),
     );
   },
 };

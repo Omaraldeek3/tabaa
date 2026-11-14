@@ -1,7 +1,7 @@
-import { sheep } from "../../lib/motifs/index.ts";
-import { g, path, scene } from "../../lib/scene.ts";
+import { burstLines, dotField, doubleFrame, sheep } from "../../lib/motifs/index.ts";
+import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
-import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
+import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
 const t: Template = {
@@ -30,7 +30,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 105, 148), max = W - 16 * s, hill = H * 0.36, sw = Math.min(W * 0.32, H * 0.2);
     const Y = (k: number) => hill + 12 * s + (H - 7 - 4 * s - hill - 12 * s) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      g({ x: W * 0.75, y: H * 0.1 }, circle(0, 0, 7 * z, { fill: p.accent2, opacity: 0.25 }), burstLines(20, 9 * z, 13 * z, p.accent2, 0.35 * z, 0.5)),
+      dotField(0, H * 0.45, W, H * 0.55, 4 * z, 0.35 * z, p.accent, { fade: "up", opacity: 0.2 }),
       path(`M${-b} ${hill} Q${W * 0.3} ${hill - H * 0.12} ${W * 0.6} ${hill - H * 0.06} T${W + b} ${hill - H * 0.04} V${hill + 4 * s} H${-b} Z`, { fill: p.accent }),
       g({ x: W * 0.36, y: hill - H * 0.075 }, sheep(sw, p.soft, p.ink)),
       g({ x: W * 0.66, y: hill - H * 0.06, scaleX: -1 }, sheep(sw * 0.8, p.soft, p.ink)),
@@ -41,6 +44,7 @@ const t: Template = {
       line(val(ctx, "date"), cx, Y(0.6), 4.2 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: max }),
       line(val(ctx, "venue"), cx, Y(0.73), 4 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(val(ctx, "prayer"), cx, Y(1), 4.2 * s, { font: "amiri", fill: p.accent2 === inks.sand ? p.accent : p.accent2, maxWidth: max }),
+      doubleFrame(5 * z, H * 0.4, W - 10 * z, H * 0.6 - 5 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 2.4 * z }),
     );
   },
 };

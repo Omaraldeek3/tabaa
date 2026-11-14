@@ -1,4 +1,4 @@
-import { archPath, khatamPath, quranStand } from "../../lib/motifs/index.ts";
+import { archPath, khatamPath, quranStand, rosetteLines, starTile } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
@@ -30,7 +30,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 148, 210), m = 11 * s, aw = W - 2 * m, ah = H - 2 * m, qw = Math.min(aw * 0.5, H * 0.24), qy = m + aw * 0.38 + qw * 0.9;
     const Y = (k: number) => qy + 12 * s + (H - m - 10 * s - qy - 12 * s) * k, max = aw - 18 * s;
+    const z = Math.min(W, H) / 148;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 12 * z, 1.4 * z, p.accent, 0.06),
+      g({ x: W / 2, y: H * 0.36, opacity: 0.15 }, rosetteLines(34 * z, p.accent, { rings: 5, lobes: 16, width: 0.3 * z })),
       g({ x: m, y: m }, path(archPath(aw, ah, 0.5), { fill: null, stroke: p.accent, strokeWidth: 0.7 * s }), g({ x: 2.5 * s, y: 2.5 * s }, path(archPath(aw - 5 * s, ah - 5 * s, 0.5), { fill: null, stroke: p.accent, strokeWidth: 0.2 * s }))),
       g({ x: cx, y: m + 10 * s }, path(khatamPath(4 * s), { fill: p.accent }), path(khatamPath(1.6 * s), { fill: p.paper })),
       line(val(ctx, "verse"), cx, m + aw * 0.22, 5.4 * s, { font: "amiri", fill: p.accent2, maxWidth: max * 0.8 }),

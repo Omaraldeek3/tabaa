@@ -1,4 +1,4 @@
-import { archWindow, crescentPath, khatamPath, tatreezBand } from "../../lib/motifs/index.ts";
+import { archWindow, burstLines, crescentPath, khatamPath, starTile, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, path, scene } from "../../lib/scene.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,7 +27,10 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 105, 148), m = 13 * s, max = W - 2 * m - 14 * s, top = H * 0.3, y = (k: number) => top + (H - top - m) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.accent,
+      starTile(0, 0, W, H, 9 * z, 1.1 * z, p.paper, 0.1),
+      g({ x: W / 2, y: H * 0.18, opacity: 0.25 }, burstLines(36, 8 * z, 26 * z, p.accent, 0.3 * z)),
       g({ x: -b, y: -b }, archWindow(W + 2 * b, H + 2 * b, m + b, p.paper, 0.62)),
       g({ x: m + b * 0 + 2 * s, y: H - m - 7 * s }, tatreezBand("chain", W - 2 * m - 4 * s, 4 * s, [p.accent2, p.ink])),
       g({ x: cx, y: top * 0.72, rotate: -90 }, path(crescentPath(7 * s, 0.5), { fill: p.accent2 })),

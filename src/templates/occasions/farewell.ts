@@ -1,5 +1,5 @@
-import { plane } from "../../lib/motifs/index.ts";
-import { circle, g, scene } from "../../lib/scene.ts";
+import { doubleFrame, plane } from "../../lib/motifs/index.ts";
+import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, joined, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -32,13 +32,16 @@ const t: Template = {
     const dots = Array.from({ length: 26 }, (_, i) => { const [x, y] = P(i / 26); return circle(x, y, 0.55 * s, { fill: p.accent2 }); });
     const [px, py] = P(1), [qx, qy] = P(0.97), ang = (Math.atan2(py - qy, px - qx) * 180) / Math.PI;
     const tx = land ? W * 0.71 : cx, al = "center" as const, tw = land ? W * 0.48 : max, top = land ? 18 * s : H * 0.5;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      [[0.15, 0.12], [0.5, 0.06], [0.75, 0.3], [0.2, 0.42]].map(([x, y], i) => g({ x: W * x, y: H * y, opacity: 0.5 }, circle(0, 0, (5 + i) * z, { fill: p.paper }), circle(4 * z, 1 * z, (4 + i * 0.6) * z, { fill: p.paper }), circle(-4 * z, 1.4 * z, 3.4 * z, { fill: p.paper }))),
       dots, g({ x: px, y: py, rotate: ang }, plane(16 * s, p.accent2)),
       line(val(ctx, "title"), tx, land ? top : top + 4 * s, 9.5 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: tw, align: al }),
       line(val(ctx, "name"), tx, land ? top + 20 * s : top + 20 * s, 13 * s, { font: ctx.font, weight: 700, fill: p.accent2, maxWidth: tw, align: al }),
       line(val(ctx, "to"), tx, land ? top + 31 * s : top + 30 * s, 4 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: tw, align: al }),
       line(val(ctx, "invite"), tx, land ? top + 39 * s : top + 38 * s, 3.8 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: tw, align: al }),
       line(joined(ctx, ["date", "place"]), tx, land ? top + 48 * s : Math.min(H - 7 - 2 * s, top + 47 * s), 4 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: tw, align: al }),
+doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.ink, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 2.2 * z }),
     );
   },
 };
