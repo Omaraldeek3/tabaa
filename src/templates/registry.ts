@@ -186,6 +186,12 @@ import calendars_monthPlanner from "./calendars/month-planner.ts";
 import calendars_schoolTimetable from "./calendars/school-timetable.ts";
 import calendars_yearCalendar from "./calendars/year-calendar.ts";
 import calendars_enHabitTracker from "./calendars/en-habit-tracker.ts";
+import programmes_graduationProgramme from "./programmes/graduation-programme.ts";
+import programmes_placeCard from "./programmes/place-card.ts";
+import programmes_programme from "./programmes/programme.ts";
+import programmes_tableNumber from "./programmes/table-number.ts";
+import programmes_welcomeSign from "./programmes/welcome-sign.ts";
+import programmes_enTableNumber from "./programmes/en-table-number.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -375,6 +381,12 @@ export const templates: Template[] = [
   calendars_schoolTimetable,
   calendars_yearCalendar,
   calendars_enHabitTracker,
+  programmes_graduationProgramme,
+  programmes_placeCard,
+  programmes_programme,
+  programmes_tableNumber,
+  programmes_welcomeSign,
+  programmes_enTableNumber,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
