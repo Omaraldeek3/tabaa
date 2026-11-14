@@ -14,7 +14,7 @@ export function guilloche(x: number, y: number, w: number, h: number, waves: num
     const y0 = y + (k + 0.5) * (h / waves), phase = k * 0.9;
     for (const sign of [1, -1]) {
       const pts: string[] = [];
-      for (let t = 0; t <= w; t += period / 12) pts.push(`${pts.length ? "L" : "M"}${f(x + t)} ${f(y0 + sign * amp * Math.sin((t / period) * 2 * Math.PI + phase))}`);
+      for (let t = 0; t <= w; t += period / 8) pts.push(`${pts.length ? "L" : "M"}${f(x + t)} ${f(y0 + sign * amp * Math.sin((t / period) * 2 * Math.PI + phase))}`);
       d.push(pts.join(" "));
     }
   }
@@ -92,7 +92,7 @@ export function dotField(x: number, y: number, w: number, h: number, pitch: numb
     for (let px = x + (j % 2 ? pitch / 2 : 0); px <= x + w; px += pitch) {
       const t = fade === "left" ? (px - x) / w : fade === "right" ? 1 - (px - x) / w : fade === "up" ? (py - y) / h : fade === "down" ? 1 - (py - y) / h : 1;
       const rr = dot * (0.25 + 0.75 * t);
-      if (rr > dot * 0.3) d.push(`M${f(px - rr)} ${f(py)} a${f(rr)} ${f(rr)} 0 1 0 ${f(2 * rr)} 0 a${f(rr)} ${f(rr)} 0 1 0 ${f(-2 * rr)} 0 Z`);
+      if (rr > dot * 0.4) d.push(`M${f(px - rr)} ${f(py)}a${f(rr)} ${f(rr)} 0 1 0 ${f(2 * rr)} 0a${f(rr)} ${f(rr)} 0 1 0 ${f(-2 * rr)} 0`);
     }
   }
   return path(d.join(" "), { fill: ink, opacity: o.opacity ?? 1 });

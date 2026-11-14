@@ -1,4 +1,4 @@
-import { burstLines, ringsNode, starPath, starTile } from "../../lib/motifs/index.ts";
+import { dotField, ringsNode, starPath, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
@@ -33,7 +33,7 @@ const t: Template = {
     for (let i = 0; i * 4 * s < W + 2 * b; i++) holes.push(rect(-b + i * 4 * s, 1.2 * s, 2 * s, 2.2 * s, { fill: p.accent2, r: 0.4 * s }), rect(-b + i * 4 * s, H - 3.4 * s, 2 * s, 2.2 * s, { fill: p.accent2, r: 0.4 * s }));
     const box = (label: string, v: string, x: number) => v ? [rect(x - 8 * s, 28 * s, 16 * s, 18 * s, { fill: null, stroke: p.ink, strokeWidth: 0.35 * s }), line(label, x, 33 * s, 2.6 * s, { font: "tajawal", fill: p.ink, safe: false }), line(v, x, 42.4 * s, 7 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: 14 * s })] : [];
     return scene(W, H, p.paper,
-      g({ x: stub, y: 0, opacity: 0.1 }, burstLines(28, 4 * s, W, inks.white, 0.5 * s)),
+      dotField(stub + 4 * s, 6 * s, W - stub - 8 * s, H - 12 * s, 3.2 * s, 0.35 * s, inks.white, { fade: "right", opacity: 0.12 }),
       starTile(stub + 4 * s, 8 * s, W - stub - 8 * s, H - 16 * s, 9 * s, 1.4 * s, inks.white, 0.05),
       g({ x: stub / 2, y: 13 * s, opacity: 0.25 }, ringsNode(5 * s, 9 * s, 3, p.accent2, 0.3 * s)),
       holes, tearLine(stub, H, p.ink, p.soft, s),

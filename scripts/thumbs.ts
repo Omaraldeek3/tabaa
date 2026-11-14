@@ -16,8 +16,10 @@ for (const file of await readdir(dir)) if (!keep.has(file)) await rm(path.join(d
 let bytes = 0;
 for (const t of templates) {
   const resolved = await resolveScene(t.render(defaultContext(t, { bleedMm: 0 })));
-  // Two decimals is plenty at thumbnail size and roughly halves the file.
-  const svg = renderSvg(resolved, { idPrefix: t.id }).replace(/(\d+\.\d{2})\d+/g, "$1");
+  // Two decimals is plenty at thumbnail size and roughly halves the file;
+  // path data gets one decimal (0.1 mm), which the eye cannot tell apart at card size.
+  const svg = renderSvg(resolved, { idPrefix: t.id }).replace(/(\d+\.\d{2})\d+/g, "$1")
+    .replace(/ d="([^"]*)"/g, (_, d: string) => ` d="${d.replace(/(\d+\.\d)\d+/g, "$1")}"`);
   bytes += svg.length;
   await writeFile(path.join(dir, `${t.id}.svg`), svg);
 }
