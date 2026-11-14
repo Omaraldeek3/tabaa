@@ -1,4 +1,4 @@
-import { rays } from "../../lib/motifs/index.ts";
+import { dotField, dotRing, rays, starPath } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, sizes, val } from "../kit.ts";
@@ -27,12 +27,16 @@ const t: Template = {
   render(ctx) {
     const { W, p, cx } = dims(ctx, 40, 40), k = W / 40, c = W / 2, sy = 15 * k;
     return scene(W, W, p.paper,
+      dotField(0, 0, W, W, 3 * k, 0.35 * k, p.accent2, { opacity: 0.3 }),
+      g({ x: c, y: sy }, circle(0, 0, 13 * k, { fill: p.paper })),
       g({ x: c, y: sy }, rays(14, 6.6 * k, 10.6 * k, p.accent2, 0.6), circle(0, 0, 6 * k, { fill: p.accent }),
         circle(-2 * k, -1 * k, 0.7 * k, { fill: p.ink }), circle(2 * k, -1 * k, 0.7 * k, { fill: p.ink }),
         path(`M${-2.6 * k} ${1.4 * k} Q0 ${4 * k} ${2.6 * k} ${1.4 * k}`, { fill: null, stroke: p.ink, strokeWidth: 0.5 * k }),
         circle(-3.6 * k, 1.2 * k, 0.9 * k, { fill: p.soft, opacity: 0.5 }), circle(3.6 * k, 1.2 * k, 0.9 * k, { fill: p.soft, opacity: 0.5 })),
       line(val(ctx, "word"), cx, 32 * k, 6.4 * k, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: 26 * k }),
       line(val(ctx, "name"), cx, 36 * k, 2.4 * k, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 18 * k }),
+      [[6, 8], [34, 9], [5, 26], [35, 25]].map(([x, y], i) => g({ x: x * k, y: y * k, rotate: i * 20 }, path(starPath(5, (1.6 - (i % 2) * 0.4) * k, 0.65 * k), { fill: i % 2 ? p.accent2 : p.accent }))),
+      g({ x: c, y: c }, dotRing(W / 2 - 1.4 * k, 40, 0.3 * k, p.accent)),
     );
   },
 };

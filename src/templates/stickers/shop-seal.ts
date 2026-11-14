@@ -1,4 +1,4 @@
-import { starPath } from "../../lib/motifs/index.ts";
+import { dotRing, khatamPath, rosetteLines, starPath } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -28,6 +28,7 @@ const t: Template = {
   render(ctx) {
     const { W, p, cx } = dims(ctx, 50, 50), k = W / 50, c = W / 2;
     return scene(W, W, p.paper,
+      g({ x: c, y: c }, dotRing(W / 2 - 3.5 * k, 60, 0.28 * k, p.ink), rosetteLines(W / 2 - 7 * k, p.accent, { rings: 2, lobes: 20, width: 0.12 * k, opacity: 0.25 })),
       circle(c, c, W / 2 - 2.4 * k, { fill: null, stroke: p.ink, strokeWidth: 1.1 * k }),
       circle(c, c, W / 2 - 4.6 * k, { fill: null, stroke: p.ink, strokeWidth: 0.3 * k }),
       [c - 17 * k, c + 17 * k].map(x => g({ x, y: c }, path(starPath(5, 1.6 * k, 0.7 * k), { fill: p.accent2 }))),
@@ -35,6 +36,7 @@ const t: Template = {
       val(ctx, "name") ? rect(c - 13 * k, 30.4 * k, 26 * k, 0.3 * k, { fill: p.ink }) : null,
       line(val(ctx, "name"), cx, 36 * k, 3.6 * k, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: 28 * k }),
       line(val(ctx, "since"), cx, 41 * k, 2.6 * k, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 20 * k }),
+      [[c, 7.6 * k], [c, W - 7.6 * k]].map(([x, y]) => g({ x, y }, path(khatamPath(1.3 * k), { fill: p.accent2 }))),
     );
   },
 };

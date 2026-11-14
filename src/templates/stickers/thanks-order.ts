@@ -1,3 +1,4 @@
+import { beadRule, burstLines, ringsNode } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -28,11 +29,14 @@ const t: Template = {
     const dashes = Array.from({ length: 40 }, (_, i) => { const a = (i / 40) * Math.PI * 2, a2 = a + Math.PI / 60; return `M${c + Math.cos(a) * r} ${c + Math.sin(a) * r} L${c + Math.cos(a2) * r} ${c + Math.sin(a2) * r}`; }).join(" ");
     const heart = `M0 ${2.2 * k} C${-4 * k} ${-0.6 * k} ${-2.6 * k} ${-4 * k} 0 ${-2 * k} C${2.6 * k} ${-4 * k} ${4 * k} ${-0.6 * k} 0 ${2.2 * k} Z`;
     return scene(W, W, p.paper,
+      g({ x: c, y: c }, circle(0, 0, r - 1.6 * k, { fill: p.accent, opacity: 0.08 }), ringsNode(r + 1.8 * k, r + 2.4 * k, 2, p.accent2, 0.15 * k, 0.8)),
+      g({ x: c, y: 15 * k, opacity: 0.35 }, burstLines(20, 4.6 * k, 7.6 * k, p.accent2, 0.3 * k)),
       path(dashes, { fill: null, stroke: p.accent, strokeWidth: 0.5 * k }),
       g({ x: c, y: 15 * k }, path(heart, { fill: p.accent })),
       line(val(ctx, "title"), cx, 28.6 * k, 6.4 * k, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: 34 * k }),
       circle(c - 8 * k, 33 * k, 0.4 * k, { fill: p.accent2 }), circle(c + 8 * k, 33 * k, 0.4 * k, { fill: p.accent2 }),
       line(val(ctx, "shop"), cx, 38 * k, 2.8 * k, { font: "tajawal", weight: 700, fill: p.accent2, maxWidth: 28 * k }),
+      beadRule(c - 6 * k, c + 6 * k, 33 * k, p.accent2, k, { bead: "dot", pitch: 1.6 }),
     );
   },
 };

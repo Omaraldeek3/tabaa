@@ -1,3 +1,4 @@
+import { ringsNode, starTile } from "../../lib/motifs/index.ts";
 import { circle, g, path, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, sizes, val } from "../kit.ts";
@@ -29,6 +30,8 @@ const t: Template = {
     const pearls = Array.from({ length: 30 }, (_, i) => { const a = (i / 30) * Math.PI * 2; return circle(c + Math.cos(a) * r, c + Math.sin(a) * r, 0.75 * k, { fill: p.accent }); });
     const heart = (x: number, sz: number) => g({ x, y: c - 0.6 * k }, path(`M0 ${sz} C${-1.8 * sz} ${-0.3 * sz} ${-1.2 * sz} ${-1.8 * sz} 0 ${-0.9 * sz} C${1.2 * sz} ${-1.8 * sz} ${1.8 * sz} ${-0.3 * sz} 0 ${sz} Z`, { fill: p.accent2 }));
     return scene(W, W, p.paper,
+      g({ x: c, y: c }, circle(0, 0, r - 1.4 * k, { fill: p.accent2, opacity: 0.15 }), ringsNode(r - 3 * k, r - 2 * k, 2, p.accent, 0.12 * k, 0.6)),
+      starTile(c - 14 * k, c - 3.4 * k, 28 * k, 6 * k, 3.6 * k, 0.45 * k, p.accent, 0.25),
       pearls, heart(c - 1.2 * k, 1.2 * k), heart(c + 1.4 * k, 0.9 * k),
       line(val(ctx, "first"), cx, 14.6 * k, 6 * k, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: 24 * k }),
       line(val(ctx, "second"), cx, 28 * k, 6 * k, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: 24 * k }),

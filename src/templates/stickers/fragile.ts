@@ -1,4 +1,5 @@
-import { g, path, rect, scene } from "../../lib/scene.ts";
+import { hatch, ringsNode } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, more, pal, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -32,12 +33,17 @@ const t: Template = {
       path(`M${-1 * s} ${-14 * s} L${1.6 * s} ${-9 * s} L${-1.4 * s} ${-6 * s} L${1 * s} ${-2 * s}`, { fill: null, stroke: p.paper, strokeWidth: 0.8 * s }));
     const arrow = (x: number) => path(`M${x} ${H - 9 * s} V${H - 18 * s} M${x - 3 * s} ${H - 15 * s} L${x} ${H - 18.5 * s} L${x + 3 * s} ${H - 15 * s}`, { fill: null, stroke: p.ink, strokeWidth: 1 * s });
     return scene(W, H, p.paper,
+      hatch(-b, sb, W + 2 * b, H - sb + b, 3 * s, p.soft, 0.15 * s, 0.25),
+      g({ x: W * 0.2, y: H * 0.5 }, circle(0, 0, 17 * s, { fill: p.paper }), ringsNode(15 * s, 17 * s, 2, p.accent, 0.3 * s, 0.6)),
       rect(-b, -b, W + 2 * b, sb + b, { fill: p.accent2 === p.ink ? inks.mustard : p.soft }), path(stripes, { fill: p.ink }),
       glass,
       line(val(ctx, "title"), R, 31 * s, 13 * s, { font: ctx.font, weight: 700, fill: p.accent, align: "start", maxWidth: tw }),
       line(val(ctx, "sub"), R, 40 * s, 3.4 * s, { font: "tajawal", weight: 800, fill: p.ink, align: "start", maxWidth: tw }),
       line(val(ctx, "shop"), R, H - 8 * s, 3 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: tw * 0.8 }),
       arrow(W * 0.36), arrow(W * 0.36 - 8 * s),
+      rect(R - tw, 44 * s, tw, 0.4 * s, { fill: p.accent }),
+      [0, 1, 2].map(i => g({ x: R - tw + 10 * s + i * 5 * s, y: 50 * s }, path(`M0 ${-2 * s} L${1.6 * s} 0 L0 ${2 * s} L${-1.6 * s} 0 Z`, { fill: p.accent2 === p.ink ? inks.mustard : p.soft }))),
+      rect(2.4 * s, sb + 2.4 * s, W - 4.8 * s, H - sb - 4.8 * s, { fill: null, stroke: p.ink, strokeWidth: 0.3 * s }),
     );
   },
 };
