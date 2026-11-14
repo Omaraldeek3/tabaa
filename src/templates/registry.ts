@@ -180,6 +180,12 @@ import bookmarks_poem from "./bookmarks/poem.ts";
 import bookmarks_readingTracker from "./bookmarks/reading-tracker.ts";
 import bookmarks_tatreezStrip from "./bookmarks/tatreez-strip.ts";
 import bookmarks_enQuote from "./bookmarks/en-quote.ts";
+import calendars_imsakiya from "./calendars/imsakiya.ts";
+import calendars_mealPlan from "./calendars/meal-plan.ts";
+import calendars_monthPlanner from "./calendars/month-planner.ts";
+import calendars_schoolTimetable from "./calendars/school-timetable.ts";
+import calendars_yearCalendar from "./calendars/year-calendar.ts";
+import calendars_enHabitTracker from "./calendars/en-habit-tracker.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
 export const templates: Template[] = [
@@ -363,6 +369,12 @@ export const templates: Template[] = [
   bookmarks_readingTracker,
   bookmarks_tatreezStrip,
   bookmarks_enQuote,
+  calendars_imsakiya,
+  calendars_mealPlan,
+  calendars_monthPlanner,
+  calendars_schoolTimetable,
+  calendars_yearCalendar,
+  calendars_enHabitTracker,
 ];
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
