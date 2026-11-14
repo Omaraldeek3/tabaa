@@ -1,6 +1,6 @@
 /** Shared builder for the Palestinian city prints: each city brings its own
  *  landmark, palettes and words; the layout is one of four compositions. */
-import { archPath, beadRule, burstLines, dotField, doubleFrame, flourishRule, ringsNode, starTile, stepEdge } from "../lib/motifs/index.ts";
+import { archPath, beadRule, burstLines, dotField, flourishRule, ringsNode, starTile, stepEdge } from "../lib/motifs/index.ts";
 import { circle, type GroupNode, g, path, rect, scene } from "../lib/scene.ts";
 import type { Palette, Template } from "./types.ts";
 import { tf } from "./fields.ts";
@@ -40,19 +40,18 @@ export function cityPrint(o: {
         line(val(ctx, "line"), cx, lineY, 8.4 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
         line(val(ctx, "coords"), cx, coordY, 5.4 * s, { font: "inter", weight: 600, fill: p.soft, maxWidth: max, tracking: 1 * s }),
       ];
-      // Paper grain behind everything; a double frame with star corners over the art.
+      // Paper grain behind everything; the ornate frame (ornate.ts) supplies the border.
       const grain = dotField(0, 0, W, H, 6 * s, 0.5 * s, p.ink, { opacity: 0.05 });
-      const frame = doubleFrame(10 * s, 10 * s, W - 20 * s, H - 20 * s, p.ink, p.paper, { gap: 3 * s, heavy: 0.8 * s, thin: 0.3 * s, corner: "khatam", r: 4 * s });
       const rule = (y: number) => flourishRule(cx, y, 110 * s, nickInk, s * 1.6);
       if (o.layout === "top") return scene(W, H, p.paper, grain,
         g({ x: W * 0.78, y: 64 * s }, circle(0, 0, 26 * s, { fill: p.accent2, opacity: 0.25 }), ringsNode(30 * s, 46 * s, 4, p.accent2, 0.5 * s, 0.4)),
         g({ x: 24 * s, y: 30 * s }, o.draw(W - 48 * s, H * 0.5, p)),
         starTile(30 * s, H * 0.5 + 40 * s, W - 60 * s, 30 * s, 16 * s, 2 * s, p.accent2, 0.15),
-        words(H * 0.5 + 100 * s, H * 0.5 + 122 * s, H * 0.5 + 142 * s, H - 24 * s), rule(H * 0.5 + 42 * s), frame);
+        words(H * 0.5 + 100 * s, H * 0.5 + 122 * s, H * 0.5 + 142 * s, H - 24 * s), rule(H * 0.5 + 42 * s));
       if (o.layout === "bottom") return scene(W, H, p.paper, grain,
         g({ x: cx, y: H * 0.5, opacity: 0.12 }, burstLines(60, 30 * s, W, p.accent2, 0.6 * s)),
         g({ x: -b, y: H * 0.46 }, o.draw(W + 2 * b, H * 0.54 + b, p)),
-        words(110 * s, 134 * s, 154 * s, 28 * s, 76), rule(44 * s), frame);
+        words(110 * s, 134 * s, 154 * s, 28 * s, 76), rule(44 * s));
       if (o.layout === "arch") {
         const aw = W - 80 * s, ah = H * 0.56, ax = 40 * s, ay = 36 * s;
         return scene(W, H, p.paper, grain,
@@ -62,7 +61,7 @@ export function cityPrint(o: {
           g({ x: ax + 14 * s, y: ay + 30 * s }, o.draw(aw - 28 * s, ah - 30 * s, p)),
           g({ x: ax - 4 * s, y: ay - 4 * s }, path(archPath(aw + 8 * s, ah + 4 * s, 0.5), { fill: null, stroke: p.ink, strokeWidth: 1.2 * s })),
           g({ x: ax - 9 * s, y: ay - 9 * s }, path(archPath(aw + 18 * s, ah + 9 * s, 0.5), { fill: null, stroke: p.ink, strokeWidth: 0.3 * s })),
-          words(ay + ah + 72 * s, ay + ah + 94 * s, ay + ah + 113 * s, H - 22 * s, 48), rule(ay + ah + 12 * s), frame);
+          words(ay + ah + 72 * s, ay + ah + 94 * s, ay + ah + 113 * s, H - 22 * s, 48), rule(ay + ah + 12 * s));
       }
       const band = H * 0.42;
       return scene(W, H, p.paper, grain,
@@ -70,7 +69,7 @@ export function cityPrint(o: {
         stepEdge(-b, H * 0.3, W + 2 * b, 3 * s, p.accent2), stepEdge(-b, H * 0.3 + band, W + 2 * b, 3 * s, p.accent2, -1),
         beadRule(14 * s, W - 14 * s, H * 0.3 - 8 * s, p.accent2, s * 1.6, { bead: "diamond", pitch: 5 }),
         g({ x: 30 * s, y: H * 0.3 + 10 * s }, o.draw(W - 60 * s, band - 10 * s, p)),
-        words(H * 0.22, H * 0.3 + band + 30 * s, H * 0.3 + band + 50 * s, H - 24 * s, 64), rule(H * 0.3 + band + 14 * s), frame);
+        words(H * 0.22, H * 0.3 + band + 30 * s, H * 0.3 + band + 50 * s, H - 24 * s, 64), rule(H * 0.3 + band + 14 * s));
     },
   };
 }

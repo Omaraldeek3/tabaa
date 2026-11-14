@@ -23,11 +23,16 @@ const tail = src.slice(src.indexOf("export const getTemplate"));
 const head = `/** Every template on the site. The list below is written by scripts/registry.mjs
  *  from the files under src/templates/<category>/; do not edit it by hand. */
 ${entries.map(e => `import ${e.name} from "./${e.cat}/${e.f}.ts";`).join("\n")}
+import { dressAll } from "./ornate.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
-export const templates: Template[] = [
+/** The designs as drawn, before the ornate frame. */
+export const bareTemplates: Template[] = [
 ${entries.map(e => `  ${e.name},`).join("\n")}
 ];
+
+/** Every design wears its ornate frame; see ornate.ts. */
+export const templates: Template[] = dressAll(bareTemplates);
 
 `;
 await writeFile(file, head + tail);

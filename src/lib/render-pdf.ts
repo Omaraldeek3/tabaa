@@ -62,7 +62,8 @@ export async function renderPdf(scene: Scene, opts: PrintOptions, meta: { title?
     if (shape.opacity < 0.995) ops.push(setGraphicsState(alphaState(doc, page, alphas, shape.opacity)));
     if (shape.fill) ops.push(setFillingColor(press(shape.fill)));
     if (shape.stroke) ops.push(setStrokingColor(press(shape.stroke)), setLineWidth(shape.strokeWidth));
-    ops.push(...pathOps(shape.d));
+    // Dense ornament makes paths with tens of thousands of operators: no spreading into calls.
+    for (const o of pathOps(shape.d)) ops.push(o);
     if (shape.fill && shape.stroke) ops.push(op(shape.evenOdd ? Ops.FillEvenOddAndStroke : Ops.FillNonZeroAndStroke));
     else if (shape.fill) ops.push(op(shape.evenOdd ? Ops.FillEvenOdd : Ops.FillNonZero));
     else ops.push(op(Ops.StrokePath));
@@ -77,6 +78,6 @@ export async function renderPdf(scene: Scene, opts: PrintOptions, meta: { title?
     ops.push(op(Ops.StrokePath));
   }
   ops.push(popGraphicsState());
-  page.pushOperators(...ops);
+  for (let i = 0; i < ops.length; i += 4096) page.pushOperators(...ops.slice(i, i + 4096));
   return doc.save();
 }

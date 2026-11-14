@@ -200,9 +200,11 @@ import stationery_prescription from "./stationery/prescription.ts";
 import stationery_quotation from "./stationery/quotation.ts";
 import stationery_receiptVoucher from "./stationery/receipt-voucher.ts";
 import stationery_enLetterhead from "./stationery/en-letterhead.ts";
+import { dressAll } from "./ornate.ts";
 import type { RenderContext, Template, Values } from "./types.ts";
 
-export const templates: Template[] = [
+/** The designs as drawn, before the ornate frame. */
+export const bareTemplates: Template[] = [
   wedding_tatreezFrame,
   wedding_jerusalemArch,
   wedding_cypressColumns,
@@ -404,6 +406,9 @@ export const templates: Template[] = [
   stationery_receiptVoucher,
   stationery_enLetterhead,
 ];
+
+/** Every design wears its ornate frame; see ornate.ts. */
+export const templates: Template[] = dressAll(bareTemplates);
 
 export const getTemplate = (id: string): Template | undefined => templates.find(t => t.id === id);
 
