@@ -9,3 +9,4 @@ export * from "./food.ts";
 export * from "./pantry.ts";
 export * from "./seasons.ts";
 export * from "./places.ts";
+export * from "./ornament.ts";

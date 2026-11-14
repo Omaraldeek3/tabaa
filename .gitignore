@@ -9,3 +9,4 @@ public/thumbs
 .vercel
 .env*
 .models/
+review/
