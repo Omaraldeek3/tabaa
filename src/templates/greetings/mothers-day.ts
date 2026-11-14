@@ -1,4 +1,4 @@
-import { stitchedHeart } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, rosetteLines, stitchedHeart } from "../../lib/motifs/index.ts";
 import { g, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -25,11 +25,15 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 105, 148), hw = Math.min(W * 0.7, H * 0.46), max = W - 16 * s;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.4, opacity: 0.12 }, rosetteLines(40 * z, p.accent, { rings: 4, lobes: 18, width: 0.25 * z })),
+      dotField(0, H * 0.82, W, H * 0.18, 4 * z, 0.35 * z, p.accent, { fade: "up", opacity: 0.2 }),
       line(val(ctx, "title"), cx, 9 + 14 * s, 13 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       g({ x: cx - hw / 2, y: H * 0.5 - hw * 0.5 }, stitchedHeart(hw, [p.accent, p.accent2])),
       line(val(ctx, "message"), cx, H * 0.5 + hw * 0.58, 5.4 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "from"), cx, H - 7 - 4 * s, 4.2 * s, { font: "tajawal", weight: 700, fill: p.accent, maxWidth: max }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "khatam", r: 2 * z }),
     );
   },
 };

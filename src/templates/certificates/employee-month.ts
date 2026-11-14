@@ -1,4 +1,4 @@
-import { rosette } from "../../lib/motifs/index.ts";
+import { guillocheNode, rosette, stampRing, starTile } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { certAr, tf } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
@@ -23,7 +23,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s } = dims(ctx, 297, 210), band = W * 0.28, R = W - 24 * s, tw = W - band - 46 * s;
     const sign = (label: string, x: number) => label ? [rect(x - 24 * s, 170 * s, 48 * s, 0.4 * s, { fill: p.ink }), line(label, x, 177 * s, 4.6 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 48 * s })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(W * 0.3, 14 * z, W * 0.7 - 14 * z, H - 28 * z, p.accent, { waves: 14, amp: 1.2 * z, period: 22 * z, width: 0.15 * z, opacity: 0.12 }),
+      starTile(0, 0, W * 0.27, H, 12 * z, 1.4 * z, p.paper, 0.06),
       rect(-b, -b, band + b, H + 2 * b, { fill: p.accent }),
       rect(band / 2 - 4 * s, -b, 8 * s, 70 * s + b, { fill: p.soft }),
       g({ x: band / 2, y: 82 * s }, rosette(24 * s, p.accent2, p.soft, p.paper)),
@@ -36,6 +39,7 @@ const t: Template = {
       stack(linesOf(val(ctx, "reason"), 3), R, 124 * s, 5.6 * s, 9 * s, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: tw }),
       line(val(ctx, "date"), R, 156 * s, 4.6 * s, { font: "tajawal", weight: 700, fill: p.ink, align: "start", maxWidth: tw * 0.5 }),
       sign(val(ctx, "sign1"), R - 26 * s), sign(val(ctx, "sign2"), R - 96 * s),
+      g({ x: W * 0.36, y: H - 30 * z, rotate: -12 }, stampRing(14 * z, p.accent, z)),
     );
   },
 };

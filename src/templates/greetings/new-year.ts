@@ -1,4 +1,4 @@
-import { firework } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, firework } from "../../lib/motifs/index.ts";
 import { g, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -26,11 +26,14 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 105, 148), max = W - 16 * s, m = Math.min(W, H);
     const bursts = [[0.3, 0.2, 0.2, p.accent], [0.7, 0.28, 0.16, p.accent2], [0.52, 0.12, 0.12, p.soft], [0.18, 0.45, 0.1, p.soft], [0.82, 0.08, 0.1, p.accent]] as const;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.55, W, H * 0.45, 4 * z, 0.3 * z, p.accent, { fade: "down", opacity: 0.15 }),
       bursts.map(([x, y, r, c]) => g({ x: W * x, y: H * y + 6 * s }, firework(m * r, c))),
       line(val(ctx, "year"), cx, H - 22 * s, Math.min(H * 0.3, W * 0.34), { font: ctx.font, weight: 700, fill: p.ink, maxWidth: W - 14 * s }),
       line(val(ctx, "title"), cx, H - 22 * s - Math.min(H * 0.3, W * 0.34) * 0.9, 6.4 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
       line(val(ctx, "from"), cx, H - 7 - 3 * s, 3.8 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: max }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "star", r: 2 * z }),
     );
   },
 };

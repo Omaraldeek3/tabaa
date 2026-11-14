@@ -1,5 +1,5 @@
-import { raisedHands } from "../../lib/motifs/index.ts";
-import { g, rect, scene } from "../../lib/scene.ts";
+import { doubleFrame, guillocheNode, khatamPath, raisedHands } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene } from "../../lib/scene.ts";
 import { certAr } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -23,7 +23,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 297, 210), max = W - 50 * s;
     const sign = (label: string, x: number) => label ? [rect(x - 24 * s, 138 * s, 48 * s, 0.4 * s, { fill: p.ink }), line(label, x, 145 * s, 4.6 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 48 * s })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(14 * z, 14 * z, W - 28 * z, H - 28 * z, p.accent, { waves: 14, amp: 1.2 * z, period: 22 * z, width: 0.15 * z, opacity: 0.12 }),
+      g({ x: W / 2, y: H * 0.36, opacity: 0.08 }, path(khatamPath(50 * z), { fill: p.accent })),
       g({ x: -b, y: H + b }, raisedHands(W + 2 * b, 11, [p.accent, p.accent2, p.soft, p.ink === inks.ivory ? inks.sand : inks.sand])),
       line(val(ctx, "org"), cx, 26 * s, 7 * s, { font: "tajawal", weight: 800, fill: p.accent2, maxWidth: max }),
       line(val(ctx, "title"), cx, 52 * s, 22 * s, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max }),
@@ -32,6 +35,7 @@ const t: Template = {
       stack(linesOf(val(ctx, "reason"), 3), cx, 104 * s, 5.6 * s, 8.6 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       line(val(ctx, "date"), cx, 140 * s, 4.6 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 60 * s }),
       sign(val(ctx, "sign1"), W - 54 * s), sign(val(ctx, "sign2"), 54 * s),
+      doubleFrame(6 * z, 6 * z, W - 12 * z, H - 12 * z, p.accent, p.paper, { gap: 2 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "khatam", r: 2 * z }),
     );
   },
 };

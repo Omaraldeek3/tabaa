@@ -1,5 +1,5 @@
-import { oliveBranch, shieldPath } from "../../lib/motifs/index.ts";
-import { g, path, rect, scene } from "../../lib/scene.ts";
+import { guillocheNode, khatamPath, oliveBranch, rosetteLines, shieldPath } from "../../lib/motifs/index.ts";
+import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { certAr } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -23,7 +23,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 297, 210), m = 10 * s, max = W - 60 * s, sw = 22 * s, top = 18 * s;
     const sign = (label: string, x: number) => label ? [rect(x - 26 * s, 172 * s, 52 * s, 0.35 * s, { fill: p.ink }), line(label, x, 180 * s, 4.8 * s, { font: "amiri", fill: p.ink, maxWidth: 52 * s })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(14 * z, 14 * z, W - 28 * z, H - 28 * z, p.accent, { waves: 14, amp: 1.2 * z, period: 22 * z, width: 0.15 * z, opacity: 0.15 }),
+      g({ x: W / 2, y: H * 0.5, opacity: 0.12 }, rosetteLines(60 * z, p.accent, { rings: 6, lobes: 18, width: 0.3 * z })),
       rect(m, m, W - 2 * m, H - 2 * m, { fill: null, stroke: p.accent, strokeWidth: 1 * s }),
       rect(m + 3 * s, m + 3 * s, W - 2 * m - 6 * s, H - 2 * m - 6 * s, { fill: null, stroke: p.accent, strokeWidth: 0.3 * s }),
       g({ x: cx, y: top }, path(shieldPath(sw), { fill: p.accent }), g({ y: sw * 0.1 }, path(shieldPath(sw * 0.78), { fill: p.accent2 }))),
@@ -36,6 +39,7 @@ const t: Template = {
       stack(linesOf(val(ctx, "reason"), 3), cx, 136 * s, 6 * s, 9 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "date"), cx, 178 * s, 4.6 * s, { font: "amiri", fill: p.soft, maxWidth: max * 0.3 }),
       sign(val(ctx, "sign1"), W - 60 * s), sign(val(ctx, "sign2"), 60 * s),
+      [[18, 18], [W / z - 18, 18], [18, H / z - 18], [W / z - 18, H / z - 18]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(3 * z), { fill: p.accent }), circle(0, 0, 1 * z, { fill: p.paper }))),
     );
   },
 };

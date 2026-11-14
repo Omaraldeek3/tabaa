@@ -1,5 +1,5 @@
-import { khatamPath, oliveWreath, tatreezBand } from "../../lib/motifs/index.ts";
-import { g, path, scene } from "../../lib/scene.ts";
+import { dotField, khatamPath, oliveWreath, tatreezBand } from "../../lib/motifs/index.ts";
+import { circle, g, path, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -26,7 +26,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 120, 120), band = 6 * s, r = Math.min(W * 0.36, (H - 2 * band) * 0.3), cy = band + 10 * s + r * 1.02, max = W - 22 * s;
     const y = (k: number) => cy + r * 1.1 + (H - band - cy - r * 1.1) * k;
+    const z = Math.min(W, H) / 120;
     return scene(W, H, p.paper,
+      dotField(14 * z, 14 * z, W - 28 * z, H - 28 * z, 5 * z, 0.35 * z, p.accent, { opacity: 0.1 }),
       g({ x: -b, y: -b }, tatreezBand("chain", W + 2 * b, band + b, [p.accent2, p.accent])),
       g({ x: -b, y: H - band }, tatreezBand("chain", W + 2 * b, band + b, [p.accent2, p.accent])),
       g({ x: cx, y: cy }, oliveWreath(r, p.accent, p.accent2, { leaves: 14, open: 30 })),
@@ -35,6 +37,7 @@ const t: Template = {
       line(val(ctx, "year"), cx, cy + r * 0.44, 8.6 * s, { font: "tajawal", weight: 800, fill: p.soft, maxWidth: r * 1.1 }),
       line(val(ctx, "message"), cx, y(0.36), 5 * s, { font: "amiri", fill: p.ink, maxWidth: max }),
       line(val(ctx, "from"), cx, y(0.72), 4.4 * s, { font: "amiri", weight: 700, fill: p.soft === inks.goldDeep ? p.accent2 : p.soft, maxWidth: max }),
+      [[10, H / z * 0.5], [W / z - 10, H / z * 0.5]].map(([x, y]) => g({ x: x * z, y: y * z }, path(khatamPath(2.4 * z), { fill: p.accent }), circle(0, 0, 0.8 * z, { fill: p.paper }))),
     );
   },
 };

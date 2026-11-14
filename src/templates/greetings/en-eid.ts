@@ -1,5 +1,5 @@
-import { crescentPath, khatamPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { crescentPath, dotField, doubleFrame, khatamPath } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -28,7 +28,9 @@ const t: Template = {
     for (let r = 0; r * cell < top + cell; r++) for (let c = 0; c < cols; c++)
       tiles.push(g({ x: -b + (c + 0.5) * cell, y: -b + (r + 0.5) * cell }, path(khatamPath(cell * 0.44), { fill: null, stroke: p.accent2, strokeWidth: 0.3 * s, opacity: 0.7 }), path(khatamPath(cell * 0.14), { fill: p.accent2, opacity: 0.8 })));
     const y = (k: number) => top + (H - top) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.58, W, H * 0.42, 4 * z, 0.3 * z, p.accent2, { fade: "up", opacity: 0.2 }),
       rect(-b, -b, W + 2 * b, top + b, { fill: p.accent }), tiles,
       rect(-b, top, W + 2 * b, H - top + b, { fill: p.paper }),
       g({ x: cx, y: top * 0.5 }, path(khatamPath(top * 0.36), { fill: p.accent }), path(khatamPath(top * 0.33), { fill: null, stroke: p.accent2, strokeWidth: 0.4 * s }), g({ rotate: 200 }, path(crescentPath(top * 0.17, 0.5), { fill: p.accent2 }))),
@@ -36,6 +38,7 @@ const t: Template = {
       rect(cx - 9 * s, y(0.46), 18 * s, 0.4 * s, { fill: p.accent2 }),
       line(val(ctx, "message"), cx, y(0.62), 4.2 * s, { font: "playfairdisplay", fill: p.ink, maxWidth: max }),
       line(val(ctx, "from"), cx, y(0.8), 2.6 * s, { font: "inter", weight: 700, fill: p.soft === inks.sky ? inks.sky : p.accent, tracking: 0.5 * s, maxWidth: max }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent2, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "khatam", r: 2 * z }),
     );
   },
 };

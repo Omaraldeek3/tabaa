@@ -1,4 +1,4 @@
-import { trophy } from "../../lib/motifs/index.ts";
+import { burstLines, guillocheNode, trophy } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { certAr } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
@@ -24,7 +24,10 @@ const t: Template = {
     const { W, H, p, b, s } = dims(ctx, 297, 210), R = W - 22 * s, tw = W * 0.6;
     const speed = [0, 1, 2, 3, 4].map(i => `M${-b} ${60 * s + i * 22 * s} L${W * 0.42 - i * 8 * s} ${60 * s + i * 22 * s - 30 * s}`).join(" ");
     const sign = (label: string, x: number) => label ? [rect(x - 26 * s, 176 * s, 52 * s, 0.4 * s, { fill: p.ink }), line(label, x, 184 * s, 5 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: 52 * s })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      g({ x: W * 0.2, y: H * 0.42, opacity: 0.25 }, burstLines(48, 40 * z, 90 * z, p.accent, 0.35 * z)),
+      guillocheNode(W * 0.45, 14 * z, W * 0.55 - 14 * z, H - 28 * z, p.accent, { waves: 14, amp: 1.2 * z, period: 22 * z, width: 0.15 * z, opacity: 0.1 }),
       rect(-b, -b, W + 2 * b, 8 * s + b, { fill: p.accent2 }), rect(-b, H - 8 * s, W + 2 * b, 8 * s + b, { fill: p.accent2 }),
       path(speed, { fill: null, stroke: p.soft, strokeWidth: 3 * s, opacity: 0.6 }),
       g({ x: W * 0.2, y: H * 0.78 }, trophy(H * 0.56, p.accent, p.ink)),

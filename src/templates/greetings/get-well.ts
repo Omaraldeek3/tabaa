@@ -1,4 +1,4 @@
-import { rays, teaCup } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, rays, teaCup } from "../../lib/motifs/index.ts";
 import { circle, g, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
@@ -26,13 +26,16 @@ const t: Template = {
   ],
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 105, 148), max = W - 16 * s, cy = H * 0.38, cw = Math.min(W * 0.36, H * 0.24);
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(0, H * 0.6, W, H * 0.4, 4 * z, 0.35 * z, p.accent2, { fade: "up", opacity: 0.2 }),
       line(val(ctx, "to"), cx, 9 + 5 * s, 4 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: max }),
       g({ x: cx + cw * 0.5, y: cy - cw * 0.55 }, g({ opacity: 0.6 }, rays(18, cw * 0.36, cw * 0.62, p.accent, 0.5)), circle(0, 0, cw * 0.3, { fill: p.accent })),
       g({ x: cx, y: cy + cw * 0.55 }, teaCup(cw, p.accent2, inks.goldDeep, p.ink, p.soft)),
       line(val(ctx, "title"), cx, cy + cw * 0.55 + 22 * s, 17 * s, { font: ctx.font, weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "line"), cx, cy + cw * 0.55 + 32 * s, 4.2 * s, { font: "tajawal", weight: 700, fill: p.ink, maxWidth: max }),
       line(val(ctx, "from"), cx, H - 7 - 3 * s, 4 * s, { font: "tajawal", weight: 800, fill: p.accent2, maxWidth: max }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent2, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "bracket", r: 2 * z }),
     );
   },
 };

@@ -1,5 +1,5 @@
-import { crescentPath, jerusalem, lantern, starPath } from "../../lib/motifs/index.ts";
-import { type SceneNode, g, path, rect, scene } from "../../lib/scene.ts";
+import { crescentPath, jerusalem, lantern, starPath, starTile } from "../../lib/motifs/index.ts";
+import { g, path, rect, scene, type SceneNode } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
@@ -29,7 +29,9 @@ const eidCrescent: Template = {
       .map(([x, y, r]) => g({ x: x * W, y: y * (H - skyH) }, path(starPath(4, r * 1.5 * s, r * 0.45 * s), { fill: p.accent, opacity: 0.75 })));
     const lamps = [[0.1, 0.34], [0.2, 0.2], [0.9, 0.3]] as const;
     const mid = (H - skyH) * 0.52;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H * 0.8, 10 * z, 1 * z, p.accent, 0.06),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       stars,
       g({ x: W * 0.82, y: (H - skyH) * 0.24, rotate: 200 }, path(crescentPath(10.5 * s, 0.5), { fill: p.accent })),

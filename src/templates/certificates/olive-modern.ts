@@ -1,4 +1,4 @@
-import { keffiyeh, oliveBranch } from "../../lib/motifs/index.ts";
+import { guillocheNode, keffiyeh, oliveBranch, stampRing } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -31,7 +31,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b } = dims(ctx, 297, 210), side = 62, right = W - 24, max = W - side - 48;
     const sign = (label: string, x: number) => label ? [rect(x - 54, 172, 54, 0.4, { fill: p.ink }), line(label, x, 180, 4.6, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: 54 })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(W * 0.36, 14 * z, W * 0.64 - 14 * z, H - 28 * z, p.accent, { waves: 14, amp: 1.2 * z, period: 22 * z, width: 0.15 * z, opacity: 0.12 }),
       rect(-b, -b, side + b, H + 2 * b, { fill: p.accent }),
       g({ x: -b, y: -b, opacity: 0.16 }, keffiyeh(side + b, H + 2 * b, 11, inks.paper, 0.12)),
       g({ x: side / 2, y: H - 22, rotate: -90 }, oliveBranch(H - 50, inks.ivory, null, { leaves: 15, bend: 0.05 })),
@@ -44,6 +46,7 @@ const t: Template = {
       stack(linesOf(val(ctx, "reason"), 3), right, 131, 5.8, 9.4, { font: "tajawal", weight: 500, fill: p.ink, align: "start", maxWidth: max }),
       sign(val(ctx, "sign1"), right), sign(val(ctx, "sign2"), right - 74),
       line(val(ctx, "date"), side + 24, 180, 4.6, { font: "tajawal", weight: 700, fill: p.soft, align: "end", maxWidth: 60 }),
+      g({ x: W * 0.4, y: H - 26 * z, rotate: -10 }, stampRing(13 * z, p.accent, z)),
     );
   },
 };

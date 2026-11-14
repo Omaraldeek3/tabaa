@@ -1,6 +1,6 @@
-import { archPath, crescentPath, khatamPath, scallopPath } from "../../lib/motifs/index.ts";
+import { archPath, crescentPath, khatamPath, rosetteLines, scallopPath, starTile } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
-import { dims, line, linesOf, pal, sizes, stack, val, inks } from "../kit.ts";
+import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
 
 const t: Template = {
@@ -31,7 +31,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, cx } = dims(ctx, 210, 297), m = 16, aw = W - 2 * m, ah = H - 2 * m, max = aw - 44;
     const sign = (label: string, x: number) => label ? [rect(x - 26, 246, 52, 0.35, { fill: p.ink }), line(label, x, 254, 4.8, { font: "amiri", fill: p.ink, maxWidth: 52 })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 14 * z, 1.4 * z, p.accent, 0.06),
+      g({ x: W / 2, y: H * 0.45, opacity: 0.12 }, rosetteLines(60 * z, p.accent, { rings: 6, lobes: 16, width: 0.3 * z })),
       g({ x: m, y: m }, path(archPath(aw, ah, 0.6), { fill: null, stroke: p.accent, strokeWidth: 1 })),
       g({ x: m + 4, y: m + 5.4 }, path(archPath(aw - 8, ah - 9.4, 0.6), { fill: null, stroke: p.accent, strokeWidth: 0.3 })),
       [m + 6, W - m - 6].map(x => g({ x, y: m + 6 }, path(khatamPath(6), { fill: p.accent }), path(khatamPath(2.6), { fill: p.paper }))),

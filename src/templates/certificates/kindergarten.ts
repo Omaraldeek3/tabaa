@@ -1,4 +1,4 @@
-import { starPath } from "../../lib/motifs/index.ts";
+import { dotField, starPath } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { certAr } from "../fields.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
@@ -31,7 +31,9 @@ const t: Template = {
       ...Array.from({ length: ny }, (_, i) => crayon(W - 5 * s, 14 * s + i * 46 * s, 44 * s, 90, cols[(i + 3) % 4])),
     ];
     const sign = (label: string, x: number) => label ? [rect(x - 24 * s, 160 * s, 48 * s, 0.5 * s, { fill: p.ink }), line(label, x, 168 * s, 5 * s, { font: ctx.font, fill: p.ink, maxWidth: 48 * s })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      dotField(16 * z, 16 * z, W - 32 * z, H - 32 * z, 6 * z, 0.5 * z, p.accent2, { opacity: 0.12 }),
       frame,
       g({ x: 34 * s, y: 34 * s }, circle(0, 0, 9 * s, { fill: p.soft }), path(Array.from({ length: 10 }, (_, i) => { const a = i * Math.PI / 5; return `M${Math.cos(a) * 11 * s} ${Math.sin(a) * 11 * s} L${Math.cos(a) * 15 * s} ${Math.sin(a) * 15 * s}`; }).join(" "), { fill: null, stroke: p.soft, strokeWidth: 1.4 * s })),
       [[W - 34 * s, 32 * s, 7], [W - 52 * s, 46 * s, 4], [36 * s, H - 40 * s, 5]].map(([x, y, r], i) => g({ x, y, rotate: i * 14 }, path(starPath(5, r * s, r * 0.45 * s), { fill: cols[i] }))),

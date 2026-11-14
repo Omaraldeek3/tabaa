@@ -1,4 +1,4 @@
-import { rays, ribbon, starPath } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, rays, ribbon, starPath } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -27,7 +27,9 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, s, cx } = dims(ctx, 105, 148), max = W - 20 * s, cy = H * 0.36, r = Math.min(30 * s, H * 0.2), rw = Math.min(max * 0.9, 76 * s);
     const y = (k: number) => cy + r + (H - cy - r) * k;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(0, 0, W, H, 4 * z, 0.4 * z, p.paper, { opacity: 0.12 }),
       g({ x: cx, y: cy, opacity: 0.22 }, rays(20, r * 0.6, Math.hypot(W, H), p.ink, 0.5)),
       g({ x: cx, y: cy }, circle(0, 0, r, { fill: p.accent }), circle(0, 0, r * 0.9, { fill: null, stroke: p.soft, strokeWidth: 0.4 * s })),
       [[-1.3, -0.8, 3.4], [1.3, -0.7, 2.6], [-1.45, 0.3, 2], [1.4, 0.5, 3]].map(([x, yy, k]) => g({ x: cx + x * r, y: cy + yy * r, rotate: x * 20 }, path(starPath(5, k * s, k * 0.42 * s), { fill: p.accent2 }))),
@@ -38,6 +40,7 @@ const t: Template = {
       line(val(ctx, "message"), cx, y(0.6), 4.6 * s, { font: "tajawal", weight: 500, fill: p.ink, maxWidth: max }),
       rect(cx - 8 * s, y(0.67), 16 * s, 0.4 * s, { fill: p.ink }),
       line(val(ctx, "from"), cx, y(0.8), 4.4 * s, { font: "tajawal", weight: 800, fill: p.ink, maxWidth: max }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.ink, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "star", r: 2 * z }),
     );
   },
 };

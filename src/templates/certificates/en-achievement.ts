@@ -1,4 +1,4 @@
-import { oliveWreath, starPath, tatreezBand } from "../../lib/motifs/index.ts";
+import { guillocheNode, oliveWreath, ringsNode, starPath, tatreezBand } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -31,7 +31,10 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, b, cx } = dims(ctx, 297, 210), max = W - 80, band = 8;
     const sign = (label: string, x: number) => label ? [rect(x - 28, 172, 56, 0.35, { fill: p.ink }), line(label, x, 179, 3.6, { font: "inter", weight: 500, fill: p.ink, maxWidth: 56 })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(14 * z, 14 * z, W - 28 * z, H - 28 * z, p.accent, { waves: 14, amp: 1.2 * z, period: 22 * z, width: 0.15 * z, opacity: 0.15 }),
+      g({ x: W / 2, y: H * 0.86, opacity: 0.3 }, ringsNode(14 * z, 20 * z, 3, p.accent, 0.3 * z)),
       g({ x: -b, y: 10 }, tatreezBand("chain", W + 2 * b, band, [p.accent2, p.accent])),
       g({ x: -b, y: H - 10 - band }, tatreezBand("chain", W + 2 * b, band, [p.accent2, p.accent])),
       line(val(ctx, "org"), cx, 38, 4.2, { font: "inter", weight: 700, fill: p.accent2 === inks.navy ? p.accent : p.accent2, tracking: 1.4, maxWidth: max }),

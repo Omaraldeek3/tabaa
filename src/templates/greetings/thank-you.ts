@@ -1,4 +1,4 @@
-import { poppy } from "../../lib/motifs/index.ts";
+import { dotField, doubleFrame, poppy } from "../../lib/motifs/index.ts";
 import { g, rect, scene } from "../../lib/scene.ts";
 import { dims, inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -29,12 +29,15 @@ const t: Template = {
     const flowers = tall
       ? [[0.3, 0.16, 15], [0.52, 0.1, 19], [0.72, 0.18, 13]].map(([x, yy, d]) => g({ x: x * W, y: yy * H + 10 * s }, poppy(d * s, p.accent, heart, { stem: p.accent2, stemLength: H * 0.4 - yy * H - 6 * s })))
       : [[0.3, 0.42, 17], [0.55, 0.24, 23], [0.8, 0.5, 14]].map(([x, yy, d]) => g({ x: x * side, y: yy * H }, poppy(d * s, p.accent, heart, { stem: p.accent2, stemLength: H - yy * H + b })));
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      dotField(W * 0.45, 0, W * 0.55, H, 4 * z, 0.35 * z, p.accent, { fade: "left", opacity: 0.12 }),
       flowers,
       tall ? rect(cx - 10 * s, H * 0.4, 20 * s, 0.4 * s, { fill: p.accent2 }) : rect(side + 2 * s, 12 * s, 0.4 * s, H - 24 * s, { fill: p.accent2 }),
       line(val(ctx, "title"), ax, top + 18 * s, 30 * s, { font: ctx.font, weight: 700, fill: p.accent, align, maxWidth: max }),
       stack(linesOf(val(ctx, "body"), 2), ax, top + 32 * s, 5.4 * s, 8 * s, { font: "amiri", fill: p.ink, align, maxWidth: max }),
       line(val(ctx, "from"), ax, top + 54 * s, 4.6 * s, { font: "amiri", weight: 700, fill: p.soft === inks.grey ? p.ink : p.soft, align, maxWidth: max }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "dot", r: 2 * z }),
     );
   },
 };

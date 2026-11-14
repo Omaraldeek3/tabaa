@@ -1,4 +1,4 @@
-import { arcade, crescentPath, dotRing, lantern, starPath, tatreezBand } from "../../lib/motifs/index.ts";
+import { arcade, crescentPath, dotRing, lantern, starPath, starTile, tatreezBand } from "../../lib/motifs/index.ts";
 import { circle, g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -28,7 +28,9 @@ const ramadanLantern: Template = {
     const s = Math.min(W / 105, H / 148), cx = W / 2, max = W - 22 * s;
     const lampH = Math.min(H * 0.34, 56 * s), lampTop = H * 0.07, haloY = lampTop + lampH * 0.56, halo = lampH * 0.62;
     const arcH = Math.min(26 * s, H * 0.16), textY = Math.max(lampTop + lampH + (H - arcH - lampTop - lampH) * 0.3, haloY + halo * 1.12 + 15 * s);
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      starTile(0, 0, W, H, 9 * z, 1 * z, p.accent, 0.06),
       rect(-b, -b, W + 2 * b, H + 2 * b, { fill: p.paper }),
       g({ x: cx, y: haloY }, circle(0, 0, halo, { fill: p.accent2, opacity: 0.35 }), circle(0, 0, halo, { fill: null, stroke: p.accent, strokeWidth: 0.3 * s }), dotRing(halo * 1.1, 36, 0.45 * s, p.accent)),
       g({ x: cx, y: -b }, path(`M0 0 L0 ${lampTop + b}`, { fill: null, stroke: p.accent, strokeWidth: 0.3 * s }), g({ y: lampTop + b }, lantern(lampH, p.accent2, p.accent))),

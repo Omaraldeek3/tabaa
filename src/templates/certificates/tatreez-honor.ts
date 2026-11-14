@@ -1,4 +1,4 @@
-import { khatamPath, oliveBranch, scallopPath, tatreezBand, tatreezFrame } from "../../lib/motifs/index.ts";
+import { guillocheNode, khatamPath, oliveBranch, scallopPath, tatreezBand, tatreezFrame } from "../../lib/motifs/index.ts";
 import { g, path, rect, scene } from "../../lib/scene.ts";
 import { inks, line, linesOf, pal, sizes, stack, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -32,7 +32,10 @@ const tatreezHonor: Template = {
     const { widthMm: W, heightMm: H } = ctx.size, p = ctx.palette, cx = W / 2;
     const inset = 9, band = 10, max = W - 2 * (inset + band + 16), body = "amiri";
     const sign = (label: string, x: number) => label ? [rect(x - 30, 177, 60, 0.35, { fill: p.ink }), line(label, x, 184, 4.8, { font: body, fill: p.ink, maxWidth: 60 })] : [];
+    const z = Math.min(W, H) / 210;
     return scene(W, H, p.paper,
+      guillocheNode(14 * z, 14 * z, W - 28 * z, H - 28 * z, p.accent2, { waves: 14, amp: 1.2 * z, period: 22 * z, width: 0.15 * z, opacity: 0.15 }),
+      g({ x: W / 2, y: H / 2, opacity: 0.06 }, path(khatamPath(60 * z), { fill: p.accent })),
       g({ x: inset, y: inset }, tatreezFrame(W - 2 * inset, H - 2 * inset, band, [p.accent, p.accent2], { style: "stars" })),
       line(val(ctx, "org"), cx, 40, 5.4, { font: "tajawal", weight: 700, fill: p.accent2, maxWidth: max }),
       line(val(ctx, "title"), cx, 67, 24, { font: ctx.font, weight: 700, fill: p.accent, maxWidth: max * 0.82 }),

@@ -1,4 +1,5 @@
-import { circle, scene } from "../../lib/scene.ts";
+import { doubleFrame, ringsNode } from "../../lib/motifs/index.ts";
+import { circle, g, scene } from "../../lib/scene.ts";
 import { tf } from "../fields.ts";
 import { dims, inks, line, pal, sizes, val } from "../kit.ts";
 import type { Template } from "../types.ts";
@@ -25,11 +26,14 @@ const t: Template = {
   render(ctx) {
     const { W, H, p, s, cx } = dims(ctx, 105, 148), max = W - 18 * s, cy = H * 0.36, r = Math.min(W, H) * 0.2;
     const blots = [[-0.6, 0.1, 1, p.accent], [0.35, -0.3, 0.85, p.accent2], [0.2, 0.45, 0.7, p.soft], [-0.15, -0.55, 0.5, p.accent2]] as const;
+    const z = Math.min(W, H) / 105;
     return scene(W, H, p.paper,
+      g({ x: W / 2, y: H * 0.3, opacity: 0.2 }, ringsNode(24 * z, 40 * z, 4, p.accent, 0.25 * z)),
       blots.map(([x, y, k, c]) => circle(cx + x * r, cy + y * r, r * k, { fill: c, opacity: 0.38 })),
       line(val(ctx, "title"), cx, cy + r * 1.7 + 6 * s, 9.6 * s, { font: "playfairdisplay", weight: 600, fill: p.ink, maxWidth: max }),
       line(val(ctx, "message"), cx, cy + r * 1.7 + 15 * s, 4 * s, { font: "playfairdisplay", fill: p.ink, maxWidth: max }),
       line(val(ctx, "from"), cx, H - 7 - 5 * s, 4.2 * s, { font: "playfairdisplay", fill: p.ink, maxWidth: max }),
+      doubleFrame(5 * z, 5 * z, W - 10 * z, H - 10 * z, p.accent, p.paper, { gap: 1.6 * z, heavy: 0.4 * z, thin: 0.15 * z, corner: "dot", r: 2 * z }),
     );
   },
 };
